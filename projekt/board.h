@@ -2,13 +2,14 @@
 #include "tile.h"
 #include <QPoint>
 #include <QVector>
+#include <qglobal.h>
 
 #ifndef BOARD
 #define BOARD
 
 class Board
 {
-    QVector<Tile> tiles;
+    QVector<TileCorner> tiles;
     QVector<Player> players;
     Tile newTile;
 
@@ -19,6 +20,9 @@ public:
     void setBoard(unsigned int);
     void insertNewTile(QPoint);
     void undo();
+    Tile getTile(QPoint);   //vraci kamen pro danou souradnici
+    TileCorner getTile(int);   //vraci kamen pro danou souradnici
+    int genRand(unsigned int, unsigned int);
 protected:
     //Tile generateTile();
 };

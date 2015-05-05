@@ -19,9 +19,12 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>231</width>
+      <width>181</width>
       <height>201</height>
      </rect>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_rotate">
@@ -53,9 +56,9 @@
    <widget class="QPlainTextEdit" name="plainTextEdit">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>210</x>
       <y>10</y>
-      <width>261</width>
+      <width>181</width>
       <height>211</height>
      </rect>
     </property>

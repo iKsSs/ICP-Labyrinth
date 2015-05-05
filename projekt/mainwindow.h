@@ -10,6 +10,7 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+    int width, height;
 
 public:
     explicit MainWindow(QWidget *parent = 0);
