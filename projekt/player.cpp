@@ -58,3 +58,11 @@ void Player::run()
 {
 
 }
+
+bool Player::operator ==(const Player& p) const
+{
+    if (this->name == p.name)
+        return true;
+    else
+        return false;
+}

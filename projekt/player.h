@@ -23,6 +23,8 @@ public:
     unsigned int getPoints();
     void addPoints(unsigned int);
 
+    bool operator == (const Player&) const;
+
     ~Player();
 };
 
