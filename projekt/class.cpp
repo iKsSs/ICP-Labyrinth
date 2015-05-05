@@ -36,14 +36,18 @@ public:
             this->size = size;
         }
     }
-    void makePlayer();
+    player* makePlayer();
 };
 
-void game::makePlayer() {
-    if (players == 4) {
+player* game::makePlayer() {
+	player *p = new player();
+	
+	if (players == 4) {
         //chyba moc hracu
     }
     players++;
+
+	return p;
 }
 
 class card{
