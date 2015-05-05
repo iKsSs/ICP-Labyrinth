@@ -29,8 +29,9 @@ MainWindow::MainWindow(QWidget *parent) :
     int i;
     int n = 4;
     for (i=0; i < n; ++i){
-        obr = board.getTile(n-1-i).getImage();
-        scene->addPixmap(obr);
+        ui->plainTextEdit->appendPlainText(QString::number(i));
+        obr = board.getTile(i).getImage();
+
         pixmapItem = scene->addPixmap(obr);
         pixmapItem->moveBy(44*i, 0);
     }
@@ -40,7 +41,6 @@ MainWindow::MainWindow(QWidget *parent) :
     this->width = ui->graphicsView->width();
     this->height = ui->graphicsView->height();
 
-    scene->addPixmap(obr);
 
     ui->graphicsView->setScene(scene);
 }
