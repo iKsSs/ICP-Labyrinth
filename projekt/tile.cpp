@@ -6,7 +6,7 @@ Tile::Tile(){
 }
 
 void Tile::rotate(){
-;
+    rotation = (rotation+1)%4;
 }
 
 void Tile::setPosition(QPoint pos){
@@ -26,13 +26,24 @@ int Tile::getMove(){
 }
 
 void Tile::addPlayer(Player play){
-    this->players.push_back(play);
+   players.push_back(play);
 }
 
 void Tile::removePlayer(Player play){
-    ;//najde hrace a vymaze ho z vektoru
+    int n = players.size();
+    for(int i = 0; i < n; ++i){
+        if (players[i] == play){
+            players.remove(i);
+            break;
+        }
+    }
 }
 
 QVector<Player> Tile::getPlayers(){
     return players;
+}
+
+
+void TileStraight::rotate(){
+    rotation = (rotation+1)%2;
 }

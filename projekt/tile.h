@@ -8,6 +8,7 @@
 #include "player.h"
 
 class Tile{
+protected:
   QPoint position;
   QImage image;
   int move;
@@ -27,15 +28,15 @@ public:
 };
 
 class TileStraight: public Tile{
-;
+  void rotate();
 };
 
 class TileCorner: public Tile{
-;
+
 };
 
 class TileCross: public Tile{
-;
+
 };
 
 #endif // TILE
