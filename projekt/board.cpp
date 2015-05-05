@@ -12,22 +12,22 @@ void Board::setBoard(unsigned int n){
     for (i=0; i<size; ++i){
         if (i==0){
             TileCorner x;
-            x.setRotation(3);
+            x.setRotation(4);
             tiles.push_back(x);
         }
         if (i==(n-1)){
             TileCorner x;
-            x.setRotation(2);
+            x.setRotation(3);
             tiles.push_back(x);
         }
         if (i==(size-n)){
             TileCorner x;
-            x.setRotation(0);
+            x.setRotation(1);
             tiles.push_back(x);
         }
         if (i==(size-1)){
             TileCorner x;
-            x.setRotation(1);
+            x.setRotation(2);
             tiles.push_back(x);
         }
  /*       tileType = this->genRand(Low, High);

@@ -6,7 +6,7 @@ Tile::Tile(){
 }
 
 void Tile::rotate(){
-    rotation = (rotation+1)%4;
+    rotation = (rotation+1)%4 + 1;
 }
 
 void Tile::setPosition(QPoint pos){
@@ -45,33 +45,33 @@ QVector<Player> Tile::getPlayers(){
 
 
 void TileStraight::rotate(){
-    rotation = (rotation+1)%2;
+    rotation = (rotation+1)%2 + 1;
 }
 
 QPixmap TileStraight::getImage(){
     switch(rotation){
-        case 0: return QPixmap("images/S-1.png");
-        case 1: return QPixmap("images/S-2.png");
+        case 1: return QPixmap("images/S-1.png");
+        case 2: return QPixmap("images/S-2.png");
         default: return QPixmap();
     }
 }
 
 QPixmap TileCorner::getImage(){
     switch(rotation){
-        case 0: return QPixmap("images/L-1.png");
-        case 1: return QPixmap("images/L-2.png");
-        case 2: return QPixmap("images/L-3.png");
-        case 3: return QPixmap("images/L-4.png");
+        case 1: return QPixmap("images/L-1.png");
+        case 2: return QPixmap("images/L-2.png");
+        case 3: return QPixmap("images/L-3.png");
+        case 4: return QPixmap("images/L-4.png");
         default: return QPixmap();
     }
 }
 
 QPixmap TileCross::getImage(){
     switch(rotation){
-        case 0: return QPixmap("images/T-1.png");
-        case 1: return QPixmap("images/T-2.png");
-        case 2: return QPixmap("images/T-3.png");
-        case 3: return QPixmap("images/T-4.png");
+        case 1: return QPixmap("images/T-1.png");
+        case 2: return QPixmap("images/T-2.png");
+        case 3: return QPixmap("images/T-3.png");
+        case 4: return QPixmap("images/T-4.png");
         default: return QPixmap();
     }
 }
