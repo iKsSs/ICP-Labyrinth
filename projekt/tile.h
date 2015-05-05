@@ -2,7 +2,7 @@
 #define TILE
 
 #include <QPoint>
-#include <QImage>
+#include <QPixmap>
 #include <QVector>
 
 #include "player.h"
@@ -10,7 +10,7 @@
 class Tile{
 protected:
   QPoint position;
-  QImage image;
+  QPixmap image;
   int move;
   int rotation;
   QVector<Player> players;
@@ -20,7 +20,8 @@ public:
   void rotate();
   void setPosition(QPoint);
   QPoint getPosition();
-  QImage getImage();
+  QPixmap getImage();
+  void setRotation(int);
   int getMove();   //treba zmenit navvratovy typ
   void addPlayer(Player);
   void removePlayer(Player);
@@ -28,15 +29,25 @@ public:
 };
 
 class TileStraight: public Tile{
+    static unsigned int count;
+public:
+  TileStraight(){TileStraight::count++;}
   void rotate();
+  QPixmap getImage();
 };
 
 class TileCorner: public Tile{
-
+    static unsigned int count;
+public:
+    TileCorner(){TileCorner::count++;}
+  QPixmap getImage();
 };
 
 class TileCross: public Tile{
-
+    static unsigned int count;
+public:
+    TileCross(){TileCross::count++;}
+  QPixmap getImage();
 };
 
 #endif // TILE

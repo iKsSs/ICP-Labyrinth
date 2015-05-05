@@ -25,7 +25,7 @@ public:
 
     bool operator == (const Player&) const;
 
-    ~Player();
+    //~Player();
 };
 
 #endif // PLAYER

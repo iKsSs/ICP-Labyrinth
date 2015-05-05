@@ -14,8 +14,16 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    class.cpp
+    tile.cpp \
+    player.cpp \
+    board.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    tile.h \
+    player.h \
+    board.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    images.qrc
