@@ -11,6 +11,9 @@
 #include <QPixmap>
 #include <QGraphicsPixmapItem>
 
+#include <QMessageBox>
+#include <QMouseEvent>
+
 #include "board.h"
 
 const unsigned int SIZE = 7;
@@ -23,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     qsrand(QTime::currentTime().msec());
 
     ui->setupUi(this);
-    QGraphicsScene *scene = new QGraphicsScene;
+    QGraphicsScene *scene = new QGraphicsScene();
     QGraphicsPixmapItem *pixmapItem;
     QPixmap obr;
 
@@ -48,6 +51,8 @@ MainWindow::MainWindow(QWidget *parent) :
     int n = size*size;
 
     ui->plainTextEdit->appendPlainText("\nCoor.  Rot.  Move");
+
+    ui->graphicsView->setInteractive(true);
 
     for (i=0, j=0; i < n; ++i, ++j){
 
@@ -79,6 +84,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 //    this->width = ui->graphicsView->width();
 //    this->height = ui->graphicsView->height();
+
     this->width = size*44;
     this->height = size*44;
 
@@ -94,4 +100,17 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void QGraphicsView::mousePressEvent(QMouseEvent *event)
+{
+    event->accept();
+
+    //tady se zpracuje udalost
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Kliknul jsi na obrázek");
+    msgBox.setText(QString::number(event->localPos().x()) + " " + QString::number(event->localPos().y()));
+    msgBox.setStandardButtons(QMessageBox::Yes);
+    msgBox.setDefaultButton(QMessageBox::No);
+    msgBox.exec();
 }
