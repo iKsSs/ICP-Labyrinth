@@ -13,7 +13,7 @@
 
 #include "board.h"
 
-const unsigned int SIZE = 11;
+const unsigned int SIZE = 9;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -79,10 +79,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
 //    this->width = ui->graphicsView->width();
 //    this->height = ui->graphicsView->height();
-//    this->width = size*44;
-//    this->height = size*44;
+    this->width = size*44;
+    this->height = size*44;
 
-//    ui->graphicsView->setSceneRect(0,0,width,height);
+    ui->graphicsView->setGeometry(QRect(10, 10, width, height));    //prizpusobeni okna hraci desky
 
     ui->graphicsView->setScene(scene);
 }
