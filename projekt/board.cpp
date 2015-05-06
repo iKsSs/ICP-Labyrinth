@@ -1,51 +1,69 @@
 #include "board.h"
 
 void Board::setBoard(unsigned int n){
-    int High = 3;
-    int Low = 1;
-    int tileType, tileRotation;
-    int i, size;
-    int StraightMax, CornerMax, CrossMax;
+    unsigned int High = 3;
+    unsigned int Low = 1;
+    unsigned int tileType, tileRotation;
+    unsigned int i, j, size;
+    unsigned int StraightMax, CornerMax, CrossMax;
 
     size = n*n;
 
-    for (i=0; i<size; ++i){
-        if (i==0){
-            TileCorner x;
-            x.setRotation(4);
-            tiles.push_back(x);
-        }
-        if (i==(n-1)){
-            TileCorner x;
-            x.setRotation(3);
-            tiles.push_back(x);
-        }
-        if (i==(size-n)){
-            TileCorner x;
-            x.setRotation(1);
-            tiles.push_back(x);
-        }
-        if (i==(size-1)){
-            TileCorner x;
-            x.setRotation(2);
-            tiles.push_back(x);
-        }
- /*       tileType = this->genRand(Low, High);
+    for (i=0; i<n; ++i){
+      for (j=0; j<n; ++j){
 
-       // TileStraight::count;
-        switch (tileType){
-            case 1:break;
+        Tile* x;
+        if (i == 0 && j == 0){  //LH roh
+            x = new TileCorner(4);
         }
+        else if (i == 0 && j == (n-1)){ //PH roh
+            x = new TileCorner(3);
+        }
+        else if (i == (n-1) && j == 0){ //LS roh
+            x = new TileCorner(1);
+        }
+        else if (i == (n-1) && j == (n-1)){ //PS roh
+            x = new TileCorner(2);
+        }
+        else if (i == 0 && j%2==0){  //prvni radek liche sloupce - cislovani od 0
+            x = new TileCross(3);
+        }
+        else if (i == (n-1) && j%2==0){  //posledni radek liche sloupce - cislovani od 0
+            x = new TileCross(1);
+        }
+        else if (i%2 == 0 && j == 0){  //prvni sloupec liche radky - cislovani od 0
+            x = new TileCross(4);
+        }
+        else if (i%2 == 0 && j == (n-1)){  //posledni sloupec liche radky - cislovani od 0
+            x = new TileCross(2);
+        }
+        else if (i==(size-1)){
+            x = new TileCorner(2);
+        }
+        else{
+            tileType = this->genRand(Low, High);
+            tileRotation = this->genRand(Low, High);
+            switch(tileType){
+                case 1: x = new TileStraight(tileRotation%2+1); break;
+                case 2: x = new TileCorner(tileRotation); break;
+                case 3: x = new TileCross(tileRotation); break;
+            default: x = NULL;
+            }
+        }
+        x->setPosition(QPoint(i,j));
 
-        tileRotation = this->genRand(Low, High);*/
+        tiles.push_back(x);
     }
+   }
 }
 
-TileCorner Board::getTile(int i){
+Tile* Board::getTile(int i){
     return tiles[i];
 }
 
 int Board::genRand(unsigned int Low, unsigned int High){
-    qsrand(qrand());
+    //qsrand(qrand());
+    for (int i =0; i<10000000;i++);
+    qsrand(QTime::currentTime().msec());
     return qrand() % ((High + 1) - Low) + Low;
 }

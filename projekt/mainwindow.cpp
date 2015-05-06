@@ -13,6 +13,8 @@
 
 #include "board.h"
 
+const unsigned int SIZE = 7;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -24,19 +26,53 @@ MainWindow::MainWindow(QWidget *parent) :
 
     Board board;
 
-    board.setBoard(2);
+    board.setBoard(SIZE);
 
+    ui->plainTextEdit->appendPlainText("Generated tiles");
+    ui->plainTextEdit->appendPlainText("Straight:\t");
+    ui->plainTextEdit->insertPlainText(QString::number(TileStraight::count));
+    ui->plainTextEdit->appendPlainText("Corner:\t");
+    ui->plainTextEdit->insertPlainText(QString::number(TileCorner::count));
+    ui->plainTextEdit->appendPlainText("Cross:\t");
+    ui->plainTextEdit->insertPlainText(QString::number(TileCross::count));
+
+    Tile * tile;
+    int rot, mov;
+    QPoint pos;
     int i;
-    int n = 4;
-    for (i=0; i < n; ++i){
-        ui->plainTextEdit->appendPlainText(QString::number(i));
-        obr = board.getTile(i).getImage();
+    int j = 0, k = 0;
+    int size = SIZE;
+    int n = size*size;
+
+    ui->plainTextEdit->appendPlainText("\nCoor.  Rot.  Move");
+
+    for (i=0, j=0; i < n; ++i, ++j){
+
+        tile = board.getTile(i);
+        obr = tile->getImage();
+
+        pos = tile->getPosition();
+        rot = tile->getRotation();
+        mov = tile->getMove();
+
+        ui->plainTextEdit->appendPlainText(QString::number(pos.x()+1));
+        ui->plainTextEdit->insertPlainText("x");
+        ui->plainTextEdit->insertPlainText(QString::number(pos.y()+1));
+        ui->plainTextEdit->insertPlainText(" :    ");
+        ui->plainTextEdit->insertPlainText(QString::number(rot));
+        ui->plainTextEdit->insertPlainText("        ");
+        ui->plainTextEdit->insertPlainText(QString::number(mov));
 
         pixmapItem = scene->addPixmap(obr);
-        pixmapItem->moveBy(44*i, 0);
+
+        if(i%size == 0){
+            k += 44;
+            j = 0;
+        }
+        pixmapItem->moveBy(44*j, k);
     }
 
-    ui->plainTextEdit->appendPlainText("test");
+    //ui->plainTextEdit->appendPlainText("test");
 
     this->width = ui->graphicsView->width();
     this->height = ui->graphicsView->height();

@@ -41,26 +41,26 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(400, 276);
+        MainWindow->resize(760, 391);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         graphicsView = new QGraphicsView(centralWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(10, 10, 181, 201));
+        graphicsView->setGeometry(QRect(10, 10, 371, 321));
         graphicsView->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         btn_rotate = new QPushButton(centralWidget);
         btn_rotate->setObjectName(QStringLiteral("btn_rotate"));
-        btn_rotate->setGeometry(QRect(330, 60, 51, 23));
+        btn_rotate->setGeometry(QRect(440, 50, 51, 23));
         btn_addPlayer = new QPushButton(centralWidget);
         btn_addPlayer->setObjectName(QStringLiteral("btn_addPlayer"));
-        btn_addPlayer->setGeometry(QRect(320, 190, 75, 23));
+        btn_addPlayer->setGeometry(QRect(430, 180, 75, 23));
         plainTextEdit = new QPlainTextEdit(centralWidget);
         plainTextEdit->setObjectName(QStringLiteral("plainTextEdit"));
-        plainTextEdit->setGeometry(QRect(210, 10, 181, 211));
+        plainTextEdit->setGeometry(QRect(520, 10, 221, 321));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 400, 21));
+        menuBar->setGeometry(QRect(0, 0, 760, 21));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));

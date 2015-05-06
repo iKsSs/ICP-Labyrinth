@@ -5,6 +5,11 @@ Tile::Tile(){
     move = 0;
 }
 
+Tile::Tile(int r){
+    rotation = r;
+    move = 0;
+}
+
 void Tile::rotate(){
     rotation = (rotation+1)%4 + 1;
 }
@@ -17,6 +22,10 @@ QPoint Tile::getPosition(){
     return position;
 }
 
+QPixmap Tile::getImage(){
+    return image;
+}
+
 int Tile::getMove(){
     return move;
 }
@@ -24,6 +33,11 @@ int Tile::getMove(){
 void Tile::setRotation(int r){
     this->rotation = r;
 }
+
+int Tile::getRotation(){
+    return rotation;
+}
+
 
 void Tile::addPlayer(Player play){
    players.push_back(play);
@@ -48,34 +62,46 @@ void TileStraight::rotate(){
     rotation = (rotation+1)%2 + 1;
 }
 
-QPixmap TileStraight::getImage(){
-    switch(rotation){
-        case 1: return QPixmap("images/S-1.png");
-        case 2: return QPixmap("images/S-2.png");
-        default: return QPixmap();
-    }
-}
-
-QPixmap TileCorner::getImage(){
-    switch(rotation){
-        case 1: return QPixmap("images/L-1.png");
-        case 2: return QPixmap("images/L-2.png");
-        case 3: return QPixmap("images/L-3.png");
-        case 4: return QPixmap("images/L-4.png");
-        default: return QPixmap();
-    }
-}
-
-QPixmap TileCross::getImage(){
-    switch(rotation){
-        case 1: return QPixmap("images/T-1.png");
-        case 2: return QPixmap("images/T-2.png");
-        case 3: return QPixmap("images/T-3.png");
-        case 4: return QPixmap("images/T-4.png");
-        default: return QPixmap();
-    }
-}
-
 unsigned int TileStraight::count = 0;
 unsigned int TileCorner::count = 0;
 unsigned int TileCross::count = 0;
+
+TileStraight::TileStraight(int r){
+    TileStraight::count++;
+    rotation = r;
+    move = 2;
+
+    switch(rotation){
+        case 1: image.load("images/S-1.png");break;
+        case 2: image.load("images/S-2.png");break;
+        default: image.load("images/C.png");
+    }
+}
+
+TileCorner::TileCorner(int r){
+    TileCorner::count++;
+    rotation = r;
+    move = 2;
+
+    switch(rotation){
+        case 1: image.load("images/L-1.png");break;
+        case 2: image.load("images/L-2.png");break;
+        case 3: image.load("images/L-3.png");break;
+        case 4: image.load("images/L-4.png");break;
+        default: image.load("images/C.png");
+    }
+}
+
+TileCross::TileCross(int r){
+    TileCross::count++;
+    rotation = r;
+    move = 3;
+
+    switch(rotation){
+        case 1: image.load("images/T-1.png");break;
+        case 2: image.load("images/T-2.png");break;
+        case 3: image.load("images/T-3.png");break;
+        case 4: image.load("images/T-4.png");break;
+        default: image.load("images/C.png");
+    }
+}
