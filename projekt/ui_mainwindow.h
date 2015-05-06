@@ -41,26 +41,30 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(760, 391);
+        MainWindow->resize(919, 734);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         graphicsView = new QGraphicsView(centralWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(10, 10, 371, 321));
+        graphicsView->setGeometry(QRect(20, 10, 600, 600));
+        graphicsView->setBaseSize(QSize(0, 0));
+        graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        graphicsView->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
         graphicsView->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         btn_rotate = new QPushButton(centralWidget);
         btn_rotate->setObjectName(QStringLiteral("btn_rotate"));
-        btn_rotate->setGeometry(QRect(440, 50, 51, 23));
+        btn_rotate->setGeometry(QRect(100, 640, 51, 23));
         btn_addPlayer = new QPushButton(centralWidget);
         btn_addPlayer->setObjectName(QStringLiteral("btn_addPlayer"));
-        btn_addPlayer->setGeometry(QRect(430, 180, 75, 23));
+        btn_addPlayer->setGeometry(QRect(470, 640, 75, 23));
         plainTextEdit = new QPlainTextEdit(centralWidget);
         plainTextEdit->setObjectName(QStringLiteral("plainTextEdit"));
-        plainTextEdit->setGeometry(QRect(520, 10, 221, 321));
+        plainTextEdit->setGeometry(QRect(640, 10, 271, 671));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 760, 21));
+        menuBar->setGeometry(QRect(0, 0, 919, 21));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
