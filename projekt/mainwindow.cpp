@@ -13,12 +13,15 @@
 
 #include "board.h"
 
-const unsigned int SIZE = 7;
+const unsigned int SIZE = 11;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    //qsrand(qrand()); //pro testovani
+    qsrand(QTime::currentTime().msec());
+
     ui->setupUi(this);
     QGraphicsScene *scene = new QGraphicsScene;
     QGraphicsPixmapItem *pixmapItem;
@@ -74,9 +77,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //ui->plainTextEdit->appendPlainText("test");
 
-    this->width = ui->graphicsView->width();
-    this->height = ui->graphicsView->height();
+//    this->width = ui->graphicsView->width();
+//    this->height = ui->graphicsView->height();
+//    this->width = size*44;
+//    this->height = size*44;
 
+//    ui->graphicsView->setSceneRect(0,0,width,height);
 
     ui->graphicsView->setScene(scene);
 }
