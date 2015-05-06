@@ -156,6 +156,7 @@ debug\qrc_images.cpp: images.qrc \
 		images\T-2.png \
 		images\L-2.png \
 		images\S-2.png \
+		images\C.png \
 		images\T-1.png \
 		images\L-1.png \
 		images\S-1.png \
@@ -591,7 +592,9 @@ debug\mainwindow.obj: mainwindow.cpp mainwindow.h \
 		board.h \
 		player.h \
 		C:\ProgramFiles\Qt\5.4\msvc2013_64\include\QtCore\QString \
-		tile.h
+		tile.h \
+		C:\ProgramFiles\Qt\5.4\msvc2013_64\include\QtCore\QTime \
+		C:\ProgramFiles\Qt\5.4\msvc2013_64\include\QtCore\qdatetime.h
 
 debug\tile.obj: tile.cpp tile.h \
 		C:\ProgramFiles\Qt\5.4\msvc2013_64\include\QtCore\QPoint \
@@ -802,7 +805,9 @@ debug\board.obj: board.cpp board.h \
 		C:\ProgramFiles\Qt\5.4\msvc2013_64\include\QtCore\qline.h \
 		C:\ProgramFiles\Qt\5.4\msvc2013_64\include\QtGui\qpainterpath.h \
 		C:\ProgramFiles\Qt\5.4\msvc2013_64\include\QtGui\qpixelformat.h \
-		C:\ProgramFiles\Qt\5.4\msvc2013_64\include\QtCore\QVector
+		C:\ProgramFiles\Qt\5.4\msvc2013_64\include\QtCore\QVector \
+		C:\ProgramFiles\Qt\5.4\msvc2013_64\include\QtCore\QTime \
+		C:\ProgramFiles\Qt\5.4\msvc2013_64\include\QtCore\qdatetime.h
 
 debug\qrc_images.obj: debug\qrc_images.cpp 
 
