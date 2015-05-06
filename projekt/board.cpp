@@ -6,9 +6,15 @@ void Board::setBoard(unsigned int n){
     unsigned int tileType, tileRotation;
     unsigned int i, j, size;
     unsigned int StraightMax, CornerMax, CrossMax;
-    unsigned int lackOfCorner=4, lackOfCross=8;
+    unsigned int lackOfCorner=4, lackOfCross=4;
 
     size = n*n;
+
+    switch(n){
+        case 11: lackOfCross += 4;
+        case 9:  lackOfCross += 4;
+        case 7:  lackOfCross += 4;
+    }
 
     StraightMax = CornerMax = CrossMax = (size/3);
     if(size%3){
