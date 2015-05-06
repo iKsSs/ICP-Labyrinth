@@ -13,7 +13,7 @@
 
 #include "board.h"
 
-const unsigned int SIZE = 11;
+const unsigned int SIZE = 7;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -86,9 +86,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->btn_rotate->setGeometry(QRect(50, height+30, 50, 23));
     ui->btn_addPlayer->setGeometry(QRect(150, height+30, 75, 23));
     ui->plainTextEdit->setGeometry(QRect(width+20, 10, 250, height+25));
-    resize(10+width+20+250, 10+height+25+50);
-
-    setWindowTitle(QApplication::translate("Labyrinth", "Labyrinth", 0));
+    resize(10+width+20+250, 10+height+25+30);
 
     ui->graphicsView->setScene(scene);
 }
