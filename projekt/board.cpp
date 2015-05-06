@@ -6,8 +6,23 @@ void Board::setBoard(unsigned int n){
     unsigned int tileType, tileRotation;
     unsigned int i, j, size;
     unsigned int StraightMax, CornerMax, CrossMax;
+    unsigned int lackOfCorner=4, lackOfCross=8;
 
     size = n*n;
+
+    StraightMax = CornerMax = CrossMax = (size/3);
+    if(size%3){
+        switch(this->genRand(Low, High)){
+            case 1:
+                ++StraightMax; break;
+            case 2:
+                ++CornerMax; break;
+            case 3:
+                ++CrossMax; break;
+        default:
+            ++StraightMax;
+        }
+    }
 
     for (i=0; i<n; ++i){
       for (j=0; j<n; ++j){
@@ -15,39 +30,58 @@ void Board::setBoard(unsigned int n){
         Tile* x;
         if (i == 0 && j == 0){  //LH roh
             x = new TileCorner(4);
+            --lackOfCorner;
         }
         else if (i == 0 && j == (n-1)){ //PH roh
             x = new TileCorner(3);
+            --lackOfCorner;
         }
         else if (i == (n-1) && j == 0){ //LS roh
             x = new TileCorner(1);
+            --lackOfCorner;
         }
         else if (i == (n-1) && j == (n-1)){ //PS roh
             x = new TileCorner(2);
+            --lackOfCorner;
         }
         else if (i == 0 && j%2==0){  //prvni radek liche sloupce - cislovani od 0
             x = new TileCross(3);
+            --lackOfCross;
         }
         else if (i == (n-1) && j%2==0){  //posledni radek liche sloupce - cislovani od 0
             x = new TileCross(1);
+            --lackOfCross;
         }
         else if (i%2 == 0 && j == 0){  //prvni sloupec liche radky - cislovani od 0
             x = new TileCross(4);
+            --lackOfCross;
         }
         else if (i%2 == 0 && j == (n-1)){  //posledni sloupec liche radky - cislovani od 0
             x = new TileCross(2);
+            --lackOfCross;
         }
         else if (i==(size-1)){
             x = new TileCorner(2);
+            --lackOfCross;
         }
         else{
-            tileType = this->genRand(Low, High);
-            tileRotation = this->genRand(Low, High);
-            switch(tileType){
-                case 1: x = new TileStraight(tileRotation%2+1); break;
-                case 2: x = new TileCorner(tileRotation); break;
-                case 3: x = new TileCross(tileRotation); break;
-            default: x = NULL;
+            while(1){
+                tileType = this->genRand(Low, High);
+                tileRotation = this->genRand(Low, High);
+                switch(tileType){
+                    case 1:
+                        if (StraightMax == TileStraight::count){continue;}
+                        x = new TileStraight(tileRotation%2+1); break;
+                    case 2:
+                        if ((CornerMax - lackOfCorner) == TileCorner::count){continue;}
+                        x = new TileCorner(tileRotation); break;
+                    case 3:
+                        if ((CrossMax - lackOfCross) == TileCross::count){continue;}
+                        x = new TileCross(tileRotation); break;
+
+                    default: x = NULL;
+                }
+                break;
             }
         }
         x->setPosition(QPoint(i,j));
