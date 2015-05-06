@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>276</height>
+    <width>760</width>
+    <height>391</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>181</width>
-      <height>201</height>
+      <width>371</width>
+      <height>321</height>
      </rect>
     </property>
     <property name="alignment">
@@ -30,8 +30,8 @@
    <widget class="QPushButton" name="btn_rotate">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>60</y>
+      <x>440</x>
+      <y>50</y>
       <width>51</width>
       <height>23</height>
      </rect>
@@ -43,8 +43,8 @@
    <widget class="QPushButton" name="btn_addPlayer">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>190</y>
+      <x>430</x>
+      <y>180</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -56,10 +56,10 @@
    <widget class="QPlainTextEdit" name="plainTextEdit">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>520</x>
       <y>10</y>
-      <width>181</width>
-      <height>211</height>
+      <width>221</width>
+      <height>321</height>
      </rect>
     </property>
    </widget>
@@ -69,7 +69,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>760</width>
      <height>21</height>
     </rect>
    </property>

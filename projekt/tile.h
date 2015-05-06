@@ -17,11 +17,13 @@ protected:
 
 public:
   Tile();
+  Tile(int);    //kontruktor s rotaci
   void rotate();
   void setPosition(QPoint);
   QPoint getPosition();
   QPixmap getImage();
   void setRotation(int);
+  int getRotation();
   int getMove();   //treba zmenit navvratovy typ
   void addPlayer(Player);
   void removePlayer(Player);
@@ -29,25 +31,28 @@ public:
 };
 
 class TileStraight: public Tile{
-    static unsigned int count;
+
 public:
+    static unsigned int count;
+  TileStraight(int);    //kontruktor s rotaci
   TileStraight(){TileStraight::count++;}
   void rotate();
-  QPixmap getImage();
 };
 
 class TileCorner: public Tile{
-    static unsigned int count;
+
 public:
-    TileCorner(){TileCorner::count++;}
-  QPixmap getImage();
+    static unsigned int count;
+  TileCorner(int);    //kontruktor s rotaci
+  TileCorner(){TileCorner::count++;}
 };
 
 class TileCross: public Tile{
-    static unsigned int count;
+
 public:
-    TileCross(){TileCross::count++;}
-  QPixmap getImage();
+    static unsigned int count;
+  TileCross(int);    //kontruktor s rotaci
+  TileCross(){TileCross::count++;}
 };
 
 #endif // TILE
