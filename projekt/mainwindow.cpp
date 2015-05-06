@@ -83,10 +83,10 @@ MainWindow::MainWindow(QWidget *parent) :
     this->height = size*44;
 
     ui->graphicsView->setGeometry(QRect(10, 10, width, height));    //prizpusobeni okna hraci desky
-    ui->btn_rotate->setGeometry(QRect(50, height+30, 50, 23));
-    ui->btn_addPlayer->setGeometry(QRect(150, height+30, 75, 23));
+    ui->btn_rotate->setGeometry(QRect(50, height+20, 50, 23));
+    ui->btn_addPlayer->setGeometry(QRect(150, height+20, 75, 23));
     ui->plainTextEdit->setGeometry(QRect(width+20, 10, 250, height+25));
-    resize(10+width+20+250, 10+height+25+30);
+    resize(10+width+20+250, 10+height+25+20);
 
     ui->graphicsView->setScene(scene);
 }
