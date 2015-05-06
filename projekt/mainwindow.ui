@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>760</width>
-    <height>391</height>
+    <width>919</width>
+    <height>734</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,11 +17,26 @@
    <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>20</x>
       <y>10</y>
-      <width>371</width>
-      <height>321</height>
+      <width>600</width>
+      <height>600</height>
      </rect>
+    </property>
+    <property name="baseSize">
+     <size>
+      <width>0</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="sizeAdjustPolicy">
+     <enum>QAbstractScrollArea::AdjustIgnored</enum>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -30,8 +45,8 @@
    <widget class="QPushButton" name="btn_rotate">
     <property name="geometry">
      <rect>
-      <x>440</x>
-      <y>50</y>
+      <x>100</x>
+      <y>640</y>
       <width>51</width>
       <height>23</height>
      </rect>
@@ -43,8 +58,8 @@
    <widget class="QPushButton" name="btn_addPlayer">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>180</y>
+      <x>470</x>
+      <y>640</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -56,10 +71,10 @@
    <widget class="QPlainTextEdit" name="plainTextEdit">
     <property name="geometry">
      <rect>
-      <x>520</x>
+      <x>640</x>
       <y>10</y>
-      <width>221</width>
-      <height>321</height>
+      <width>271</width>
+      <height>671</height>
      </rect>
     </property>
    </widget>
@@ -69,7 +84,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>760</width>
+     <width>919</width>
      <height>21</height>
     </rect>
    </property>
