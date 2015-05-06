@@ -19,8 +19,6 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QStatusBar>
-#include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -34,14 +32,16 @@ public:
     QPushButton *btn_addPlayer;
     QPlainTextEdit *plainTextEdit;
     QMenuBar *menuBar;
-    QToolBar *mainToolBar;
-    QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
         MainWindow->resize(740, 510);
+        MainWindow->setMaximumSize(QSize(1920, 1920));
+        MainWindow->setContextMenuPolicy(Qt::DefaultContextMenu);
+        MainWindow->setAnimated(true);
+        MainWindow->setDockOptions(QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         graphicsView = new QGraphicsView(centralWidget);
@@ -57,21 +57,17 @@ public:
         btn_rotate->setGeometry(QRect(50, 440, 50, 23));
         btn_addPlayer = new QPushButton(centralWidget);
         btn_addPlayer->setObjectName(QStringLiteral("btn_addPlayer"));
+        btn_addPlayer->setEnabled(true);
         btn_addPlayer->setGeometry(QRect(150, 440, 75, 23));
         plainTextEdit = new QPlainTextEdit(centralWidget);
         plainTextEdit->setObjectName(QStringLiteral("plainTextEdit"));
         plainTextEdit->setGeometry(QRect(450, 10, 280, 460));
         MainWindow->setCentralWidget(centralWidget);
-        //menuBar = new QMenuBar(MainWindow);
-        //menuBar->setObjectName(QStringLiteral("menuBar"));
-        //menuBar->setGeometry(QRect(0, 0, 947, 21));
-        //MainWindow->setMenuBar(menuBar);
-        //mainToolBar = new QToolBar(MainWindow);
-        //mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        //MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
-        //statusBar = new QStatusBar(MainWindow);
-        //statusBar->setObjectName(QStringLiteral("statusBar"));
-        //MainWindow->setStatusBar(statusBar);
+        menuBar = new QMenuBar(MainWindow);
+        menuBar->setObjectName(QStringLiteral("menuBar"));
+        menuBar->setEnabled(false);
+        menuBar->setGeometry(QRect(0, 0, 740, 21));
+        MainWindow->setMenuBar(menuBar);
 
         retranslateUi(MainWindow);
 
