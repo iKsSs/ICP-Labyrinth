@@ -1,21 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <QGraphicsScene>
-#include <QApplication>
-#include <QLabel>
-#include <QPicture>
-#include <QPainter>
-#include <QPoint>
-#include <QVector>
-#include <QPixmap>
-#include <QGraphicsPixmapItem>
-
-#include <QMessageBox>
-#include <QMouseEvent>
-
-#include "board.h"
-
 const unsigned int SIZE = 7;
 const unsigned int IMG_SIZE = 44;
 
@@ -27,12 +12,14 @@ MainWindow::MainWindow(QWidget *parent) :
     qsrand(QTime::currentTime().msec());    //random
 
     ui->setupUi(this);
-    QGraphicsScene *scene = new QGraphicsScene();
-    QGraphicsScene *newTile = new QGraphicsScene();
+
+    scene = new QGraphicsScene();
+    newTile = new QGraphicsScene();
+    btn_rotate = new QPushButton("Rotate", this);
+
+    //lokalni promenne
     QGraphicsPixmapItem *pixmapItem;
     QPixmap obr;
-
-    Board board;
 
     board.setBoard(SIZE);   //vygenerovat kameny pro hraci desku
 
@@ -48,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->plainTextEdit->appendPlainText("\nCoor.  Rot.  Move");
 /* END DEBUG */
 
+    //lokalni promenne
     Tile * tile;
     int rot, mov;
     QPoint pos;
@@ -90,8 +78,10 @@ MainWindow::MainWindow(QWidget *parent) :
     this->width = SIZE*IMG_SIZE;    //sirka sceny
     this->height = SIZE*IMG_SIZE;   //vyska sceny
 
+    //nastaveni zobrazovani objektu
     ui->graphicsView->setGeometry(QRect(10, 10, width, height));    //prizpusobeni okna hraci desky
-    ui->btn_rotate->setGeometry(QRect(60, height+20, 50, 23));      //tlacitko rotace
+    btn_rotate->setGeometry(QRect(60, height+20, 50, 23));      //tlacitko rotace
+  //  ui->btn_rotate->setGeometry(QRect(60, height+20, 50, 23));      //tlacitko rotace
     ui->btn_addPlayer->setGeometry(QRect(150, height+20, 75, 23));  //tlacitko pridat hrace
     ui->plainTextEdit->setGeometry(QRect(width+20, 10, 250, height+25));    //debug okno
     ui->gw_newTile->setGeometry(QRect(10, height+20, 44, 44));      //novy kamen mimo hraci desku
@@ -99,16 +89,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
     board.genNewTile();          //vygenerovani noveho kamenu mimo desku
     tile = board.getNewTile();   //odkaz na nove vygenerovany kamen
+ //   tile->rotate();
     obr = tile->getImage();      //ziska obrazek noveho kamene
 
-    pixmapItem = newTile->addPixmap(obr);
+    newTile->addPixmap(obr);        //prida obrazek do okenka
 
-    ui->graphicsView->setScene(scene);
-    ui->gw_newTile->setScene(newTile);
+    ui->graphicsView->setScene(scene);  //zobrazi board
+    ui->gw_newTile->setScene(newTile);  //zobrazi novy kamen
+
+    //connections
+    connect(btn_rotate, SIGNAL (pressed()), this, SLOT (handle_btn_rotate()));
 }
 
 MainWindow::~MainWindow()
 {
+    delete scene;
+    delete newTile;
     delete ui;
 }
 
@@ -123,4 +119,21 @@ void QGraphicsView::mousePressEvent(QMouseEvent *event)
     msgBox.setStandardButtons(QMessageBox::Yes);
     msgBox.setDefaultButton(QMessageBox::No);
     msgBox.exec();
+}
+
+void MainWindow::handle_btn_rotate()
+{
+    ui->plainTextEdit->appendPlainText("Obsluha Rotate");
+
+  //  Tile* tile = board.getNewTile();   //odkaz na kamen mimo desku
+   // tile->rotate();                     //otoceni
+
+    //zavola prekresleni
+    void drawNewTile();
+}
+
+void MainWindow::drawNewTile()
+{
+    newTile->addPixmap(board.getNewTile()->getImage());        //prida obrazek do okenka
+    ui->gw_newTile->setScene(newTile);  //zobrazi novy kamen
 }
