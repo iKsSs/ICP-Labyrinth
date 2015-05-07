@@ -38,10 +38,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //lokalni promenne
     Tile * tile;
-    int rot, mov;
-    QPoint pos;
     int i, j;
-    int x = 0, y = 0, k = 0;
+    int x = 0, y = 0, k = 0, a, b;
 
     ui->graphicsView->setInteractive(true);
 
@@ -53,15 +51,22 @@ MainWindow::MainWindow(QWidget *parent) :
                 k++;
                 obr = tile->getImage();
                 pixmapItem = scene->addPixmap(obr);
-                pixmapItem->setX(x);
-                pixmapItem->setY(y);
+                a=x;
+                b=y;
+                if(i==0){a=x+50;}
+                else if(i==(SIZE-1)){a=x+50;b=y+100;}
+                if(j==0){b=y+50;}
+                else if(j==(SIZE-1)){b=y+50;a=x+100;}
+                pixmapItem->setX(a);
+                pixmapItem->setY(b);
             }
-            else{
-                int souradnice = j+i*SIZE;
-                tile = board.getTile(souradnice);    //odkaz na kamen
-                obr = tile->getImage();     //ziska obrazek
+            int souradnice = j+i*SIZE;
+            tile = board.getTile(souradnice);    //odkaz na kamen
+            obr = tile->getImage();     //ziska obrazek
 
 /* DEBUG */
+//                int rot, mov;
+//                QPoint pos;
 //                pos = tile->getPosition();
 //                rot = tile->getRotation();
 //                mov = tile->getMove();
@@ -75,13 +80,11 @@ MainWindow::MainWindow(QWidget *parent) :
 //                ui->plainTextEdit->insertPlainText(QString::number(mov));
 /* END DEBUG */
 
-                pixmapItem = scene->addPixmap(obr); //prida obrazek do sceny a vrati odkaz na nej
+            pixmapItem = scene->addPixmap(obr); //prida obrazek do sceny a vrati odkaz na nej
 
-              //  pixmapItem->moveBy(x, y);  //premisteni v X,Y
-               // x+=50;
-                 pixmapItem->setX(x);
-                 pixmapItem->setY(y);
-            }
+            pixmapItem->setX(x+50);
+            pixmapItem->setY(y+50);
+
             x += IMG_SIZE; //posunuti v ose X
         }
         /* Odradkovani */
