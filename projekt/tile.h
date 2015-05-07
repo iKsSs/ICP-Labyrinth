@@ -60,5 +60,14 @@ public:
   void genImage();
 };
 
+class TileOutter: public Tile{
+
+public:
+  TileOutter(int);    //kontruktor s rotaci
+  TileOutter(){}
+  virtual void rotate(){}
+  void genImage();
+};
+
 #endif // TILE
 

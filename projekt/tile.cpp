@@ -110,3 +110,14 @@ void TileCross::genImage()
         default: image.load("images/C.png");
     }
 }
+
+TileOutter::TileOutter(int r){
+    rotation = r;
+
+    genImage();
+}
+
+void TileOutter::genImage()
+{
+   image.load("images/E.png");
+}

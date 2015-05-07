@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>740</width>
-    <height>510</height>
+    <width>1013</width>
+    <height>731</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -32,8 +32,8 @@
    <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
+      <x>30</x>
+      <y>20</y>
       <width>420</width>
       <height>420</height>
      </rect>
@@ -44,6 +44,9 @@
       <height>0</height>
      </size>
     </property>
+    <property name="lineWidth">
+     <number>1</number>
+    </property>
     <property name="verticalScrollBarPolicy">
      <enum>Qt::ScrollBarAlwaysOff</enum>
     </property>
@@ -53,6 +56,15 @@
     <property name="sizeAdjustPolicy">
      <enum>QAbstractScrollArea::AdjustIgnored</enum>
     </property>
+    <property name="backgroundBrush">
+     <brush brushstyle="NoBrush">
+      <color alpha="255">
+       <red>0</red>
+       <green>0</green>
+       <blue>0</blue>
+      </color>
+     </brush>
+    </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
     </property>
@@ -60,8 +72,8 @@
    <widget class="QPlainTextEdit" name="plainTextEdit">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>10</y>
+      <x>630</x>
+      <y>0</y>
       <width>280</width>
       <height>460</height>
      </rect>
@@ -70,8 +82,8 @@
    <widget class="QGraphicsView" name="gw_newTile">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>440</y>
+      <x>30</x>
+      <y>580</y>
       <width>44</width>
       <height>44</height>
      </rect>
@@ -96,6 +108,10 @@
      <string/>
     </property>
    </widget>
+   <zorder>plainTextEdit</zorder>
+   <zorder>gw_newTile</zorder>
+   <zorder>l_players</zorder>
+   <zorder>graphicsView</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="enabled">
@@ -105,7 +121,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>740</width>
+     <width>1013</width>
      <height>20</height>
     </rect>
    </property>
