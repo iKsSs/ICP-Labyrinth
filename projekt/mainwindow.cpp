@@ -89,7 +89,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     board.genNewTile();          //vygenerovani noveho kamenu mimo desku
     tile = board.getNewTile();   //odkaz na nove vygenerovany kamen
- //   tile->rotate();
+    tile->rotate();
     obr = tile->getImage();      //ziska obrazek noveho kamene
 
     newTile->addPixmap(obr);        //prida obrazek do okenka
