@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     scene = new QGraphicsScene();
     newTile = new QGraphicsScene();
     btn_rotate = new QPushButton("Rotate", this);
+    btn_addPlayer = new QPushButton("Add Player", this);
 
     //lokalni promenne
     QGraphicsPixmapItem *pixmapItem;
@@ -81,30 +82,29 @@ MainWindow::MainWindow(QWidget *parent) :
     //nastaveni zobrazovani objektu
     ui->graphicsView->setGeometry(QRect(10, 10, width, height));    //prizpusobeni okna hraci desky
     btn_rotate->setGeometry(QRect(60, height+20, 50, 23));      //tlacitko rotace
-  //  ui->btn_rotate->setGeometry(QRect(60, height+20, 50, 23));      //tlacitko rotace
-    ui->btn_addPlayer->setGeometry(QRect(150, height+20, 75, 23));  //tlacitko pridat hrace
+    btn_addPlayer->setGeometry(QRect(150, height+20, 75, 23));      //tlacitko pridat hrace
+    ui->l_players->setGeometry(QRect(240, height+15, 80, 60));
     ui->plainTextEdit->setGeometry(QRect(width+20, 10, 250, height+25));    //debug okno
     ui->gw_newTile->setGeometry(QRect(10, height+20, 44, 44));      //novy kamen mimo hraci desku
     resize(10+width+20+250, 10+height+25+40);                       //cele okno
 
     board.genNewTile();          //vygenerovani noveho kamenu mimo desku
-    tile = board.getNewTile();   //odkaz na nove vygenerovany kamen
-    tile->rotate();
-    obr = tile->getImage();      //ziska obrazek noveho kamene
 
-    newTile->addPixmap(obr);        //prida obrazek do okenka
+    this->drawNewTile();        //zobrazi novy kamen
 
     ui->graphicsView->setScene(scene);  //zobrazi board
-    ui->gw_newTile->setScene(newTile);  //zobrazi novy kamen
 
     //connections
-    connect(btn_rotate, SIGNAL (pressed()), this, SLOT (handle_btn_rotate()));
+    connect(btn_rotate, SIGNAL (released()), this, SLOT (handle_btn_rotate()));
+    connect(btn_addPlayer, SIGNAL (released()), this, SLOT (handle_btn_addPlayer()));
 }
 
 MainWindow::~MainWindow()
 {
     delete scene;
     delete newTile;
+    delete btn_rotate;
+    delete btn_addPlayer;
     delete ui;
 }
 
@@ -125,15 +125,40 @@ void MainWindow::handle_btn_rotate()
 {
     ui->plainTextEdit->appendPlainText("Obsluha Rotate");
 
-  //  Tile* tile = board.getNewTile();   //odkaz na kamen mimo desku
-   // tile->rotate();                     //otoceni
+    board.getNewTile()->rotate();   //otoceni
 
     //zavola prekresleni
-    void drawNewTile();
+    this->drawNewTile();
+}
+
+void MainWindow::handle_btn_addPlayer()
+{
+    if (board.getNumPlayers() >= 4){
+       ui->plainTextEdit->appendPlainText("MAX 4 Players");
+    }
+    else{
+        Player player = Player();
+        board.addPlayer(player);
+
+        //zavola prekresleni
+        this->drawPlayers();
+    }
 }
 
 void MainWindow::drawNewTile()
 {
     newTile->addPixmap(board.getNewTile()->getImage());        //prida obrazek do okenka
     ui->gw_newTile->setScene(newTile);  //zobrazi novy kamen
+}
+
+void MainWindow::drawPlayers()
+{
+    QString str;
+    int n = board.getNumPlayers();
+    for (int i=0; i<n; ++i){
+        str += board.getPlayer(i).getName() + "\n";
+    }
+    str.remove(str.length()-1,1);   //odstraneni posledniho znaku
+    ui->l_players->setText(str);
+    ui->l_players->repaint();
 }

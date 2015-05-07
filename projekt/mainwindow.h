@@ -34,9 +34,11 @@ public:
     ~MainWindow();
 
     void drawNewTile();
+    void drawPlayers();
 
 private slots:
     void handle_btn_rotate();
+    void handle_btn_addPlayer();
 
 private:
     Ui::MainWindow *ui;
@@ -49,6 +51,7 @@ private:
     QGraphicsScene *newTile;
 
     QPushButton *btn_rotate;
+    QPushButton *btn_addPlayer;
 };
 
 #endif // MAINWINDOW_H

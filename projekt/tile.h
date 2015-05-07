@@ -13,12 +13,11 @@ protected:
   QPixmap image;
   int move;
   int rotation;
-  QVector<Player> players;
 
 public:
   Tile();
   Tile(int);    //kontruktor s rotaci
-  void rotate();
+  virtual void rotate()=0;
   void setPosition(QPoint);
   QPoint getPosition();
   QPixmap getImage();
@@ -37,7 +36,7 @@ public:
     static unsigned int count;
   TileStraight(int);    //kontruktor s rotaci
   TileStraight(){TileStraight::count++;}
-  void rotate();
+  virtual void rotate();
   void genImage();
 };
 
@@ -47,7 +46,7 @@ public:
     static unsigned int count;
   TileCorner(int);    //kontruktor s rotaci
   TileCorner(){TileCorner::count++;}
-  void rotate();
+  virtual void rotate();
   void genImage();
 };
 
@@ -57,7 +56,7 @@ public:
     static unsigned int count;
   TileCross(int);    //kontruktor s rotaci
   TileCross(){TileCross::count++;}
-  void rotate();
+  virtual void rotate();
   void genImage();
 };
 

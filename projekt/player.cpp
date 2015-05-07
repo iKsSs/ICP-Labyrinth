@@ -2,7 +2,8 @@
 
 Player::Player(void)
 {
-    this->name="NoName Player";
+    Player::countNoName++;
+    this->name="Player" + QString::number(Player::countNoName);
     this->points = 0;
     this->position.setX(0);
     this->position.setY(0);
@@ -66,3 +67,5 @@ bool Player::operator ==(const Player& p) const
     else
         return false;
 }
+
+unsigned int Player::countNoName = 0;
