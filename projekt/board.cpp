@@ -97,6 +97,24 @@ void Board::setBoard(unsigned int n){
    }
 }
 
+void Board::genNewTile(void){
+    int choice = this->genRand(1, 3);
+    switch(choice){
+        case 1:
+            this->newTile = new TileStraight(1); break;
+        case 2:
+            this->newTile = new TileCorner(1); break;
+        case 3:
+            this->newTile = new TileCross(1); break;
+
+        default: this->newTile = NULL;
+    }
+}
+
+Tile* Board::getNewTile(void){
+    return this->newTile;
+}
+
 Tile* Board::getTile(int i){
     return tiles[i];
 }
