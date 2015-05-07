@@ -18,6 +18,9 @@ class Board
     QVector<Board> board;
 public:
     void addPlayer(Player);
+    void removePlayer(Player);
+    int getNumPlayers();
+    Player getPlayer(unsigned int);
     void setBoard(unsigned int);
     void insertNewTile(QPoint);
     void genNewTile(void);

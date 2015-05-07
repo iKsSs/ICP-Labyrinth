@@ -122,3 +122,25 @@ Tile* Board::getTile(int i){
 int Board::genRand(unsigned int Low, unsigned int High){
     return qrand() % ((High + 1) - Low) + Low;
 }
+
+void Board::addPlayer(Player play){
+   players.push_back(play);
+}
+
+void Board::removePlayer(Player play){
+    int n = players.size();
+    for(int i = 0; i < n; ++i){
+        if (players[i] == play){
+            players.remove(i);
+            break;
+        }
+    }
+}
+
+int Board::getNumPlayers(){
+    return players.size();
+}
+
+Player Board::getPlayer(unsigned int i){
+    return players[i];
+}

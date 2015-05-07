@@ -25,6 +25,8 @@ public:
 
     bool operator == (const Player&) const;
 
+    static unsigned int countNoName;
+
     //~Player();
 };
 

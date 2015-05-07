@@ -34,29 +34,6 @@ int Tile::getRotation(){
     return rotation;
 }
 
-void Tile::rotate() {
-
-}
-
-
-void Tile::addPlayer(Player play){
-   players.push_back(play);
-}
-
-void Tile::removePlayer(Player play){
-    int n = players.size();
-    for(int i = 0; i < n; ++i){
-        if (players[i] == play){
-            players.remove(i);
-            break;
-        }
-    }
-}
-
-QVector<Player> Tile::getPlayers(){
-    return players;
-}
-
 void TileStraight::rotate(){
     rotation++;
     if(rotation%3 == 0){rotation = 1;}
