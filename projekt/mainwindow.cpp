@@ -40,44 +40,57 @@ MainWindow::MainWindow(QWidget *parent) :
     Tile * tile;
     int rot, mov;
     QPoint pos;
-    int i;
-    int j = 0, k = 0;
-    int n = SIZE*SIZE;
+    int i, j;
+    int x = 0, y = 0, k = 0;
 
     ui->graphicsView->setInteractive(true);
 
     /* Generovani kamenu hraci desky */
-    for (i=0, j=0; i < n; ++i, ++j){
-
-        tile = board.getTile(i);    //odkaz na kamen
-        obr = tile->getImage();     //ziska obrazek
+    for (i=0; i < SIZE; ++i){
+        for (j=0; j < SIZE; ++j){
+            if(((i==0 || i==(SIZE-1)) && j%2==1) || ((j==0 || j==(SIZE-1)) && i%2==1)){ //pozice moznych vstupu kamenu
+                tile = board.getOutterField(k);
+                k++;
+                obr = tile->getImage();
+                pixmapItem = scene->addPixmap(obr);
+                pixmapItem->setX(x);
+                pixmapItem->setY(y);
+            }
+            else{
+                int souradnice = j+i*SIZE;
+                tile = board.getTile(souradnice);    //odkaz na kamen
+                obr = tile->getImage();     //ziska obrazek
 
 /* DEBUG */
-        pos = tile->getPosition();
-        rot = tile->getRotation();
-        mov = tile->getMove();
+//                pos = tile->getPosition();
+//                rot = tile->getRotation();
+//                mov = tile->getMove();
 
-        ui->plainTextEdit->appendPlainText(QString::number(pos.x()+1));
-        ui->plainTextEdit->insertPlainText("x");
-        ui->plainTextEdit->insertPlainText(QString::number(pos.y()+1));
-        ui->plainTextEdit->insertPlainText(" :    ");
-        ui->plainTextEdit->insertPlainText(QString::number(rot));
-        ui->plainTextEdit->insertPlainText("        ");
-        ui->plainTextEdit->insertPlainText(QString::number(mov));
+//                ui->plainTextEdit->appendPlainText(QString::number(pos.x()+1));
+//                ui->plainTextEdit->insertPlainText("x");
+//                ui->plainTextEdit->insertPlainText(QString::number(pos.y()+1));
+//                ui->plainTextEdit->insertPlainText(" :    ");
+//                ui->plainTextEdit->insertPlainText(QString::number(rot));
+//                ui->plainTextEdit->insertPlainText("        ");
+//                ui->plainTextEdit->insertPlainText(QString::number(mov));
 /* END DEBUG */
 
-        pixmapItem = scene->addPixmap(obr); //prida obrazek do sceny a vrati odkaz na nej
+                pixmapItem = scene->addPixmap(obr); //prida obrazek do sceny a vrati odkaz na nej
 
-        /* Odradkovani */
-        if(i%SIZE == 0){
-            k += IMG_SIZE;  //posunuti v ose Y
-            j = 0;          //posunuti v ose X
+              //  pixmapItem->moveBy(x, y);  //premisteni v X,Y
+               // x+=50;
+                 pixmapItem->setX(x);
+                 pixmapItem->setY(y);
+            }
+            x += IMG_SIZE; //posunuti v ose X
         }
-        pixmapItem->moveBy(IMG_SIZE*j, k);  //premisteni v X,Y
+        /* Odradkovani */
+        x = 0;
+        y += IMG_SIZE;  //posunuti v ose Y
     }
 
-    this->width = SIZE*IMG_SIZE;    //sirka sceny
-    this->height = SIZE*IMG_SIZE;   //vyska sceny
+    this->width = SIZE*IMG_SIZE+100;    //sirka sceny
+    this->height = SIZE*IMG_SIZE+100;   //vyska sceny
 
     //nastaveni zobrazovani objektu
     ui->graphicsView->setGeometry(QRect(10, 10, width, height));    //prizpusobeni okna hraci desky
@@ -115,7 +128,7 @@ void QGraphicsView::mousePressEvent(QMouseEvent *event)
     //tady se zpracuje udalost
     QMessageBox msgBox;
     msgBox.setWindowTitle("Kliknul jsi na obrázek");
-    msgBox.setText(QString::number(round((event->localPos().x()-IMG_SIZE/2)/IMG_SIZE)+1) + " " + QString::number(round((event->localPos().y()-IMG_SIZE/2)/IMG_SIZE)+1));
+    msgBox.setText(QString::number(round((event->localPos().y()-IMG_SIZE/2)/IMG_SIZE)+1) + " " + QString::number(round((event->localPos().x()-IMG_SIZE/2)/IMG_SIZE)+1));
     msgBox.setStandardButtons(QMessageBox::Yes);
     msgBox.setDefaultButton(QMessageBox::No);
     msgBox.exec();

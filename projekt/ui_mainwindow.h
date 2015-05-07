@@ -37,7 +37,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(740, 510);
+        MainWindow->resize(1013, 731);
         MainWindow->setMaximumSize(QSize(1920, 1920));
         MainWindow->setContextMenuPolicy(Qt::DefaultContextMenu);
         MainWindow->setAnimated(true);
@@ -46,28 +46,36 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         graphicsView = new QGraphicsView(centralWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(10, 10, 420, 420));
+        graphicsView->setGeometry(QRect(30, 20, 420, 420));
         graphicsView->setBaseSize(QSize(0, 0));
+        graphicsView->setLineWidth(1);
         graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         graphicsView->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
+        QBrush brush(QColor(0, 0, 0, 255));
+        brush.setStyle(Qt::NoBrush);
+        graphicsView->setBackgroundBrush(brush);
         graphicsView->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         plainTextEdit = new QPlainTextEdit(centralWidget);
         plainTextEdit->setObjectName(QStringLiteral("plainTextEdit"));
-        plainTextEdit->setGeometry(QRect(450, 10, 280, 460));
+        plainTextEdit->setGeometry(QRect(630, 0, 280, 460));
         gw_newTile = new QGraphicsView(centralWidget);
         gw_newTile->setObjectName(QStringLiteral("gw_newTile"));
-        gw_newTile->setGeometry(QRect(10, 440, 44, 44));
+        gw_newTile->setGeometry(QRect(30, 580, 44, 44));
         gw_newTile->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         gw_newTile->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         l_players = new QLabel(centralWidget);
         l_players->setObjectName(QStringLiteral("l_players"));
         l_players->setGeometry(QRect(360, 450, 47, 13));
         MainWindow->setCentralWidget(centralWidget);
+        plainTextEdit->raise();
+        gw_newTile->raise();
+        l_players->raise();
+        graphicsView->raise();
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setEnabled(false);
-        menuBar->setGeometry(QRect(0, 0, 740, 20));
+        menuBar->setGeometry(QRect(0, 0, 1013, 20));
         MainWindow->setMenuBar(menuBar);
 
         retranslateUi(MainWindow);

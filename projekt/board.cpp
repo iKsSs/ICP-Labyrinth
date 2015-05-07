@@ -95,6 +95,32 @@ void Board::setBoard(unsigned int n){
         tiles.push_back(x);
     }
    }
+
+   this->setOutterFields(n);
+}
+
+void Board::setOutterFields(unsigned int n){
+    unsigned int i;
+    unsigned int count=0;    //pocet policek v jednom radku
+
+    switch(n){
+        case 11: count += 1;
+        case 9: count += 1;
+        case 7: count += 1;
+        case 5: count += 2; break;
+    default: count = 0;
+    }
+    count *= 4;     //mame 4 strany
+
+
+    for (i=0; i<count; ++i){
+        Tile* x = new TileOutter(0);
+        outter.push_back(x);
+    }
+}
+
+Tile* Board::getOutterField(unsigned int i){
+    return outter[i];
 }
 
 void Board::genNewTile(void){

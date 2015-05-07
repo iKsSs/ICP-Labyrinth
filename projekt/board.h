@@ -11,6 +11,7 @@
 class Board
 {
     QVector<Tile*> tiles;
+    QVector<Tile*> outter;
     QVector<Player> players;
     Tile* newTile;
 
@@ -22,6 +23,8 @@ public:
     int getNumPlayers();
     Player getPlayer(unsigned int);
     void setBoard(unsigned int);
+    void setOutterFields(unsigned int);
+    Tile* getOutterField(unsigned int);
     void insertNewTile(QPoint);
     void genNewTile(void);
     Tile* getNewTile(void); //vraci kamen mimo hraci plochu
