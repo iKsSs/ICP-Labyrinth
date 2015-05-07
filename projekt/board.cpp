@@ -120,6 +120,5 @@ Tile* Board::getTile(int i){
 }
 
 int Board::genRand(unsigned int Low, unsigned int High){
-    //for (int i =0; i<10000000;i++);
     return qrand() % ((High + 1) - Low) + Low;
 }

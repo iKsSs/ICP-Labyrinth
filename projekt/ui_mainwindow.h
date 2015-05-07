@@ -28,7 +28,6 @@ class Ui_MainWindow
 public:
     QWidget *centralWidget;
     QGraphicsView *graphicsView;
-    QPushButton *btn_rotate;
     QPushButton *btn_addPlayer;
     QPlainTextEdit *plainTextEdit;
     QGraphicsView *gw_newTile;
@@ -53,9 +52,6 @@ public:
         graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         graphicsView->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
         graphicsView->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
-        btn_rotate = new QPushButton(centralWidget);
-        btn_rotate->setObjectName(QStringLiteral("btn_rotate"));
-        btn_rotate->setGeometry(QRect(70, 440, 50, 23));
         btn_addPlayer = new QPushButton(centralWidget);
         btn_addPlayer->setObjectName(QStringLiteral("btn_addPlayer"));
         btn_addPlayer->setEnabled(true);
@@ -72,7 +68,7 @@ public:
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setEnabled(false);
-        menuBar->setGeometry(QRect(0, 0, 740, 21));
+        menuBar->setGeometry(QRect(0, 0, 740, 20));
         MainWindow->setMenuBar(menuBar);
 
         retranslateUi(MainWindow);
@@ -83,7 +79,6 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Labyrinth", 0));
-        btn_rotate->setText(QApplication::translate("MainWindow", "Rotate", 0));
         btn_addPlayer->setText(QApplication::translate("MainWindow", "Add player", 0));
     } // retranslateUi
 

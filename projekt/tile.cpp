@@ -1,17 +1,13 @@
 #include "tile.h"
 
 Tile::Tile(){
-    rotation = 0;
+    rotation = 1;
     move = 0;
 }
 
 Tile::Tile(int r){
     rotation = r;
     move = 0;
-}
-
-void Tile::rotate(){
-    rotation = (rotation+1)%4 + 1;
 }
 
 void Tile::setPosition(QPoint pos){
@@ -57,9 +53,22 @@ QVector<Player> Tile::getPlayers(){
     return players;
 }
 
-
 void TileStraight::rotate(){
-    rotation = (rotation+1)%2 + 1;
+    rotation++;
+    if(rotation%3 == 0){rotation = 1;}
+    genImage();
+}
+
+void TileCorner::rotate(){
+    rotation++;
+    if(rotation%5 == 0){rotation = 1;}
+    genImage();
+}
+
+void TileCross::rotate(){
+    rotation++;
+    if(rotation%5 == 0){rotation = 1;}
+    genImage();
 }
 
 unsigned int TileStraight::count = 0;
@@ -71,11 +80,7 @@ TileStraight::TileStraight(int r){
     rotation = r;
     move = 2;
 
-    switch(rotation){
-        case 1: image.load("images/S-1.png");break;
-        case 2: image.load("images/S-2.png");break;
-        default: image.load("images/C.png");
-    }
+    genImage();
 }
 
 TileCorner::TileCorner(int r){
@@ -83,6 +88,28 @@ TileCorner::TileCorner(int r){
     rotation = r;
     move = 2;
 
+    genImage();
+}
+
+TileCross::TileCross(int r){
+    TileCross::count++;
+    rotation = r;
+    move = 3;
+
+    genImage();
+}
+
+void TileStraight::genImage()
+{
+    switch(rotation){
+        case 1: image.load("images/S-1.png");break;
+        case 2: image.load("images/S-2.png");break;
+        default: image.load("images/C.png");
+    }
+}
+
+void TileCorner::genImage()
+{
     switch(rotation){
         case 1: image.load("images/L-1.png");break;
         case 2: image.load("images/L-2.png");break;
@@ -92,11 +119,8 @@ TileCorner::TileCorner(int r){
     }
 }
 
-TileCross::TileCross(int r){
-    TileCross::count++;
-    rotation = r;
-    move = 3;
-
+void TileCross::genImage()
+{
     switch(rotation){
         case 1: image.load("images/T-1.png");break;
         case 2: image.load("images/T-2.png");break;
