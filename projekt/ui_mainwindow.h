@@ -31,6 +31,7 @@ public:
     QPushButton *btn_rotate;
     QPushButton *btn_addPlayer;
     QPlainTextEdit *plainTextEdit;
+    QGraphicsView *gw_newTile;
     QMenuBar *menuBar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -54,7 +55,7 @@ public:
         graphicsView->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         btn_rotate = new QPushButton(centralWidget);
         btn_rotate->setObjectName(QStringLiteral("btn_rotate"));
-        btn_rotate->setGeometry(QRect(50, 440, 50, 23));
+        btn_rotate->setGeometry(QRect(70, 440, 50, 23));
         btn_addPlayer = new QPushButton(centralWidget);
         btn_addPlayer->setObjectName(QStringLiteral("btn_addPlayer"));
         btn_addPlayer->setEnabled(true);
@@ -62,6 +63,11 @@ public:
         plainTextEdit = new QPlainTextEdit(centralWidget);
         plainTextEdit->setObjectName(QStringLiteral("plainTextEdit"));
         plainTextEdit->setGeometry(QRect(450, 10, 280, 460));
+        gw_newTile = new QGraphicsView(centralWidget);
+        gw_newTile->setObjectName(QStringLiteral("gw_newTile"));
+        gw_newTile->setGeometry(QRect(10, 440, 44, 44));
+        gw_newTile->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        gw_newTile->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));

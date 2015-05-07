@@ -12,7 +12,7 @@ class Board
 {
     QVector<Tile*> tiles;
     QVector<Player> players;
-    Tile newTile;
+    Tile* newTile;
 
     //...
     QVector<Board> board;
@@ -20,6 +20,8 @@ public:
     void addPlayer(Player);
     void setBoard(unsigned int);
     void insertNewTile(QPoint);
+    void genNewTile(void);
+    Tile* getNewTile(void); //vraci kamen mimo hraci plochu
     void undo();
     Tile* getTile(QPoint);   //vraci kamen pro danou souradnici
     Tile* getTile(int);     //vraci kamen pro dany index

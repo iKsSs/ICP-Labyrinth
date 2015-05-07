@@ -60,7 +60,7 @@
    <widget class="QPushButton" name="btn_rotate">
     <property name="geometry">
      <rect>
-      <x>50</x>
+      <x>70</x>
       <y>440</y>
       <width>50</width>
       <height>23</height>
@@ -94,6 +94,22 @@
       <width>280</width>
       <height>460</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QGraphicsView" name="gw_newTile">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>440</y>
+      <width>44</width>
+      <height>44</height>
+     </rect>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
     </property>
    </widget>
   </widget>
