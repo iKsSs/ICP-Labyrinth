@@ -34,6 +34,10 @@ int Tile::getRotation(){
     return rotation;
 }
 
+void Tile::rotate() {
+
+}
+
 
 void Tile::addPlayer(Player play){
    players.push_back(play);
