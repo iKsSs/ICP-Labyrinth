@@ -24,12 +24,21 @@ MainWindow::MainWindow(QWidget *parent) :
     btn_addPlayer = new QPushButton("Add Player", this);
 
     l_addPlayers = new QLabel(this);
-    l_players = new QLabel(this);
+    l_players = new QLabel("Players:", this);
     l_sizeView = new QLabel("Choosen size: " + QString::number(this->size), this);
+
+    l_size = new QLabel("Choose size:", this);
 
     gw_board = new QGraphicsView(this);
     gw_newTile = new QGraphicsView(this);
     le_player = new QLineEdit(this);
+
+    btn_size_5 = new QPushButton("5", this);
+    btn_size_7 = new QPushButton("7", this);
+    btn_size_9 = new QPushButton("9", this);
+    btn_size_11 = new QPushButton("11", this);
+
+    btn_play = new QPushButton("Play!", this);
 
     board = new Board();
 
@@ -38,41 +47,28 @@ MainWindow::MainWindow(QWidget *parent) :
     gw_board->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     gw_newTile->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     gw_newTile->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
-    //this->menu();
-    this->game();
 }
 
 void MainWindow::menu(){
     this->hideGame();
 
-    btn_addPlayer->setGeometry(QRect(150, 50, 75, 23));      //tlacitko pridat hrace
-    resize(500, 500);                       //cele okno
-
     l_addPlayers->setGeometry(QRect(250, 25, 40, 80));
     l_sizeView->setGeometry(QRect(20, 100, 90, 20));
     le_player->setGeometry(QRect(150, 20, 80, 20));
 
-    QLabel* l_size = new QLabel("Choose size:", this);
     l_size->setGeometry(QRect(20, 20, 60, 20));
-
-    QLabel* l_players = new QLabel("Players:", this);
     l_players->setGeometry(QRect(250, 20, 60, 20));
 
-    QPushButton* btn_size_5 = new QPushButton("5", this);
     btn_size_5->setGeometry(QRect(40, 40, 20, 20));
-
-    QPushButton* btn_size_7 = new QPushButton("7", this);
     btn_size_7->setGeometry(QRect(60, 40, 20, 20));
-
-    QPushButton* btn_size_9 = new QPushButton("9", this);
     btn_size_9->setGeometry(QRect(80, 40, 20, 20));
-
-    QPushButton* btn_size_11 = new QPushButton("11", this);
     btn_size_11->setGeometry(QRect(100, 40, 20, 20));
 
-    QPushButton* btn_play = new QPushButton("Play!", this);
     btn_play->setGeometry(QRect(200, 140, 75, 40));
+
+    btn_addPlayer->setGeometry(QRect(150, 50, 75, 23));      //tlacitko pridat hrace
+    resize(500, 500);                       //cele okno
+
 
     //connections
     connect(btn_size_5, SIGNAL (released()), this, SLOT (handle_btn_size_5()));
@@ -80,13 +76,18 @@ void MainWindow::menu(){
     connect(btn_size_9, SIGNAL (released()), this, SLOT (handle_btn_size_9()));
     connect(btn_size_11, SIGNAL (released()), this, SLOT (handle_btn_size_11()));
     connect(btn_addPlayer, SIGNAL (released()), this, SLOT (handle_btn_addPlayer()));
+    connect(btn_play, SIGNAL (released()), this, SLOT (handle_btn_play()));
 }
 
 void MainWindow::hideMenu(){
     btn_addPlayer->hide();
-    l_addPlayers->hide();
     l_sizeView->hide();
     le_player->hide();
+    btn_size_5->hide();
+    btn_size_7->hide();
+    btn_size_9->hide();
+    btn_size_11->hide();
+    btn_play->hide();
 }
 
 void MainWindow::game(){
@@ -134,7 +135,6 @@ void MainWindow::game(){
     for (i=0; i < quantity; ++i){
         ui->plainTextEdit->appendPlainText(QString::number(tr_pom->getTreasure(i)->getCode()));
     }
-
 
     //ui->plainTextEdit->appendPlainText("\nCoor.  Rot.  Move");
 /* END DEBUG */
@@ -198,6 +198,7 @@ void MainWindow::game(){
     gw_board->setGeometry(QRect(10, 10, width, height));    //prizpusobeni okna hraci desky
     btn_rotate->setGeometry(QRect(60, height+20, 50, 23));      //tlacitko rotace
     l_players->setGeometry(QRect(240, height+15, 80, 60));
+    l_addPlayers->setGeometry(QRect(290, height+15, 80, 60));
     ui->plainTextEdit->setGeometry(QRect(width+20, 10, 250, height+25));    //debug okno
     gw_newTile->setGeometry(QRect(10, height+20, 44, 44));      //novy kamen mimo hraci desku
     resize(10+width+20+250, 10+height+25+40);                       //cele okno
@@ -215,7 +216,6 @@ void MainWindow::game(){
 void MainWindow::hideGame(){
 
     btn_rotate->hide();
-    l_players->hide();
     //ui->plainTextEdit->hide();
     gw_board->hide();
     gw_newTile->hide();
@@ -225,7 +225,6 @@ void MainWindow::hideGame(){
 void MainWindow::showGame(){
 
     btn_rotate->show();
-    l_players->show();
     //ui->plainTextEdit->show();
     gw_board->show();
     gw_newTile->show();
@@ -396,4 +395,10 @@ void MainWindow::drawSize(){
     str = "Choosen size: " + QString::number(this->size);
     l_sizeView->setText(str);
     l_sizeView->repaint();
+}
+
+void MainWindow::handle_btn_play()
+{
+    printf("PLAY");
+    this->game();
 }

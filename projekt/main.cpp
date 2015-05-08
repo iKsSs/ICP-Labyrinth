@@ -8,5 +8,10 @@ int main(int argc, char *argv[])
 
     w.show();
 
+
+    w.menu();
+
+   // w.game();
+
     return a.exec();
 }
