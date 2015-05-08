@@ -193,8 +193,7 @@ void Board::insertNewTile(QPoint point){
     unsigned int i, j;
     Tile* x;
     if(point.x() == this->size+1){
-        printf("SPODEK");
-        j = (point.x()-2)*this->size + 1;
+        j = this->size*this->size - (this->size+1-point.y());
         for(i=0; i < this->size; ++i){
             x = tiles[j];
             tiles[j] = newTile;
@@ -203,7 +202,15 @@ void Board::insertNewTile(QPoint point){
         }
     }
     if(point.x() == 0){
-        printf("VRCH");
+        j = point.y() - 1;
+        for(i=0; i < this->size; ++i){
+            x = tiles[j];
+            tiles[j] = newTile;
+            newTile = x;
+            j += this->size;
+        }
+    }
+    if(point.y() == this->size+1){
         j = point.x()*this->size - 1;
         for(i=0; i < this->size; ++i){
             x = tiles[j];
@@ -212,18 +219,7 @@ void Board::insertNewTile(QPoint point){
             j -= 1;
         }
     }
-    if(point.y() == this->size+1){
-        printf("VPRAVO");
-        j = (point.x()-2)*this->size + 1;
-        for(i=0; i < this->size; ++i){
-            x = tiles[j];
-            tiles[j] = newTile;
-            newTile = x;
-            j -= this->size;
-        }
-    }
     if(point.y() == 0){
-        printf("VLEVO");
         j = (point.x()-1)*this->size;
         for(i=0; i < this->size; ++i){
             x = tiles[j];

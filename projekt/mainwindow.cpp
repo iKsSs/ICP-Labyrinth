@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 const unsigned int IMG_SIZE = 44;
+const unsigned int E_SIZE = 50;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -67,8 +68,9 @@ void MainWindow::menu(){
     btn_play->setGeometry(QRect(200, 140, 75, 40));
 
     btn_addPlayer->setGeometry(QRect(150, 50, 75, 23));      //tlacitko pridat hrace
-    resize(500, 500);                       //cele okno
+    resize(500, 400);                       //cele okno
 
+    ui->plainTextEdit->setGeometry(QRect(20, 220, 400, 150));    //debug okno
 
     //connections
     connect(btn_size_5, SIGNAL (released()), this, SLOT (handle_btn_size_5()));
@@ -95,14 +97,8 @@ void MainWindow::game(){
     this->hideMenu();
     this->showGame();
 
-    //lokalni promenne
-    Tile * tile;
-    unsigned int i, j;
-    int x = 0, y = 0, k = 0, a, b;
-
-    //lokalni promenne
-    QGraphicsPixmapItem *pixmapItem;
-    QPixmap obr;
+   //lokalni promenne
+    unsigned int i;
 
     this->board->setBoard(this->size);   //vygenerovat kameny pro hraci desku
     this->board->setOutterFields(this->size);   //vygenerování policek pro vsunuti kamene
@@ -141,55 +137,7 @@ void MainWindow::game(){
 
     gw_board->setInteractive(true);
 
-    /* Generovani kamenu hraci desky */
-    for (i=0; i < this->size; ++i){
-        for (j=0; j < this->size; ++j){
-            //pozice moznych vstupu kamenu
-            if(((i==0 || i==(this->size-1)) && j%2==1) || ((j==0 || j==(this->size-1)) && i%2==1)){
-                tile = board->getOutterField(k);
-                k++;
-                obr = tile->getImage();
-                pixmapItem = scene->addPixmap(obr);
-                a=x;
-                b=y;
-                if(i==0){a=x+50;}
-                else if(i==(this->size-1)){a=x+50;b=y+100;}
-                if(j==0){b=y+50;}
-                else if(j==(this->size-1)){b=y+50;a=x+100;}
-                pixmapItem->setX(a);
-                pixmapItem->setY(b);
-            }
-            int souradnice = j+i*this->size;
-            tile = board->getTile(souradnice);    //odkaz na kamen
-            obr = tile->getImage();     //ziska obrazek
-
-/* DEBUG */
-//                int rot, mov;
-//                QPoint pos;
-//                pos = tile->getPosition();
-//                rot = tile->getRotation();
-//                mov = tile->getMove();
-
-//                ui->plainTextEdit->appendPlainText(QString::number(pos.x()+1));
-//                ui->plainTextEdit->insertPlainText("x");
-//                ui->plainTextEdit->insertPlainText(QString::number(pos.y()+1));
-//                ui->plainTextEdit->insertPlainText(" :    ");
-//                ui->plainTextEdit->insertPlainText(QString::number(rot));
-//                ui->plainTextEdit->insertPlainText("        ");
-//                ui->plainTextEdit->insertPlainText(QString::number(mov));
-/* END DEBUG */
-
-            pixmapItem = scene->addPixmap(obr); //prida obrazek do sceny a vrati odkaz na nej
-
-            pixmapItem->setX(x+50);
-            pixmapItem->setY(y+50);
-
-            x += IMG_SIZE; //posunuti v ose X
-        }
-        /* Odradkovani */
-        x = 0;
-        y += IMG_SIZE;  //posunuti v ose Y
-    }
+    this->genBoard();
 
     this->width = this->size*IMG_SIZE+100;    //sirka sceny
     this->height = this->size*IMG_SIZE+100;   //vyska sceny
@@ -253,67 +201,65 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void QGraphicsView::mousePressEvent(QMouseEvent *event)
+void MainWindow::mousePressEvent(QMouseEvent *event)
 {
     event->accept();
 
     if (event->button() == Qt::LeftButton){
-        //tady se zpracuje udalost
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Kliknul jsi na obrázek");
+        if(event->localPos().x() < 10 || event->localPos().y() < 10){return;}
+        unsigned int posX = event->localPos().x()-10;
+        unsigned int posY = event->localPos().y()-10;
 
-        unsigned int posX = event->localPos().x();
-        unsigned int posY = event->localPos().y();
+        unsigned int width = this->gw_board->width();
+        unsigned int height = this->gw_board->height();
 
-        if ((posX > this->width() - 50 || posX < 50) || (posY > this->height() - 50 || posY < 50))
-        {
-            //mimo hraci plochu
+        if((posX > 0 && posX < width) && (posY > 0 && posY < height)){
 
-            if ((posX > this->width() - IMG_SIZE || posX < IMG_SIZE) || (posY > this->height() - IMG_SIZE || posY < IMG_SIZE))
+            if ((posX > width - 50 || posX < 50) || (posY > height - 50 || posY < 50))
             {
+                //mimo hraci plochu
 
-                //mimo hraci plochu na urovni nasouvacich policek
-
-                if ((posX <= IMG_SIZE && ((posY <= IMG_SIZE) || (posY >= this->height() - IMG_SIZE))))
-                    return;     //kraje
-                if ((posY <= IMG_SIZE && ((posX <= IMG_SIZE) || (posX >= this->width() - IMG_SIZE))))
-                    return;     //kraje
-                if ((posX >= this->width() - IMG_SIZE && ((posY <= IMG_SIZE) || (posY >= this->height() - IMG_SIZE))))
-                    return;     //kraje
-                if ((posY >= this->height() - IMG_SIZE && ((posX <= IMG_SIZE) || (posX >= this->width() - IMG_SIZE))))
-                    return;     //kraje
-
-                unsigned int row = (posY) / IMG_SIZE;
-                unsigned int col = (posX) / IMG_SIZE;
-
-                if (row % 2 == 0 && col % 2 == 0)
+                if ((posX > width - IMG_SIZE || posX < IMG_SIZE) || (posY > height - IMG_SIZE || posY < IMG_SIZE))
                 {
-                    msgBox.setText(QString::number(row) + " " + QString::number(col));
 
-                    msgBox.setStandardButtons(QMessageBox::Yes);
-                    msgBox.setDefaultButton(QMessageBox::No);
-                    msgBox.exec();
-                   // board->insertNewTile(QPoint(row, col));
+                    //mimo hraci plochu na urovni nasouvacich policek
+
+                    if ((posX <= E_SIZE && ((posY <= E_SIZE) || (posY >= height - E_SIZE))))
+                        return;     //kraje
+                    if ((posY <= E_SIZE && ((posX <= E_SIZE) || (posX >= width - E_SIZE))))
+                        return;     //kraje
+                    if ((posX >= width - E_SIZE && ((posY <= E_SIZE) || (posY >= height - E_SIZE))))
+                        return;     //kraje
+                    if ((posY >= height - E_SIZE && ((posX <= E_SIZE) || (posX >= width - E_SIZE))))
+                        return;     //kraje
+
+                    if (posX > 50){ posX -= 2*(E_SIZE-IMG_SIZE); }
+                    if (posY > 50){ posY -= 2*(E_SIZE-IMG_SIZE); }
+                    unsigned int row = (posY) / IMG_SIZE;
+                    unsigned int col = (posX) / IMG_SIZE;
+
+                    if (row % 2 == 0 && col % 2 == 0)
+                    {
+                        board->insertNewTile(QPoint(row, col));
+                        this->genBoard();
+                        this->drawNewTile();
+                    }
                 }
             }
-        }
-        else
-        {
-            unsigned int row = (posY - 50) / IMG_SIZE;
-            unsigned int col = (posX - 50) / IMG_SIZE;
+            else
+            {
+                unsigned int row = (posY - 50) / IMG_SIZE;
+                unsigned int col = (posX - 50) / IMG_SIZE;
 
-            msgBox.setText(QString::number(row) + " " + QString::number(col));
-
-            msgBox.setStandardButtons(QMessageBox::Yes);
-            msgBox.setDefaultButton(QMessageBox::No);
-            msgBox.exec();
+                col = row;  //aby se nezobrazoval warning :D
+            }
         }
     }
 }
 
 void MainWindow::handle_btn_rotate()
 {
-    ui->plainTextEdit->appendPlainText("Obsluha Rotate");
+//    ui->plainTextEdit->appendPlainText("Obsluha Rotate");
 
     this->board->getNewTile()->rotate();   //otoceni
 
@@ -399,6 +345,69 @@ void MainWindow::drawSize(){
 
 void MainWindow::handle_btn_play()
 {
-    printf("PLAY");
-    this->game();
+    if(board->getNumPlayers() >= 2){
+        this->game();
+    }
+    else{
+        ui->plainTextEdit->appendPlainText("Restriction: 2-4 players needed for game");
+    }
+}
+
+void MainWindow::genBoard(){
+
+    Tile * tile;
+    unsigned int i, j;
+    int x = 0, y = 0, k = 0, a, b;
+    QPixmap obr;
+    QGraphicsPixmapItem *pixmapItem;
+
+    /* Generovani kamenu hraci desky */
+    for (i=0; i < this->size; ++i){
+        for (j=0; j < this->size; ++j){
+            //pozice moznych vstupu kamenu
+            if(((i==0 || i==(this->size-1)) && j%2==1) || ((j==0 || j==(this->size-1)) && i%2==1)){
+                tile = board->getOutterField(k);
+                k++;
+                obr = tile->getImage();
+                pixmapItem = scene->addPixmap(obr);
+                a=x;
+                b=y;
+                if(i==0){a=x+50;}
+                else if(i==(this->size-1)){a=x+50;b=y+100;}
+                if(j==0){b=y+50;}
+                else if(j==(this->size-1)){b=y+50;a=x+100;}
+                pixmapItem->setX(a);
+                pixmapItem->setY(b);
+            }
+            int souradnice = j+i*this->size;
+            tile = board->getTile(souradnice);    //odkaz na kamen
+            obr = tile->getImage();     //ziska obrazek
+
+/* DEBUG */
+//                int rot, mov;
+//                QPoint pos;
+//                pos = tile->getPosition();
+//                rot = tile->getRotation();
+//                mov = tile->getMove();
+
+//                ui->plainTextEdit->appendPlainText(QString::number(pos.x()+1));
+//                ui->plainTextEdit->insertPlainText("x");
+//                ui->plainTextEdit->insertPlainText(QString::number(pos.y()+1));
+//                ui->plainTextEdit->insertPlainText(" :    ");
+//                ui->plainTextEdit->insertPlainText(QString::number(rot));
+//                ui->plainTextEdit->insertPlainText("        ");
+//                ui->plainTextEdit->insertPlainText(QString::number(mov));
+/* END DEBUG */
+
+            pixmapItem = scene->addPixmap(obr); //prida obrazek do sceny a vrati odkaz na nej
+
+            pixmapItem->setX(x+50);
+            pixmapItem->setY(y+50);
+
+            x += IMG_SIZE; //posunuti v ose X
+        }
+        /* Odradkovani */
+        x = 0;
+        y += IMG_SIZE;  //posunuti v ose Y
+    }
 }
