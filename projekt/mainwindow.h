@@ -33,15 +33,32 @@ public:
 
     ~MainWindow();
 
+    void menu();
+    void hideMenu();
+
+    void game();
+    void hideGame();
+    void showGame();
+
     void drawNewTile();
     void drawPlayers();
+    void drawSize();
 
 private slots:
     void handle_btn_rotate();
+
+    void handle_btn_size_5();
+    void handle_btn_size_7();
+    void handle_btn_size_9();
+    void handle_btn_size_11();
     void handle_btn_addPlayer();
 
 private:
     Ui::MainWindow *ui;
+
+    unsigned int endMenu;
+    unsigned int size;
+    unsigned int numPlayers;
 
     int width, height;
 
@@ -52,6 +69,10 @@ private:
 
     QPushButton *btn_rotate;
     QPushButton *btn_addPlayer;
+
+    QLabel* l_addPlayers;
+    QLabel* l_players;
+    QLabel* l_sizeView;
 };
 
 #endif // MAINWINDOW_H

@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-const unsigned int SIZE = 7;
 const unsigned int IMG_SIZE = 44;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -13,17 +12,77 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
 
+    this->size = 7;
+    this->numPlayers = 0;
+
     //GUI objekty
     scene = new QGraphicsScene();
     newTile = new QGraphicsScene();
+    l_players = new QLabel(this);
     btn_rotate = new QPushButton("Rotate", this);
     btn_addPlayer = new QPushButton("Add Player", this);
+
+    this->menu();
+    //this->game();
+}
+
+void MainWindow::menu(){
+    this->hideGame();
+
+    btn_addPlayer->setGeometry(QRect(150, 20, 75, 23));      //tlacitko pridat hrace
+    resize(500, 500);                       //cele okno
+
+    l_addPlayers = new QLabel(this);
+    l_addPlayers->setGeometry(QRect(250, 25, 40, 80));
+
+    QLabel* l_size = new QLabel("Choose size:", this);
+    l_size->setGeometry(QRect(20, 20, 60, 20));
+
+    QLabel* l_players = new QLabel("Players:", this);
+    l_players->setGeometry(QRect(250, 20, 60, 20));
+
+    l_sizeView = new QLabel("Choosen size: " + QString::number(this->size), this);
+    l_sizeView->setGeometry(QRect(20, 100, 90, 20));
+
+    QPushButton* btn_size_5 = new QPushButton("5", this);
+    btn_size_5->setGeometry(QRect(40, 40, 25, 20));
+
+    QPushButton* btn_size_7 = new QPushButton("7", this);
+    btn_size_7->setGeometry(QRect(60, 40, 25, 20));
+
+    QPushButton* btn_size_9 = new QPushButton("9", this);
+    btn_size_9->setGeometry(QRect(80, 40, 25, 20));
+
+    QPushButton* btn_size_11 = new QPushButton("11", this);
+    btn_size_11->setGeometry(QRect(100, 40, 25, 20));
+
+    QPushButton* btn_play = new QPushButton("Play!", this);
+    btn_play->setGeometry(QRect(200, 140, 75, 40));
+
+    //this->hideMenu();
+
+    //connections
+    connect(btn_size_5, SIGNAL (released()), this, SLOT (handle_btn_size_5()));
+    connect(btn_size_7, SIGNAL (released()), this, SLOT (handle_btn_size_7()));
+    connect(btn_size_9, SIGNAL (released()), this, SLOT (handle_btn_size_9()));
+    connect(btn_size_11, SIGNAL (released()), this, SLOT (handle_btn_size_11()));
+    connect(btn_addPlayer, SIGNAL (released()), this, SLOT (handle_btn_addPlayer()));
+}
+
+void MainWindow::hideMenu(){
+    btn_addPlayer->hide();
+    l_addPlayers->hide();
+}
+
+void MainWindow::game(){
+
+    this->showGame();
 
     //lokalni promenne
     QGraphicsPixmapItem *pixmapItem;
     QPixmap obr;
 
-    this->board.setBoard(SIZE);   //vygenerovat kameny pro hraci desku
+    this->board.setBoard(this->size);   //vygenerovat kameny pro hraci desku
 
 /* DEBUG */
     ui->plainTextEdit->appendPlainText("Generated tiles");
@@ -39,16 +98,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //lokalni promenne
     Tile * tile;
-    int i, j;
+    unsigned int i, j;
     int x = 0, y = 0, k = 0, a, b;
 
     ui->graphicsView->setInteractive(true);
 
     /* Generovani kamenu hraci desky */
-    for (i=0; i < SIZE; ++i){
-        for (j=0; j < SIZE; ++j){
+    for (i=0; i < this->size; ++i){
+        for (j=0; j < this->size; ++j){
             //pozice moznych vstupu kamenu
-            if(((i==0 || i==(SIZE-1)) && j%2==1) || ((j==0 || j==(SIZE-1)) && i%2==1)){
+            if(((i==0 || i==(this->size-1)) && j%2==1) || ((j==0 || j==(this->size-1)) && i%2==1)){
                 tile = board.getOutterField(k);
                 k++;
                 obr = tile->getImage();
@@ -56,13 +115,13 @@ MainWindow::MainWindow(QWidget *parent) :
                 a=x;
                 b=y;
                 if(i==0){a=x+50;}
-                else if(i==(SIZE-1)){a=x+50;b=y+100;}
+                else if(i==(this->size-1)){a=x+50;b=y+100;}
                 if(j==0){b=y+50;}
-                else if(j==(SIZE-1)){b=y+50;a=x+100;}
+                else if(j==(this->size-1)){b=y+50;a=x+100;}
                 pixmapItem->setX(a);
                 pixmapItem->setY(b);
             }
-            int souradnice = j+i*SIZE;
+            int souradnice = j+i*this->size;
             tile = board.getTile(souradnice);    //odkaz na kamen
             obr = tile->getImage();     //ziska obrazek
 
@@ -94,14 +153,13 @@ MainWindow::MainWindow(QWidget *parent) :
         y += IMG_SIZE;  //posunuti v ose Y
     }
 
-    this->width = SIZE*IMG_SIZE+100;    //sirka sceny
-    this->height = SIZE*IMG_SIZE+100;   //vyska sceny
+    this->width = this->size*IMG_SIZE+100;    //sirka sceny
+    this->height = this->size*IMG_SIZE+100;   //vyska sceny
 
     //nastaveni zobrazovani objektu
     ui->graphicsView->setGeometry(QRect(10, 10, width, height));    //prizpusobeni okna hraci desky
     btn_rotate->setGeometry(QRect(60, height+20, 50, 23));      //tlacitko rotace
-    btn_addPlayer->setGeometry(QRect(150, height+20, 75, 23));      //tlacitko pridat hrace
-    ui->l_players->setGeometry(QRect(240, height+15, 80, 60));
+    l_players->setGeometry(QRect(240, height+15, 80, 60));
     ui->plainTextEdit->setGeometry(QRect(width+20, 10, 250, height+25));    //debug okno
     ui->gw_newTile->setGeometry(QRect(10, height+20, 44, 44));      //novy kamen mimo hraci desku
     resize(10+width+20+250, 10+height+25+40);                       //cele okno
@@ -114,7 +172,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //connections
     connect(btn_rotate, SIGNAL (released()), this, SLOT (handle_btn_rotate()));
-    connect(btn_addPlayer, SIGNAL (released()), this, SLOT (handle_btn_addPlayer()));
+}
+
+void MainWindow::hideGame(){
+    ui->graphicsView->hide();
+    btn_rotate->hide();
+    l_players->hide();
+    ui->plainTextEdit->hide();
+    ui->gw_newTile->hide();
+}
+
+void MainWindow::showGame(){
+    ui->graphicsView->show();
+    btn_rotate->show();
+    l_players->show();
+    ui->plainTextEdit->show();
+    ui->gw_newTile->show();
 }
 
 MainWindow::~MainWindow()
@@ -177,6 +250,37 @@ void MainWindow::drawPlayers()
         str += board.getPlayer(i).getName() + "\n";
     }
     str.remove(str.length()-1,1);   //odstraneni posledniho znaku
-    ui->l_players->setText(str);
-    ui->l_players->repaint();
+    l_addPlayers->setText(str);
+    l_addPlayers->repaint();
+}
+
+void MainWindow::handle_btn_size_5()
+{
+    this->size = 5;
+    this->drawSize();
+}
+
+void MainWindow::handle_btn_size_7()
+{
+    this->size = 7;
+    this->drawSize();
+}
+
+void MainWindow::handle_btn_size_9()
+{
+    this->size = 9;
+    this->drawSize();
+}
+
+void MainWindow::handle_btn_size_11()
+{
+    this->size = 11;
+    this->drawSize();
+}
+
+void MainWindow::drawSize(){
+    QString str;
+    str = "Choosen size: " + QString::number(this->size);
+    l_sizeView->setText(str);
+    l_sizeView->repaint();
 }
