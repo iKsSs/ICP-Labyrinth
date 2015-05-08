@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QGraphicsScene>
+#include <QGraphicsView>
 #include <QApplication>
 #include <QLabel>
 #include <QPicture>
@@ -76,6 +77,7 @@ private:
     QLabel* l_sizeView;
 
     QGraphicsView* gw_board;
+    QGraphicsView* gw_newTile;
     QLineEdit* le_player;
 };
 

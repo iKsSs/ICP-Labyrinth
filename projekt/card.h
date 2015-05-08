@@ -23,6 +23,8 @@ class TreasurePack{
     Treasure* getTreasure();
     Treasure* getTreasure(unsigned int);
     void shuffle();
+
+    ~TreasurePack();
 };
 
 #endif // CARD
