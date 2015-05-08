@@ -73,6 +73,8 @@ private:
     QLabel* l_addPlayers;
     QLabel* l_players;
     QLabel* l_sizeView;
+
+    QGraphicsView* gw_board;
 };
 
 #endif // MAINWINDOW_H

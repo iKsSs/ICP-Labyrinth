@@ -16,14 +16,19 @@ MainWindow::MainWindow(QWidget *parent) :
     this->numPlayers = 0;
 
     //GUI objekty
-    scene = new QGraphicsScene();
+    scene = new QGraphicsScene(this);
     newTile = new QGraphicsScene();
     l_players = new QLabel(this);
     btn_rotate = new QPushButton("Rotate", this);
     btn_addPlayer = new QPushButton("Add Player", this);
+    gw_board = new QGraphicsView(this);
 
-    this->menu();
-    //this->game();
+    //zadne scroll bary
+    gw_board->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    gw_board->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+   //this->menu();
+   this->game();
 }
 
 void MainWindow::menu(){
@@ -101,7 +106,7 @@ void MainWindow::game(){
     unsigned int i, j;
     int x = 0, y = 0, k = 0, a, b;
 
-    ui->graphicsView->setInteractive(true);
+    gw_board->setInteractive(true);
 
     /* Generovani kamenu hraci desky */
     for (i=0; i < this->size; ++i){
@@ -157,7 +162,9 @@ void MainWindow::game(){
     this->height = this->size*IMG_SIZE+100;   //vyska sceny
 
     //nastaveni zobrazovani objektu
-    ui->graphicsView->setGeometry(QRect(10, 10, width, height));    //prizpusobeni okna hraci desky
+   // ui->graphicsView->setGeometry(QRect(10, 10, width, height));    //prizpusobeni okna hraci desky
+    gw_board->setGeometry(QRect(10, 10, width, height));    //prizpusobeni okna hraci desky
+
     btn_rotate->setGeometry(QRect(60, height+20, 50, 23));      //tlacitko rotace
     l_players->setGeometry(QRect(240, height+15, 80, 60));
     ui->plainTextEdit->setGeometry(QRect(width+20, 10, 250, height+25));    //debug okno
@@ -168,14 +175,14 @@ void MainWindow::game(){
 
     this->drawNewTile();        //zobrazi novy kamen
 
-    ui->graphicsView->setScene(scene);  //zobrazi board
+    gw_board->setScene(scene);  //zobrazi board
 
     //connections
     connect(btn_rotate, SIGNAL (released()), this, SLOT (handle_btn_rotate()));
 }
 
 void MainWindow::hideGame(){
-    ui->graphicsView->hide();
+    gw_board->hide();
     btn_rotate->hide();
     l_players->hide();
     ui->plainTextEdit->hide();
@@ -183,7 +190,7 @@ void MainWindow::hideGame(){
 }
 
 void MainWindow::showGame(){
-    ui->graphicsView->show();
+    gw_board->show();
     btn_rotate->show();
     l_players->show();
     ui->plainTextEdit->show();
