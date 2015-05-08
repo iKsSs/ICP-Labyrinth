@@ -54,6 +54,7 @@ private slots:
     void handle_btn_size_9();
     void handle_btn_size_11();
     void handle_btn_addPlayer();
+    void handle_btn_play();
 
 private:
     Ui::MainWindow *ui;
@@ -78,7 +79,15 @@ private:
 
     QGraphicsView* gw_board;
     QGraphicsView* gw_newTile;
+
+    QLabel* l_size;
     QLineEdit* le_player;
+
+    QPushButton* btn_size_5;
+    QPushButton* btn_size_7;
+    QPushButton* btn_size_9;
+    QPushButton* btn_size_11;
+    QPushButton* btn_play;
 };
 
 #endif // MAINWINDOW_H
