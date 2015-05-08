@@ -41,3 +41,10 @@ void TreasurePack::shuffle(){
         this->treasures[random] = pom;
     }
 }
+
+TreasurePack::~TreasurePack(){
+    unsigned int i;
+    for (i=0; i < this->quantity; ++i){
+        delete this->treasures[i];
+    }
+}

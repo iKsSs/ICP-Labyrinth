@@ -13,7 +13,6 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
@@ -27,14 +26,13 @@ class Ui_MainWindow
 public:
     QWidget *centralWidget;
     QPlainTextEdit *plainTextEdit;
-    QGraphicsView *gw_newTile;
     QMenuBar *menuBar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(636, 520);
+        MainWindow->resize(936, 502);
         MainWindow->setMaximumSize(QSize(1920, 1920));
         MainWindow->setContextMenuPolicy(Qt::DefaultContextMenu);
         MainWindow->setAnimated(true);
@@ -43,17 +41,12 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         plainTextEdit = new QPlainTextEdit(centralWidget);
         plainTextEdit->setObjectName(QStringLiteral("plainTextEdit"));
-        plainTextEdit->setGeometry(QRect(330, 10, 280, 460));
-        gw_newTile = new QGraphicsView(centralWidget);
-        gw_newTile->setObjectName(QStringLiteral("gw_newTile"));
-        gw_newTile->setGeometry(QRect(120, 420, 44, 44));
-        gw_newTile->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        gw_newTile->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        plainTextEdit->setGeometry(QRect(630, 0, 280, 460));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setEnabled(false);
-        menuBar->setGeometry(QRect(0, 0, 636, 20));
+        menuBar->setGeometry(QRect(0, 0, 936, 20));
         MainWindow->setMenuBar(menuBar);
 
         retranslateUi(MainWindow);

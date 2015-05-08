@@ -18,17 +18,26 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //GUI objekty
     scene = new QGraphicsScene(this);
-    newTile = new QGraphicsScene();
-    l_players = new QLabel(this);
+    newTile = new QGraphicsScene(this);
+
     btn_rotate = new QPushButton("Rotate", this);
     btn_addPlayer = new QPushButton("Add Player", this);
+
+    l_addPlayers = new QLabel(this);
+    l_players = new QLabel(this);
+    l_sizeView = new QLabel("Choosen size: " + QString::number(this->size), this);
+
     gw_board = new QGraphicsView(this);
+    gw_newTile = new QGraphicsView(this);
+    le_player = new QLineEdit(this);
 
     board = new Board();
 
     //zadne scroll bary
     gw_board->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     gw_board->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    gw_newTile->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    gw_newTile->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     //this->menu();
     this->game();
@@ -40,10 +49,8 @@ void MainWindow::menu(){
     btn_addPlayer->setGeometry(QRect(150, 50, 75, 23));      //tlacitko pridat hrace
     resize(500, 500);                       //cele okno
 
-    l_addPlayers = new QLabel(this);
     l_addPlayers->setGeometry(QRect(250, 25, 40, 80));
-
-    le_player = new QLineEdit(this);
+    l_sizeView->setGeometry(QRect(20, 100, 90, 20));
     le_player->setGeometry(QRect(150, 20, 80, 20));
 
     QLabel* l_size = new QLabel("Choose size:", this);
@@ -51,9 +58,6 @@ void MainWindow::menu(){
 
     QLabel* l_players = new QLabel("Players:", this);
     l_players->setGeometry(QRect(250, 20, 60, 20));
-
-    l_sizeView = new QLabel("Choosen size: " + QString::number(this->size), this);
-    l_sizeView->setGeometry(QRect(20, 100, 90, 20));
 
     QPushButton* btn_size_5 = new QPushButton("5", this);
     btn_size_5->setGeometry(QRect(40, 40, 25, 20));
@@ -194,7 +198,7 @@ void MainWindow::game(){
     btn_rotate->setGeometry(QRect(60, height+20, 50, 23));      //tlacitko rotace
     l_players->setGeometry(QRect(240, height+15, 80, 60));
     ui->plainTextEdit->setGeometry(QRect(width+20, 10, 250, height+25));    //debug okno
-    ui->gw_newTile->setGeometry(QRect(10, height+20, 44, 44));      //novy kamen mimo hraci desku
+    gw_newTile->setGeometry(QRect(10, height+20, 44, 44));      //novy kamen mimo hraci desku
     resize(10+width+20+250, 10+height+25+40);                       //cele okno
 
     board->setNewTile();          //vygenerovani noveho kamenu mimo desku
@@ -212,7 +216,7 @@ void MainWindow::hideGame(){
     btn_rotate->hide();
     l_players->hide();
     //ui->plainTextEdit->hide();
-    ui->gw_newTile->hide();
+    gw_newTile->hide();
 }
 
 void MainWindow::showGame(){
@@ -220,16 +224,29 @@ void MainWindow::showGame(){
     btn_rotate->show();
     l_players->show();
     //ui->plainTextEdit->show();
-    ui->gw_newTile->show();
+    gw_newTile->show();
 }
 
 MainWindow::~MainWindow()
 {
+    delete this->board->getCards();
+    delete this->board->getTreasures();
+
     delete scene;
     delete newTile;
+
     delete btn_rotate;
     delete btn_addPlayer;
+
+    delete l_addPlayers;
+    delete l_players;
+    delete l_sizeView;
+
+    delete gw_board;
+    delete gw_newTile;
+    delete le_player;
     delete board;
+
     delete ui;
 }
 
@@ -328,7 +345,7 @@ void MainWindow::handle_btn_addPlayer()
 void MainWindow::drawNewTile()
 {
     this->newTile->addPixmap(board->getNewTile()->getImage());        //prida obrazek do okenka
-    ui->gw_newTile->setScene(newTile);  //zobrazi novy kamen
+    gw_newTile->setScene(newTile);  //zobrazi novy kamen
 }
 
 void MainWindow::drawPlayers()
