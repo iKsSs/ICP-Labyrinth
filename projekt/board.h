@@ -20,6 +20,7 @@ class Board
     //...
     QVector<Board> board;
 public:
+    Board(): newTile{NULL} {}
     void setBoard(unsigned int);
     void setOutterFields(unsigned int);
     void setNewTile(void);

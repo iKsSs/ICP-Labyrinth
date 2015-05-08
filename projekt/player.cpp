@@ -60,6 +60,11 @@ void Player::run()
 
 }
 
+/*bool Player::isContained(QString name){
+    unsigned int i, n;
+    n = this->
+}*/
+
 bool Player::operator ==(const Player& p) const
 {
     if (this->name == p.name)

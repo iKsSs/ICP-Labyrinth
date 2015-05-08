@@ -27,18 +27,21 @@ MainWindow::MainWindow(QWidget *parent) :
     gw_board->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     gw_board->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-   //this->menu();
-   this->game();
+    this->menu();
+    //this->game();
 }
 
 void MainWindow::menu(){
     this->hideGame();
 
-    btn_addPlayer->setGeometry(QRect(150, 20, 75, 23));      //tlacitko pridat hrace
+    btn_addPlayer->setGeometry(QRect(150, 50, 75, 23));      //tlacitko pridat hrace
     resize(500, 500);                       //cele okno
 
     l_addPlayers = new QLabel(this);
     l_addPlayers->setGeometry(QRect(250, 25, 40, 80));
+
+    le_player = new QLineEdit(this);
+    le_player->setGeometry(QRect(150, 20, 80, 20));
 
     QLabel* l_size = new QLabel("Choose size:", this);
     l_size->setGeometry(QRect(20, 20, 60, 20));
@@ -185,7 +188,7 @@ void MainWindow::hideGame(){
     gw_board->hide();
     btn_rotate->hide();
     l_players->hide();
-    ui->plainTextEdit->hide();
+    //ui->plainTextEdit->hide();
     ui->gw_newTile->hide();
 }
 
@@ -193,7 +196,7 @@ void MainWindow::showGame(){
     gw_board->show();
     btn_rotate->show();
     l_players->show();
-    ui->plainTextEdit->show();
+    //ui->plainTextEdit->show();
     ui->gw_newTile->show();
 }
 
@@ -210,10 +213,16 @@ void QGraphicsView::mousePressEvent(QMouseEvent *event)
 {
     event->accept();
 
+    unsigned int posX = event->localPos().x();
+    unsigned int posY = event->localPos().y();
+
+    unsigned int row = (posY - 50) / IMG_SIZE;
+    unsigned int col = (posX - 50) / IMG_SIZE;
+
     //tady se zpracuje udalost
     QMessageBox msgBox;
     msgBox.setWindowTitle("Kliknul jsi na obrázek");
-    msgBox.setText(QString::number(round(((event->localPos().y()-50)-IMG_SIZE/2)/IMG_SIZE)+1) + " " + QString::number(round((event->localPos().x()-IMG_SIZE/2)/IMG_SIZE)));
+    msgBox.setText(QString::number(row) + " " + QString::number(col));
     msgBox.setStandardButtons(QMessageBox::Yes);
     msgBox.setDefaultButton(QMessageBox::No);
     msgBox.exec();
@@ -231,12 +240,25 @@ void MainWindow::handle_btn_rotate()
 
 void MainWindow::handle_btn_addPlayer()
 {
+    unsigned int i;
     if (this->board.getNumPlayers() >= 4){
        ui->plainTextEdit->appendPlainText("MAX 4 Players");
     }
     else{
-        Player player = Player();
-        this->board.addPlayer(player);
+        if (le_player->text().isEmpty()){
+            this->board.addPlayer(Player());
+        }
+        else{
+            for (i=0; i < board.getNumPlayers(); ++i ){
+                if(!(le_player->text().compare(board.getPlayer(i).getName()))){
+                    ui->plainTextEdit->appendPlainText("Name already exists");
+                    break;
+                }
+            }
+            if(i == board.getNumPlayers()){
+                this->board.addPlayer(Player(le_player->text()));
+            }
+        }
 
         //zavola prekresleni
         this->drawPlayers();
