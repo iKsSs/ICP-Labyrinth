@@ -60,21 +60,19 @@ void MainWindow::menu(){
     l_players->setGeometry(QRect(250, 20, 60, 20));
 
     QPushButton* btn_size_5 = new QPushButton("5", this);
-    btn_size_5->setGeometry(QRect(40, 40, 25, 20));
+    btn_size_5->setGeometry(QRect(40, 40, 20, 20));
 
     QPushButton* btn_size_7 = new QPushButton("7", this);
-    btn_size_7->setGeometry(QRect(60, 40, 25, 20));
+    btn_size_7->setGeometry(QRect(60, 40, 20, 20));
 
     QPushButton* btn_size_9 = new QPushButton("9", this);
-    btn_size_9->setGeometry(QRect(80, 40, 25, 20));
+    btn_size_9->setGeometry(QRect(80, 40, 20, 20));
 
     QPushButton* btn_size_11 = new QPushButton("11", this);
-    btn_size_11->setGeometry(QRect(100, 40, 25, 20));
+    btn_size_11->setGeometry(QRect(100, 40, 20, 20));
 
     QPushButton* btn_play = new QPushButton("Play!", this);
     btn_play->setGeometry(QRect(200, 140, 75, 40));
-
-    //this->hideMenu();
 
     //connections
     connect(btn_size_5, SIGNAL (released()), this, SLOT (handle_btn_size_5()));
@@ -87,16 +85,19 @@ void MainWindow::menu(){
 void MainWindow::hideMenu(){
     btn_addPlayer->hide();
     l_addPlayers->hide();
+    l_sizeView->hide();
+    le_player->hide();
 }
 
 void MainWindow::game(){
+
+    this->hideMenu();
+    this->showGame();
 
     //lokalni promenne
     Tile * tile;
     unsigned int i, j;
     int x = 0, y = 0, k = 0, a, b;
-
-    this->showGame();
 
     //lokalni promenne
     QGraphicsPixmapItem *pixmapItem;
@@ -107,8 +108,8 @@ void MainWindow::game(){
     this->board->setTreasures(this->quantity);   //vygenerovat poklady
     this->board->setCards(this->quantity);   //vygenerovat karty
 
-    this->board->getCards()->shuffle();
-    this->board->getTreasures()->shuffle();
+    this->board->getCards()->shuffle();     //zamicha karty
+    this->board->getTreasures()->shuffle(); //zamicha poklady
 
 /* DEBUG */
     ui->plainTextEdit->appendPlainText("Generated tiles");
@@ -212,18 +213,21 @@ void MainWindow::game(){
 }
 
 void MainWindow::hideGame(){
-    gw_board->hide();
+
     btn_rotate->hide();
     l_players->hide();
     //ui->plainTextEdit->hide();
+    gw_board->hide();
     gw_newTile->hide();
+
 }
 
 void MainWindow::showGame(){
-    gw_board->show();
+
     btn_rotate->show();
     l_players->show();
     //ui->plainTextEdit->show();
+    gw_board->show();
     gw_newTile->show();
 }
 
@@ -254,54 +258,57 @@ void QGraphicsView::mousePressEvent(QMouseEvent *event)
 {
     event->accept();
 
-    //tady se zpracuje udalost
-    QMessageBox msgBox;
-    msgBox.setWindowTitle("Kliknul jsi na obrázek");
+    if (event->button() == Qt::LeftButton){
+        //tady se zpracuje udalost
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Kliknul jsi na obrázek");
 
-    unsigned int posX = event->localPos().x();
-    unsigned int posY = event->localPos().y();
+        unsigned int posX = event->localPos().x();
+        unsigned int posY = event->localPos().y();
 
-    if ((posX > this->width() - 50 || posX < 50) || (posY > this->height() - 50 || posY < 50))
-    {
-        //mimo hraci plochu
-
-        if ((posX > this->width() - IMG_SIZE || posX < IMG_SIZE) || (posY > this->height() - IMG_SIZE || posY < IMG_SIZE))
+        if ((posX > this->width() - 50 || posX < 50) || (posY > this->height() - 50 || posY < 50))
         {
+            //mimo hraci plochu
 
-            //mimo hraci plochu na urovni nasouvacich policek
-
-            if ((posX <= IMG_SIZE && ((posY <= IMG_SIZE) || (posY >= this->height() - IMG_SIZE))))
-                return;     //kraje
-            if ((posY <= IMG_SIZE && ((posX <= IMG_SIZE) || (posX >= this->width() - IMG_SIZE))))
-                return;     //kraje
-            if ((posX >= this->width() - IMG_SIZE && ((posY <= IMG_SIZE) || (posY >= this->height() - IMG_SIZE))))
-                return;     //kraje
-            if ((posY >= this->height() - IMG_SIZE && ((posX <= IMG_SIZE) || (posX >= this->width() - IMG_SIZE))))
-                return;     //kraje
-
-            unsigned int row = (posY) / IMG_SIZE;
-            unsigned int col = (posX) / IMG_SIZE;
-
-            if (row % 2 == 0 && col % 2 == 0)
+            if ((posX > this->width() - IMG_SIZE || posX < IMG_SIZE) || (posY > this->height() - IMG_SIZE || posY < IMG_SIZE))
             {
-                msgBox.setText(QString::number(row) + " " + QString::number(col));
 
-                msgBox.setStandardButtons(QMessageBox::Yes);
-                msgBox.setDefaultButton(QMessageBox::No);
-                msgBox.exec();
+                //mimo hraci plochu na urovni nasouvacich policek
+
+                if ((posX <= IMG_SIZE && ((posY <= IMG_SIZE) || (posY >= this->height() - IMG_SIZE))))
+                    return;     //kraje
+                if ((posY <= IMG_SIZE && ((posX <= IMG_SIZE) || (posX >= this->width() - IMG_SIZE))))
+                    return;     //kraje
+                if ((posX >= this->width() - IMG_SIZE && ((posY <= IMG_SIZE) || (posY >= this->height() - IMG_SIZE))))
+                    return;     //kraje
+                if ((posY >= this->height() - IMG_SIZE && ((posX <= IMG_SIZE) || (posX >= this->width() - IMG_SIZE))))
+                    return;     //kraje
+
+                unsigned int row = (posY) / IMG_SIZE;
+                unsigned int col = (posX) / IMG_SIZE;
+
+                if (row % 2 == 0 && col % 2 == 0)
+                {
+                    msgBox.setText(QString::number(row) + " " + QString::number(col));
+
+                    msgBox.setStandardButtons(QMessageBox::Yes);
+                    msgBox.setDefaultButton(QMessageBox::No);
+                    msgBox.exec();
+                   // board->insertNewTile(QPoint(row, col));
+                }
             }
         }
-    }
-    else
-    {
-        unsigned int row = (posY - 50) / IMG_SIZE + 1;
-        unsigned int col = (posX - 50) / IMG_SIZE + 1;
+        else
+        {
+            unsigned int row = (posY - 50) / IMG_SIZE;
+            unsigned int col = (posX - 50) / IMG_SIZE;
 
-        msgBox.setText(QString::number(row) + " " + QString::number(col));
+            msgBox.setText(QString::number(row) + " " + QString::number(col));
 
-        msgBox.setStandardButtons(QMessageBox::Yes);
-        msgBox.setDefaultButton(QMessageBox::No);
-        msgBox.exec();
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.setDefaultButton(QMessageBox::No);
+            msgBox.exec();
+        }
     }
 }
 

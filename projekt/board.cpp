@@ -1,6 +1,6 @@
 #include "board.h"
 
-Board::Board(): newTile{NULL}, treasures{NULL}, cards{NULL} {}
+Board::Board(): newTile{NULL}, treasures{NULL}, cards{NULL}, size{0} {}
 
 void Board::setBoard(unsigned int n){
     unsigned int High = 3;
@@ -9,6 +9,8 @@ void Board::setBoard(unsigned int n){
     unsigned int i, j, size;
     unsigned int StraightMax, CornerMax, CrossMax;
     unsigned int lackOfCorner=4, lackOfCross=4;
+
+    this->size = n;
 
     size = n*n;
 
@@ -185,4 +187,49 @@ Player Board::getPlayer(unsigned int i){
 
 int Board::genRand(unsigned int Low, unsigned int High){
     return qrand() % ((High + 1) - Low) + Low;
+}
+
+void Board::insertNewTile(QPoint point){
+    unsigned int i, j;
+    Tile* x;
+    if(point.x() == this->size+1){
+        printf("SPODEK");
+        j = (point.x()-2)*this->size + 1;
+        for(i=0; i < this->size; ++i){
+            x = tiles[j];
+            tiles[j] = newTile;
+            newTile = x;
+            j -= this->size;
+        }
+    }
+    if(point.x() == 0){
+        printf("VRCH");
+        j = point.x()*this->size - 1;
+        for(i=0; i < this->size; ++i){
+            x = tiles[j];
+            tiles[j] = newTile;
+            newTile = x;
+            j -= 1;
+        }
+    }
+    if(point.y() == this->size+1){
+        printf("VPRAVO");
+        j = (point.x()-2)*this->size + 1;
+        for(i=0; i < this->size; ++i){
+            x = tiles[j];
+            tiles[j] = newTile;
+            newTile = x;
+            j -= this->size;
+        }
+    }
+    if(point.y() == 0){
+        printf("VLEVO");
+        j = (point.x()-1)*this->size;
+        for(i=0; i < this->size; ++i){
+            x = tiles[j];
+            tiles[j] = newTile;
+            newTile = x;
+            j += 1;
+        }
+    }
 }
