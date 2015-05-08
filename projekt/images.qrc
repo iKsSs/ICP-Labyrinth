@@ -12,5 +12,9 @@
         <file>images/L-3.png</file>
         <file>images/L-4.png</file>
         <file>images/C.png</file>
+        <file>images/P-1.png</file>
+        <file>images/P-2.png</file>
+        <file>images/P-3.png</file>
+        <file>images/P-4.png</file>
     </qresource>
 </RCC>

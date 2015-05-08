@@ -269,8 +269,9 @@ void MainWindow::handle_btn_rotate()
 
 void MainWindow::handle_btn_addPlayer()
 {
-    unsigned int i;
-    if (this->board->getNumPlayers() >= 4){
+    unsigned int i, n;
+    n = this->board->getNumPlayers();
+    if (n >= 4){
        ui->plainTextEdit->appendPlainText("MAX 4 Players");
     }
     else{
@@ -278,7 +279,7 @@ void MainWindow::handle_btn_addPlayer()
             this->board->addPlayer(Player());
         }
         else{
-            for (i=0; i < board->getNumPlayers(); ++i ){
+            for (i=0; i < n; ++i ){
                 if(!(le_player->text().compare(board->getPlayer(i).getName()))){
                     ui->plainTextEdit->appendPlainText("Name already exists");
                     break;
@@ -346,6 +347,8 @@ void MainWindow::drawSize(){
 void MainWindow::handle_btn_play()
 {
     if(board->getNumPlayers() >= 2){
+        this->board->setSize(this->size);
+        this->board->setPlayerPos();
         this->game();
     }
     else{
@@ -356,7 +359,7 @@ void MainWindow::handle_btn_play()
 void MainWindow::genBoard(){
 
     Tile * tile;
-    unsigned int i, j;
+    unsigned int i, j, l;
     int x = 0, y = 0, k = 0, a, b;
     QPixmap obr;
     QGraphicsPixmapItem *pixmapItem;
@@ -403,6 +406,21 @@ void MainWindow::genBoard(){
 
             pixmapItem->setX(x+50);
             pixmapItem->setY(y+50);
+
+            //vykresleni gracu
+            if (i == 0 || j == 0 || i == this->size-1 || j == this->size-1){    //podminka pro zrychleni
+                for (l=0; l < board->getNumPlayers(); ++l){
+                    Player* p;
+                    p = &board->getPlayer(l);
+                    if (i == p->getPosition().x() && j == p->getPosition().y()){
+                        obr = p->getImage();
+                        pixmapItem = scene->addPixmap(obr); //prida obrazek do sceny a vrati odkaz na nej
+
+                        pixmapItem->setX(x+50);
+                        pixmapItem->setY(y+50);
+                    }
+                }
+            }
 
             x += IMG_SIZE; //posunuti v ose X
         }

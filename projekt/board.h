@@ -30,6 +30,9 @@ public:
     void setTreasures(unsigned int);
     void setCards(unsigned int);
     void setNewTile(void);
+    void setSize(unsigned int);
+
+    void setPlayerPos();
 
     //Tile* getTile(QPoint);   //vraci kamen pro danou souradnici
     Tile* getTile(int);     //vraci kamen pro dany index
