@@ -5,8 +5,6 @@
 #include <QGraphicsView>
 #include <QApplication>
 #include <QLabel>
-#include <QPicture>
-#include <QPainter>
 #include <QPoint>
 #include <QVector>
 #include <QPixmap>
@@ -45,6 +43,8 @@ public:
     void drawNewTile();
     void drawPlayers();
     void drawSize();
+
+    void genBoard();
 
 private slots:
     void handle_btn_rotate();
@@ -88,6 +88,9 @@ private:
     QPushButton* btn_size_9;
     QPushButton* btn_size_11;
     QPushButton* btn_play;
+
+protected:
+    void mousePressEvent(QMouseEvent *event);
 };
 
 #endif // MAINWINDOW_H
