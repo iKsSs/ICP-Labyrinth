@@ -1,12 +1,14 @@
-#include "player.h"
-#include "tile.h"
+#ifndef BOARD
+#define BOARD
+
 #include <QPoint>
 #include <QVector>
 #include <QTime>
 #include <qglobal.h>
 
-#ifndef BOARD
-#define BOARD
+#include "player.h"
+#include "tile.h"
+#include "card.h"
 
 class Board
 {
@@ -18,19 +20,23 @@ class Board
     //...
     QVector<Board> board;
 public:
-    void addPlayer(Player);
-    void removePlayer(Player);
-    int getNumPlayers();
-    Player getPlayer(unsigned int);
     void setBoard(unsigned int);
     void setOutterFields(unsigned int);
-    Tile* getOutterField(unsigned int);
-    void insertNewTile(QPoint);
-    void genNewTile(void);
-    Tile* getNewTile(void); //vraci kamen mimo hraci plochu
-    void undo();
-    Tile* getTile(QPoint);   //vraci kamen pro danou souradnici
+    void setNewTile(void);
+
+    //Tile* getTile(QPoint);   //vraci kamen pro danou souradnici
     Tile* getTile(int);     //vraci kamen pro dany index
+    Tile* getOutterField(unsigned int);
+    Tile* getNewTile(void); //vraci kamen mimo hraci plochu
+
+    void addPlayer(Player);
+    void removePlayer(Player);
+    unsigned int getNumPlayers();
+    Player getPlayer(unsigned int);
+
+    void insertNewTile(QPoint);
+    void undo();
+
     int genRand(unsigned int, unsigned int);
 protected:
     //Tile generateTile();
