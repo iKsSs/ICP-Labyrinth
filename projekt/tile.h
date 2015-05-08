@@ -16,25 +16,28 @@ protected:
 
 public:
   Tile();
-  Tile(int);    //kontruktor s rotaci
+  Tile(unsigned int);    //kontruktor s rotaci
   virtual void rotate()=0;
+  virtual void genImage()=0;
+
   void setPosition(QPoint);
+  void setRotation(unsigned int);
+
   QPoint getPosition();
   QPixmap getImage();
-  void setRotation(int);
-  int getRotation();
-  int getMove();   //treba zmenit navvratovy typ
+  unsigned int getMove();   //treba zmenit navvratovy typ
+  unsigned int getRotation();
+
   void addPlayer(Player);
   void removePlayer(Player);
   QVector<Player> getPlayers();
-  void genImage();
 };
 
 class TileStraight: public Tile{
 
 public:
     static unsigned int count;
-  TileStraight(int);    //kontruktor s rotaci
+  TileStraight(unsigned int);    //kontruktor s rotaci
   TileStraight(){TileStraight::count++;}
   virtual void rotate();
   void genImage();
@@ -44,29 +47,29 @@ class TileCorner: public Tile{
 
 public:
     static unsigned int count;
-  TileCorner(int);    //kontruktor s rotaci
+  TileCorner(unsigned int);    //kontruktor s rotaci
   TileCorner(){TileCorner::count++;}
   virtual void rotate();
-  void genImage();
+  virtual void genImage();
 };
 
 class TileCross: public Tile{
 
 public:
     static unsigned int count;
-  TileCross(int);    //kontruktor s rotaci
+  TileCross(unsigned int);    //kontruktor s rotaci
   TileCross(){TileCross::count++;}
   virtual void rotate();
-  void genImage();
+  virtual void genImage();
 };
 
 class TileOutter: public Tile{
 
 public:
-  TileOutter(int);    //kontruktor s rotaci
+  TileOutter(unsigned int);    //kontruktor s rotaci
   TileOutter(){}
   virtual void rotate(){}
-  void genImage();
+  virtual void genImage();
 };
 
 #endif // TILE

@@ -16,12 +16,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     tile.cpp \
     player.cpp \
-    board.cpp
+    board.cpp \
+    card.cpp
 
 HEADERS  += mainwindow.h \
     tile.h \
     player.h \
-    board.h
+    board.h \
+    card.h
 
 FORMS    += mainwindow.ui
 

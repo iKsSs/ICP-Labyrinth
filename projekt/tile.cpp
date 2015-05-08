@@ -5,7 +5,7 @@ Tile::Tile(){
     move = 0;
 }
 
-Tile::Tile(int r){
+Tile::Tile(unsigned int r){
     rotation = r;
     move = 0;
 }
@@ -14,110 +14,110 @@ void Tile::setPosition(QPoint pos){
     this->position = pos;
 }
 
-QPoint Tile::getPosition(){
-    return position;
-}
-
-QPixmap Tile::getImage(){
-    return image;
-}
-
-int Tile::getMove(){
-    return move;
-}
-
-void Tile::setRotation(int r){
+void Tile::setRotation(unsigned int r){
     this->rotation = r;
 }
 
-int Tile::getRotation(){
-    return rotation;
+QPoint Tile::getPosition(){
+    return this->position;
+}
+
+QPixmap Tile::getImage(){
+    return this->image;
+}
+
+unsigned int Tile::getMove(){
+    return this->move;
+}
+
+unsigned int Tile::getRotation(){
+    return this->rotation;
+}
+
+TileStraight::TileStraight(unsigned int r){
+    TileStraight::count++;
+    this->rotation = r;
+    this->move = 2;
+
+    this->genImage();
+}
+
+TileCorner::TileCorner(unsigned int r){
+    TileCorner::count++;
+    this->rotation = r;
+    this->move = 2;
+
+    this->genImage();
+}
+
+TileCross::TileCross(unsigned int r){
+    TileCross::count++;
+    this->rotation = r;
+    this->move = 3;
+
+    this->genImage();
 }
 
 void TileStraight::rotate(){
-    rotation++;
-    if(rotation%3 == 0){rotation = 1;}
+    this->rotation++;
+    if(this->rotation%3 == 0){this->rotation = 1;}
     genImage();
 }
 
 void TileCorner::rotate(){
-    rotation++;
-    if(rotation%5 == 0){rotation = 1;}
+    this->rotation++;
+    if(this->rotation%5 == 0){this->rotation = 1;}
     genImage();
 }
 
 void TileCross::rotate(){
-    rotation++;
-    if(rotation%5 == 0){rotation = 1;}
-    genImage();
-}
-
-unsigned int TileStraight::count = 0;
-unsigned int TileCorner::count = 0;
-unsigned int TileCross::count = 0;
-
-TileStraight::TileStraight(int r){
-    TileStraight::count++;
-    rotation = r;
-    move = 2;
-
-    genImage();
-}
-
-TileCorner::TileCorner(int r){
-    TileCorner::count++;
-    rotation = r;
-    move = 2;
-
-    genImage();
-}
-
-TileCross::TileCross(int r){
-    TileCross::count++;
-    rotation = r;
-    move = 3;
-
+    this->rotation++;
+    if(this->rotation%5 == 0){this->rotation = 1;}
     genImage();
 }
 
 void TileStraight::genImage()
 {
-    switch(rotation){
-        case 1: image.load("images/S-1.png");break;
-        case 2: image.load("images/S-2.png");break;
-        default: image.load("images/C.png");
+    switch(this->rotation){
+        case 1: this->image.load("images/S-1.png");break;
+        case 2: this->image.load("images/S-2.png");break;
+        default: this->image.load("images/C.png");
     }
 }
 
 void TileCorner::genImage()
 {
-    switch(rotation){
-        case 1: image.load("images/L-1.png");break;
-        case 2: image.load("images/L-2.png");break;
-        case 3: image.load("images/L-3.png");break;
-        case 4: image.load("images/L-4.png");break;
-        default: image.load("images/C.png");
+    switch(this->rotation){
+        case 1: this->image.load("images/L-1.png");break;
+        case 2: this->image.load("images/L-2.png");break;
+        case 3: this->image.load("images/L-3.png");break;
+        case 4: this->image.load("images/L-4.png");break;
+        default: this->image.load("images/C.png");
     }
 }
 
 void TileCross::genImage()
 {
-    switch(rotation){
-        case 1: image.load("images/T-1.png");break;
-        case 2: image.load("images/T-2.png");break;
-        case 3: image.load("images/T-3.png");break;
-        case 4: image.load("images/T-4.png");break;
-        default: image.load("images/C.png");
+    switch(this->rotation){
+        case 1: this->image.load("images/T-1.png");break;
+        case 2: this->image.load("images/T-2.png");break;
+        case 3: this->image.load("images/T-3.png");break;
+        case 4: this->image.load("images/T-4.png");break;
+        default: this->image.load("images/C.png");
     }
 }
 
-TileOutter::TileOutter(int r){
-    rotation = r;
+TileOutter::TileOutter(unsigned int r){
+    this->rotation = r;
 
-    genImage();
+    this->genImage();
 }
 
 void TileOutter::genImage()
 {
-   image.load("images/E.png");
+   this->image.load("images/E.png");
 }
+
+unsigned int TileStraight::count = 0;
+unsigned int TileCorner::count = 0;
+unsigned int TileCross::count = 0;

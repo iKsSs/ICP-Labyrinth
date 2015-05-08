@@ -8,11 +8,12 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    //qsrand(qrand()); //pro testovani
-    qsrand(QTime::currentTime().msec());    //random
+    qsrand(qrand()); //pro testovani
+    //qsrand(QTime::currentTime().msec());    //random
 
     ui->setupUi(this);
 
+    //GUI objekty
     scene = new QGraphicsScene();
     newTile = new QGraphicsScene();
     btn_rotate = new QPushButton("Rotate", this);
@@ -22,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QGraphicsPixmapItem *pixmapItem;
     QPixmap obr;
 
-    board.setBoard(SIZE);   //vygenerovat kameny pro hraci desku
+    this->board.setBoard(SIZE);   //vygenerovat kameny pro hraci desku
 
 /* DEBUG */
     ui->plainTextEdit->appendPlainText("Generated tiles");
@@ -46,7 +47,8 @@ MainWindow::MainWindow(QWidget *parent) :
     /* Generovani kamenu hraci desky */
     for (i=0; i < SIZE; ++i){
         for (j=0; j < SIZE; ++j){
-            if(((i==0 || i==(SIZE-1)) && j%2==1) || ((j==0 || j==(SIZE-1)) && i%2==1)){ //pozice moznych vstupu kamenu
+            //pozice moznych vstupu kamenu
+            if(((i==0 || i==(SIZE-1)) && j%2==1) || ((j==0 || j==(SIZE-1)) && i%2==1)){
                 tile = board.getOutterField(k);
                 k++;
                 obr = tile->getImage();
@@ -104,7 +106,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->gw_newTile->setGeometry(QRect(10, height+20, 44, 44));      //novy kamen mimo hraci desku
     resize(10+width+20+250, 10+height+25+40);                       //cele okno
 
-    board.genNewTile();          //vygenerovani noveho kamenu mimo desku
+    board.setNewTile();          //vygenerovani noveho kamenu mimo desku
 
     this->drawNewTile();        //zobrazi novy kamen
 
@@ -131,7 +133,7 @@ void QGraphicsView::mousePressEvent(QMouseEvent *event)
     //tady se zpracuje udalost
     QMessageBox msgBox;
     msgBox.setWindowTitle("Kliknul jsi na obrázek");
-    msgBox.setText(QString::number(round((event->localPos().y()-IMG_SIZE/2)/IMG_SIZE)+1) + " " + QString::number(round((event->localPos().x()-IMG_SIZE/2)/IMG_SIZE)+1));
+    msgBox.setText(QString::number(round(((event->localPos().y()-50)-IMG_SIZE/2)/IMG_SIZE)+1) + " " + QString::number(round((event->localPos().x()-IMG_SIZE/2)/IMG_SIZE)));
     msgBox.setStandardButtons(QMessageBox::Yes);
     msgBox.setDefaultButton(QMessageBox::No);
     msgBox.exec();
@@ -141,7 +143,7 @@ void MainWindow::handle_btn_rotate()
 {
     ui->plainTextEdit->appendPlainText("Obsluha Rotate");
 
-    board.getNewTile()->rotate();   //otoceni
+    this->board.getNewTile()->rotate();   //otoceni
 
     //zavola prekresleni
     this->drawNewTile();
@@ -149,12 +151,12 @@ void MainWindow::handle_btn_rotate()
 
 void MainWindow::handle_btn_addPlayer()
 {
-    if (board.getNumPlayers() >= 4){
+    if (this->board.getNumPlayers() >= 4){
        ui->plainTextEdit->appendPlainText("MAX 4 Players");
     }
     else{
         Player player = Player();
-        board.addPlayer(player);
+        this->board.addPlayer(player);
 
         //zavola prekresleni
         this->drawPlayers();
@@ -163,15 +165,15 @@ void MainWindow::handle_btn_addPlayer()
 
 void MainWindow::drawNewTile()
 {
-    newTile->addPixmap(board.getNewTile()->getImage());        //prida obrazek do okenka
+    this->newTile->addPixmap(board.getNewTile()->getImage());        //prida obrazek do okenka
     ui->gw_newTile->setScene(newTile);  //zobrazi novy kamen
 }
 
 void MainWindow::drawPlayers()
 {
     QString str;
-    int n = board.getNumPlayers();
-    for (int i=0; i<n; ++i){
+    unsigned int i, n = board.getNumPlayers();
+    for (i=0; i<n; ++i){
         str += board.getPlayer(i).getName() + "\n";
     }
     str.remove(str.length()-1,1);   //odstraneni posledniho znaku

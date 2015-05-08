@@ -26,7 +26,7 @@ void Board::setBoard(unsigned int n){
             case 3:
                 ++CrossMax; break;
         default:
-            ++StraightMax;
+            ;
         }
     }
 
@@ -92,10 +92,10 @@ void Board::setBoard(unsigned int n){
         }
         x->setPosition(QPoint(i,j));
 
-        tiles.push_back(x);
+        this->tiles.push_back(x);
     }
    }
-
+    //vygenerování policek pro vsunuti kamene
    this->setOutterFields(n);
 }
 
@@ -115,16 +115,12 @@ void Board::setOutterFields(unsigned int n){
 
     for (i=0; i<count; ++i){
         Tile* x = new TileOutter(0);
-        outter.push_back(x);
+        this->outter.push_back(x);
     }
 }
 
-Tile* Board::getOutterField(unsigned int i){
-    return outter[i];
-}
-
-void Board::genNewTile(void){
-    int choice = this->genRand(1, 3);
+void Board::setNewTile(void){
+    unsigned int choice = this->genRand(1, 3);
     switch(choice){
         case 1:
             this->newTile = new TileStraight(1); break;
@@ -137,36 +133,40 @@ void Board::genNewTile(void){
     }
 }
 
+Tile* Board::getTile(int i){
+    return this->tiles[i];
+}
+
+Tile* Board::getOutterField(unsigned int i){
+    return this->outter[i];
+}
+
 Tile* Board::getNewTile(void){
     return this->newTile;
 }
 
-Tile* Board::getTile(int i){
-    return tiles[i];
-}
-
-int Board::genRand(unsigned int Low, unsigned int High){
-    return qrand() % ((High + 1) - Low) + Low;
-}
-
 void Board::addPlayer(Player play){
-   players.push_back(play);
+   this->players.push_back(play);
 }
 
 void Board::removePlayer(Player play){
-    int n = players.size();
+    int n = this->players.size();
     for(int i = 0; i < n; ++i){
-        if (players[i] == play){
-            players.remove(i);
+        if (this->players[i] == play){
+            this->players.remove(i);
             break;
         }
     }
 }
 
-int Board::getNumPlayers(){
-    return players.size();
+unsigned int Board::getNumPlayers(){
+    return this->players.size();
 }
 
 Player Board::getPlayer(unsigned int i){
-    return players[i];
+    return this->players[i];
+}
+
+int Board::genRand(unsigned int Low, unsigned int High){
+    return qrand() % ((High + 1) - Low) + Low;
 }

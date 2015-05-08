@@ -1,8 +1,8 @@
-#include <QPoint>
-#include <QString>
-
 #ifndef PLAYER
 #define PLAYER
+
+#include <QPoint>
+#include <QString>
 
 class Player
 {
@@ -17,11 +17,14 @@ public:
 
     void setPosition(QPoint);
     QPoint getPosition();
-    void run();
     void setName(QString);
+
     QString getName();
     unsigned int getPoints();
+
     void addPoints(unsigned int);
+
+    void run();
 
     bool operator == (const Player&) const;
 
