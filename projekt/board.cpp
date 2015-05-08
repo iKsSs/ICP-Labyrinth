@@ -1,5 +1,7 @@
 #include "board.h"
 
+Board::Board(): newTile{NULL}, treasures{NULL}, cards{NULL} {}
+
 void Board::setBoard(unsigned int n){
     unsigned int High = 3;
     unsigned int Low = 1;
@@ -95,8 +97,6 @@ void Board::setBoard(unsigned int n){
         this->tiles.push_back(x);
     }
    }
-    //vygenerování policek pro vsunuti kamene
-   this->setOutterFields(n);
 }
 
 void Board::setOutterFields(unsigned int n){
@@ -117,6 +117,14 @@ void Board::setOutterFields(unsigned int n){
         Tile* x = new TileOutter(0);
         this->outter.push_back(x);
     }
+}
+
+void Board::setTreasures(unsigned int n){
+    this->treasures = new TreasurePack(n);
+}
+
+void Board::setCards(unsigned int n){
+    this->cards = new TreasurePack(n);
 }
 
 void Board::setNewTile(void){
@@ -143,6 +151,14 @@ Tile* Board::getOutterField(unsigned int i){
 
 Tile* Board::getNewTile(void){
     return this->newTile;
+}
+
+TreasurePack* Board::getTreasures(){
+    return this->treasures;
+}
+
+TreasurePack* Board::getCards(){
+    return this->cards;
 }
 
 void Board::addPlayer(Player play){

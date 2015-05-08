@@ -57,13 +57,13 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    unsigned int endMenu;
+    unsigned int quantity;
     unsigned int size;
     unsigned int numPlayers;
 
-    int width, height;
+    unsigned int width, height;
 
-    Board board;
+    Board *board;
 
     QGraphicsScene *scene;
     QGraphicsScene *newTile;

@@ -17,18 +17,25 @@ class Board
     QVector<Player> players;
     Tile* newTile;
 
+    TreasurePack *treasures;
+    TreasurePack *cards;
+
     //...
     QVector<Board> board;
 public:
-    Board(): newTile{NULL} {}
+    Board();
     void setBoard(unsigned int);
     void setOutterFields(unsigned int);
+    void setTreasures(unsigned int);
+    void setCards(unsigned int);
     void setNewTile(void);
 
     //Tile* getTile(QPoint);   //vraci kamen pro danou souradnici
     Tile* getTile(int);     //vraci kamen pro dany index
     Tile* getOutterField(unsigned int);
     Tile* getNewTile(void); //vraci kamen mimo hraci plochu
+    TreasurePack* getTreasures();
+    TreasurePack* getCards();
 
     void addPlayer(Player);
     void removePlayer(Player);

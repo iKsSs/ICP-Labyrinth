@@ -4,40 +4,25 @@
 #include <QVector>
 #include <QImage>
 
-class CardPack{
-
-  public:
-    CardPack();
-    CardPack(unsigned int);
-    void setPack(unsigned int);
-};
-
 class Treasure{
     unsigned int code;
     QImage image;
   public:
-    Treasure(){this->code=0;}
+    Treasure();
     Treasure(unsigned int);
-
+    unsigned int getCode();
 };
 
 class TreasurePack{
     unsigned int quantity;
-    QVector<Treasure> treasures;
+    QVector<Treasure*> treasures;
   public:
     TreasurePack(){this->quantity=0;}
     TreasurePack(unsigned int);
     void setTreasurePack();
-    Treasure getTreasure();
+    Treasure* getTreasure();
+    Treasure* getTreasure(unsigned int);
     void shuffle();
-};
-
-class Card{
-
-  public:
-    Card();
-    Card(unsigned int);
-    void setCard(unsigned int);
 };
 
 #endif // CARD
