@@ -21,7 +21,6 @@ Player::Player(QString name, QPoint position)
 {
     this->name = name;
     this->points = 0;
-    this->position.setX(0);
     this->position = position;
 }
 
@@ -38,6 +37,26 @@ QPoint Player::getPosition()
 void Player::setName(QString name)
 {
     this->name = name;
+}
+
+void Player::setImage(){
+    unsigned int sw;
+    if(this->position.x() == 0 && this->position.y() == 0){ sw = 3; }
+    else if(this->position.x() == 0 && this->position.y() != 0){ sw = 2; }
+    else if(this->position.x() != 0 && this->position.y() == 0){ sw = 1; }
+    else { sw = 4; }
+
+    switch(sw){
+        case 1: image.load("images/P-1.png"); break;
+        case 2: image.load("images/P-2.png"); break;
+        case 3: image.load("images/P-3.png"); break;
+        case 4: image.load("images/P-4.png"); break;
+    default: image.load("images/C.png");
+    }
+}
+
+QPixmap Player::getImage(){
+    return this->image;
 }
 
 QString Player::getName()
@@ -59,11 +78,6 @@ void Player::run()
 {
 
 }
-
-/*bool Player::isContained(QString name){
-    unsigned int i, n;
-    n = this->
-}*/
 
 bool Player::operator ==(const Player& p) const
 {

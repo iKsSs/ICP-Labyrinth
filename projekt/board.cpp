@@ -143,6 +143,10 @@ void Board::setNewTile(void){
     }
 }
 
+void Board::setSize(unsigned int size){
+    this->size = size;
+}
+
 Tile* Board::getTile(int i){
     return this->tiles[i];
 }
@@ -183,6 +187,19 @@ unsigned int Board::getNumPlayers(){
 
 Player Board::getPlayer(unsigned int i){
     return this->players[i];
+}
+
+void Board::setPlayerPos(){
+    unsigned int i, n = this->players.size();
+    for (i=0; i < n; ++i){
+        switch(i){
+            case 0: this->players[i].setPosition(QPoint(this->size-1,0)); break;
+            case 1: this->players[i].setPosition(QPoint(0,this->size-1)); break;
+            case 2: this->players[i].setPosition(QPoint(0,0)); break;
+            case 3: this->players[i].setPosition(QPoint(this->size-1,this->size-1)); break;
+        }
+        this->players[i].setImage();
+    }
 }
 
 int Board::genRand(unsigned int Low, unsigned int High){

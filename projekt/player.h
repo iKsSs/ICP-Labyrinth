@@ -3,11 +3,14 @@
 
 #include <QPoint>
 #include <QString>
+#include <QImage>
+#include <QPixmap>
 
 class Player
 {
     QPoint position;
     QString name;
+    QPixmap image;
     unsigned int points;
     //QVector<Card> cards;
 public:
@@ -18,7 +21,9 @@ public:
     void setPosition(QPoint);
     QPoint getPosition();
     void setName(QString);
+    void setImage();
 
+    QPixmap getImage();
     QString getName();
     unsigned int getPoints();
 
