@@ -15,7 +15,6 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QHeaderView>
-#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPlainTextEdit>
@@ -30,7 +29,6 @@ public:
     QGraphicsView *graphicsView;
     QPlainTextEdit *plainTextEdit;
     QGraphicsView *gw_newTile;
-    QLabel *l_players;
     QMenuBar *menuBar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -64,13 +62,9 @@ public:
         gw_newTile->setGeometry(QRect(30, 580, 44, 44));
         gw_newTile->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         gw_newTile->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        l_players = new QLabel(centralWidget);
-        l_players->setObjectName(QStringLiteral("l_players"));
-        l_players->setGeometry(QRect(360, 450, 47, 13));
         MainWindow->setCentralWidget(centralWidget);
         plainTextEdit->raise();
         gw_newTile->raise();
-        l_players->raise();
         graphicsView->raise();
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -86,7 +80,6 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Labyrinth", 0));
-        l_players->setText(QString());
     } // retranslateUi
 
 };
