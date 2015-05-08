@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->size = 7;
     this->numPlayers = 0;
+    this->quantity = 12;
 
     //GUI objekty
     scene = new QGraphicsScene(this);
@@ -23,12 +24,14 @@ MainWindow::MainWindow(QWidget *parent) :
     btn_addPlayer = new QPushButton("Add Player", this);
     gw_board = new QGraphicsView(this);
 
+    board = new Board();
+
     //zadne scroll bary
     gw_board->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     gw_board->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    this->menu();
-    //this->game();
+    //this->menu();
+    this->game();
 }
 
 void MainWindow::menu(){
@@ -84,13 +87,24 @@ void MainWindow::hideMenu(){
 
 void MainWindow::game(){
 
+    //lokalni promenne
+    Tile * tile;
+    unsigned int i, j;
+    int x = 0, y = 0, k = 0, a, b;
+
     this->showGame();
 
     //lokalni promenne
     QGraphicsPixmapItem *pixmapItem;
     QPixmap obr;
 
-    this->board.setBoard(this->size);   //vygenerovat kameny pro hraci desku
+    this->board->setBoard(this->size);   //vygenerovat kameny pro hraci desku
+    this->board->setOutterFields(this->size);   //vygenerování policek pro vsunuti kamene
+    this->board->setTreasures(this->quantity);   //vygenerovat poklady
+    this->board->setCards(this->quantity);   //vygenerovat karty
+
+    this->board->getCards()->shuffle();
+    this->board->getTreasures()->shuffle();
 
 /* DEBUG */
     ui->plainTextEdit->appendPlainText("Generated tiles");
@@ -101,13 +115,24 @@ void MainWindow::game(){
     ui->plainTextEdit->appendPlainText("Cross:\t");
     ui->plainTextEdit->insertPlainText(QString::number(TileCross::count));
 
-    ui->plainTextEdit->appendPlainText("\nCoor.  Rot.  Move");
-/* END DEBUG */
+    TreasurePack* tr_pom = this->board->getCards();
 
-    //lokalni promenne
-    Tile * tile;
-    unsigned int i, j;
-    int x = 0, y = 0, k = 0, a, b;
+    ui->plainTextEdit->appendPlainText("\nCards:");
+
+    for (i=0; i < quantity; ++i){
+        ui->plainTextEdit->appendPlainText(QString::number(tr_pom->getTreasure(i)->getCode()));
+    }
+
+    tr_pom = this->board->getTreasures();
+
+    ui->plainTextEdit->appendPlainText("\nTreasures:");
+    for (i=0; i < quantity; ++i){
+        ui->plainTextEdit->appendPlainText(QString::number(tr_pom->getTreasure(i)->getCode()));
+    }
+
+
+    //ui->plainTextEdit->appendPlainText("\nCoor.  Rot.  Move");
+/* END DEBUG */
 
     gw_board->setInteractive(true);
 
@@ -116,7 +141,7 @@ void MainWindow::game(){
         for (j=0; j < this->size; ++j){
             //pozice moznych vstupu kamenu
             if(((i==0 || i==(this->size-1)) && j%2==1) || ((j==0 || j==(this->size-1)) && i%2==1)){
-                tile = board.getOutterField(k);
+                tile = board->getOutterField(k);
                 k++;
                 obr = tile->getImage();
                 pixmapItem = scene->addPixmap(obr);
@@ -130,7 +155,7 @@ void MainWindow::game(){
                 pixmapItem->setY(b);
             }
             int souradnice = j+i*this->size;
-            tile = board.getTile(souradnice);    //odkaz na kamen
+            tile = board->getTile(souradnice);    //odkaz na kamen
             obr = tile->getImage();     //ziska obrazek
 
 /* DEBUG */
@@ -165,16 +190,14 @@ void MainWindow::game(){
     this->height = this->size*IMG_SIZE+100;   //vyska sceny
 
     //nastaveni zobrazovani objektu
-   // ui->graphicsView->setGeometry(QRect(10, 10, width, height));    //prizpusobeni okna hraci desky
     gw_board->setGeometry(QRect(10, 10, width, height));    //prizpusobeni okna hraci desky
-
     btn_rotate->setGeometry(QRect(60, height+20, 50, 23));      //tlacitko rotace
     l_players->setGeometry(QRect(240, height+15, 80, 60));
     ui->plainTextEdit->setGeometry(QRect(width+20, 10, 250, height+25));    //debug okno
     ui->gw_newTile->setGeometry(QRect(10, height+20, 44, 44));      //novy kamen mimo hraci desku
     resize(10+width+20+250, 10+height+25+40);                       //cele okno
 
-    board.setNewTile();          //vygenerovani noveho kamenu mimo desku
+    board->setNewTile();          //vygenerovani noveho kamenu mimo desku
 
     this->drawNewTile();        //zobrazi novy kamen
 
@@ -206,6 +229,7 @@ MainWindow::~MainWindow()
     delete newTile;
     delete btn_rotate;
     delete btn_addPlayer;
+    delete board;
     delete ui;
 }
 
@@ -213,26 +237,62 @@ void QGraphicsView::mousePressEvent(QMouseEvent *event)
 {
     event->accept();
 
-    unsigned int posX = event->localPos().x();
-    unsigned int posY = event->localPos().y();
-
-    unsigned int row = (posY - 50) / IMG_SIZE;
-    unsigned int col = (posX - 50) / IMG_SIZE;
-
     //tady se zpracuje udalost
     QMessageBox msgBox;
     msgBox.setWindowTitle("Kliknul jsi na obrázek");
-    msgBox.setText(QString::number(row) + " " + QString::number(col));
-    msgBox.setStandardButtons(QMessageBox::Yes);
-    msgBox.setDefaultButton(QMessageBox::No);
-    msgBox.exec();
+
+    unsigned int posX = event->localPos().x();
+    unsigned int posY = event->localPos().y();
+
+    if ((posX > this->width() - 50 || posX < 50) || (posY > this->height() - 50 || posY < 50))
+    {
+        //mimo hraci plochu
+
+        if ((posX > this->width() - IMG_SIZE || posX < IMG_SIZE) || (posY > this->height() - IMG_SIZE || posY < IMG_SIZE))
+        {
+
+            //mimo hraci plochu na urovni nasouvacich policek
+
+            if ((posX <= IMG_SIZE && ((posY <= IMG_SIZE) || (posY >= this->height() - IMG_SIZE))))
+                return;     //kraje
+            if ((posY <= IMG_SIZE && ((posX <= IMG_SIZE) || (posX >= this->width() - IMG_SIZE))))
+                return;     //kraje
+            if ((posX >= this->width() - IMG_SIZE && ((posY <= IMG_SIZE) || (posY >= this->height() - IMG_SIZE))))
+                return;     //kraje
+            if ((posY >= this->height() - IMG_SIZE && ((posX <= IMG_SIZE) || (posX >= this->width() - IMG_SIZE))))
+                return;     //kraje
+
+            unsigned int row = (posY) / IMG_SIZE;
+            unsigned int col = (posX) / IMG_SIZE;
+
+            if (row % 2 == 0 && col % 2 == 0)
+            {
+                msgBox.setText(QString::number(row) + " " + QString::number(col));
+
+                msgBox.setStandardButtons(QMessageBox::Yes);
+                msgBox.setDefaultButton(QMessageBox::No);
+                msgBox.exec();
+            }
+        }
+    }
+    else
+    {
+        unsigned int row = (posY - 50) / IMG_SIZE + 1;
+        unsigned int col = (posX - 50) / IMG_SIZE + 1;
+
+        msgBox.setText(QString::number(row) + " " + QString::number(col));
+
+        msgBox.setStandardButtons(QMessageBox::Yes);
+        msgBox.setDefaultButton(QMessageBox::No);
+        msgBox.exec();
+    }
 }
 
 void MainWindow::handle_btn_rotate()
 {
     ui->plainTextEdit->appendPlainText("Obsluha Rotate");
 
-    this->board.getNewTile()->rotate();   //otoceni
+    this->board->getNewTile()->rotate();   //otoceni
 
     //zavola prekresleni
     this->drawNewTile();
@@ -241,22 +301,22 @@ void MainWindow::handle_btn_rotate()
 void MainWindow::handle_btn_addPlayer()
 {
     unsigned int i;
-    if (this->board.getNumPlayers() >= 4){
+    if (this->board->getNumPlayers() >= 4){
        ui->plainTextEdit->appendPlainText("MAX 4 Players");
     }
     else{
         if (le_player->text().isEmpty()){
-            this->board.addPlayer(Player());
+            this->board->addPlayer(Player());
         }
         else{
-            for (i=0; i < board.getNumPlayers(); ++i ){
-                if(!(le_player->text().compare(board.getPlayer(i).getName()))){
+            for (i=0; i < board->getNumPlayers(); ++i ){
+                if(!(le_player->text().compare(board->getPlayer(i).getName()))){
                     ui->plainTextEdit->appendPlainText("Name already exists");
                     break;
                 }
             }
-            if(i == board.getNumPlayers()){
-                this->board.addPlayer(Player(le_player->text()));
+            if(i == board->getNumPlayers()){
+                this->board->addPlayer(Player(le_player->text()));
             }
         }
 
@@ -267,16 +327,16 @@ void MainWindow::handle_btn_addPlayer()
 
 void MainWindow::drawNewTile()
 {
-    this->newTile->addPixmap(board.getNewTile()->getImage());        //prida obrazek do okenka
+    this->newTile->addPixmap(board->getNewTile()->getImage());        //prida obrazek do okenka
     ui->gw_newTile->setScene(newTile);  //zobrazi novy kamen
 }
 
 void MainWindow::drawPlayers()
 {
     QString str;
-    unsigned int i, n = board.getNumPlayers();
+    unsigned int i, n = board->getNumPlayers();
     for (i=0; i<n; ++i){
-        str += board.getPlayer(i).getName() + "\n";
+        str += board->getPlayer(i).getName() + "\n";
     }
     str.remove(str.length()-1,1);   //odstraneni posledniho znaku
     l_addPlayers->setText(str);
