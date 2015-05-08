@@ -22,3 +22,14 @@ void TreasurePack::setTreasurePack(){
 Treasure TreasurePack::getTreasure(){
     return this->treasures.first();
 }
+
+void TreasurePack::shuffle(){
+    unsigned int i, random;
+    Treasure pom;
+    for (i=0; i < quantity; ++i){
+        random = qrand() % this->treasures.count();
+        pom = this->treasures[i];
+        this->treasures[i] = this->treasures[random];
+        this->treasures[random] = pom;
+    }
+}

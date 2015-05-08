@@ -29,13 +29,14 @@ class TreasurePack{
     TreasurePack(unsigned int);
     void setTreasurePack();
     Treasure getTreasure();
+    void shuffle();
 };
 
-class TreasureCard{
+class Card{
 
   public:
-    TreasureCard();
-    TreasureCard(unsigned int);
+    Card();
+    Card(unsigned int);
     void setCard(unsigned int);
 };
 

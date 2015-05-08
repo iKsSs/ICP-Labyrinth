@@ -16,6 +16,7 @@
 
 #include <QMainWindow>
 #include <QPushButton>
+#include <QLineEdit>
 #include <QCoreApplication>
 
 #include "board.h"
@@ -75,6 +76,7 @@ private:
     QLabel* l_sizeView;
 
     QGraphicsView* gw_board;
+    QLineEdit* le_player;
 };
 
 #endif // MAINWINDOW_H
