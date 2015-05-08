@@ -26,7 +26,6 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    QGraphicsView *graphicsView;
     QPlainTextEdit *plainTextEdit;
     QGraphicsView *gw_newTile;
     QMenuBar *menuBar;
@@ -42,18 +41,6 @@ public:
         MainWindow->setDockOptions(QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        graphicsView = new QGraphicsView(centralWidget);
-        graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(30, 20, 420, 420));
-        graphicsView->setBaseSize(QSize(0, 0));
-        graphicsView->setLineWidth(1);
-        graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        graphicsView->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
-        QBrush brush(QColor(0, 0, 0, 255));
-        brush.setStyle(Qt::NoBrush);
-        graphicsView->setBackgroundBrush(brush);
-        graphicsView->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         plainTextEdit = new QPlainTextEdit(centralWidget);
         plainTextEdit->setObjectName(QStringLiteral("plainTextEdit"));
         plainTextEdit->setGeometry(QRect(630, 0, 280, 460));
@@ -63,9 +50,6 @@ public:
         gw_newTile->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         gw_newTile->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         MainWindow->setCentralWidget(centralWidget);
-        plainTextEdit->raise();
-        gw_newTile->raise();
-        graphicsView->raise();
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setEnabled(false);
