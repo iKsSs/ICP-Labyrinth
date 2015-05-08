@@ -16,6 +16,7 @@ class Board
     QVector<Tile*> outter;
     QVector<Player> players;
     Tile* newTile;
+    unsigned int size;
 
     TreasurePack *treasures;
     TreasurePack *cards;
