@@ -252,6 +252,22 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                 unsigned int col = (posX - 50) / IMG_SIZE;
 
                 col = row;  //aby se nezobrazoval warning :D
+/* DEBUG */
+                //tady se zpracuje udalost
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Klik");
+                msgBox.setText(QString::number(this->board->getTile(7)->getMove().getMove()) + " " +
+                               QString::number(this->board->getTile(8)->getMove().getMove()) + " " +
+                               QString::number(this->board->getTile(9)->getMove().getMove()) + " " +
+                               QString::number(this->board->getTile(10)->getMove().getMove()) + " " +
+                               QString::number(this->board->getTile(11)->getMove().getMove()) + " " +
+                               QString::number(this->board->getTile(12)->getMove().getMove()) + " " +
+                               QString::number(this->board->getTile(13)->getMove().getMove())
+                               );
+                msgBox.setStandardButtons(QMessageBox::Yes);
+                msgBox.setDefaultButton(QMessageBox::No);
+                msgBox.exec();
+/* END DEBUG */
             }
         }
     }
