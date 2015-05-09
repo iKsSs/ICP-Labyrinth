@@ -103,6 +103,7 @@ bool Move::moveLeft()
  */
 Tile::Tile(){
     this->rotation = 1;
+    this->treasure = NULL;
 }
 
 /**
@@ -113,6 +114,7 @@ Tile::Tile(){
  */
 Tile::Tile(unsigned int r){
     this->rotation = r;
+    this->treasure = NULL;
 }
 
 /**
