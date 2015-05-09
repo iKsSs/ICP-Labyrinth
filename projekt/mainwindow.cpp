@@ -504,10 +504,10 @@ void MainWindow::genBoard(){
     }
 }
 
-bool MainWindow::uialg(int index_start, int index_goal)
+bool MainWindow::uialg(unsigned int index_start, unsigned int index_goal)
 {
-    QVector<int> indexs;
-    int ptr_indexs = 0;
+    QVector<unsigned int> indexs;
+    unsigned int ptr_indexs = 0;
 
     indexs.push_back(index_start);
     bool inc_ptr_indexs = false;
@@ -515,6 +515,9 @@ bool MainWindow::uialg(int index_start, int index_goal)
     while (true)
     {
         index_start = indexs[ptr_indexs];
+
+        qDebug(QString::number(index_start).toStdString().c_str());
+
         Move move = board->getTile(index_start)->getMove();
 
         if (move.moveDown())
@@ -530,14 +533,14 @@ bool MainWindow::uialg(int index_start, int index_goal)
 
                         inc_ptr_indexs = true;
 
-                        qDebug(QString::number(index_start + this->size).toStdString().c_str());
+                        //qDebug(QString::number(index_start + this->size).toStdString().c_str());
                     }
                 }
             }
         }
         if (move.moveLeft())
         {
-            if (index_start % this->size != 0)
+            if (index_start % this->size != 0 && index_start - 1 >= 0)
             {
                 Move move = board->getTile(index_start - 1)->getMove();
                 if (move.moveRight())
@@ -548,14 +551,14 @@ bool MainWindow::uialg(int index_start, int index_goal)
 
                         inc_ptr_indexs = true;
 
-                        qDebug(QString::number(index_start - 1).toStdString().c_str());
+                        //qDebug(QString::number(index_start - 1).toStdString().c_str());
                     }
                 }
             }
         }
         if (move.moveRight())
         {
-            if (index_start + 1 % (this->size) != 0)
+            if (index_start + 1 % (this->size) != 0 && index_start + 1 < this->size * this->size)
             {
                 Move move = board->getTile(index_start + 1)->getMove();
                 if (move.moveLeft())
@@ -566,15 +569,17 @@ bool MainWindow::uialg(int index_start, int index_goal)
 
                         inc_ptr_indexs = true;
 
-                        qDebug(QString::number(index_start + 1).toStdString().c_str());
+                        //qDebug(QString::number(index_start + 1).toStdString().c_str());
                     }
                 }
             }
         }
         if (move.moveUp())
         {
-            if (index_start - this->size >= 0)
+            if (index_start - this->size < this->size * this->size)
             {
+                qDebug(QString::number(index_start - this->size).toStdString().c_str());
+
                 Move move = board->getTile(index_start - this->size)->getMove();
                 if (move.moveDown())
                 {
@@ -586,7 +591,7 @@ bool MainWindow::uialg(int index_start, int index_goal)
 
                         inc_ptr_indexs = true;
 
-                        qDebug(QString::number(index_start - this->size).toStdString().c_str());
+                        //qDebug(QString::number(index_start - this->size).toStdString().c_str());
                     }
                 }
             }
