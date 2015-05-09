@@ -299,6 +299,9 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                                QString::number(this->board->getTile(13)->getMove().getMove())
                                );
         */
+                this->uialg(0, row * size + col);
+
+
                 msgBox.setText(QString::number(row*this->size+col));
                 msgBox.setStandardButtons(QMessageBox::Yes);
                 msgBox.setDefaultButton(QMessageBox::No);
@@ -498,5 +501,120 @@ void MainWindow::genBoard(){
         /* Odradkovani */
         x = 0;
         y += IMG_SIZE;  //posunuti v ose Y
+    }
+}
+
+bool MainWindow::uialg(int index_start, int index_goal)
+{
+    QVector<int> indexs;
+    int ptr_indexs = 0;
+
+    indexs.push_back(index_start);
+    bool inc_ptr_indexs = false;
+
+    while (true)
+    {
+        index_start = indexs[ptr_indexs];
+        Move move = board->getTile(index_start)->getMove();
+
+        if (move.moveDown())
+        {
+            if (index_start + this->size < this->size * this->size)
+            {
+                Move move = board->getTile(index_start + this->size)->getMove();
+                if (move.moveUp())
+                {
+                    if (indexs.indexOf(index_start + this->size) == -1)
+                    {
+                        indexs.push_back(index_start + this->size);
+
+                        inc_ptr_indexs = true;
+
+                        qDebug(QString::number(index_start + this->size).toStdString().c_str());
+                    }
+                }
+            }
+        }
+        if (move.moveLeft())
+        {
+            if (index_start % this->size != 0)
+            {
+                Move move = board->getTile(index_start - 1)->getMove();
+                if (move.moveRight())
+                {
+                    if (indexs.indexOf(index_start - 1) == -1)
+                    {
+                        indexs.push_back(index_start - 1);
+
+                        inc_ptr_indexs = true;
+
+                        qDebug(QString::number(index_start - 1).toStdString().c_str());
+                    }
+                }
+            }
+        }
+        if (move.moveRight())
+        {
+            if (index_start + 1 % (this->size) != 0)
+            {
+                Move move = board->getTile(index_start + 1)->getMove();
+                if (move.moveLeft())
+                {
+                    if (indexs.indexOf(index_start + 1) == -1)
+                    {
+                        indexs.push_back(index_start + 1);
+
+                        inc_ptr_indexs = true;
+
+                        qDebug(QString::number(index_start + 1).toStdString().c_str());
+                    }
+                }
+            }
+        }
+        if (move.moveUp())
+        {
+            if (index_start - this->size >= 0)
+            {
+                Move move = board->getTile(index_start - this->size)->getMove();
+                if (move.moveDown())
+                {
+                    if (indexs.indexOf(index_start - this->size) == -1)
+                    {
+                        indexs.push_back(index_start - this->size);
+
+
+
+                        inc_ptr_indexs = true;
+
+                        qDebug(QString::number(index_start - this->size).toStdString().c_str());
+                    }
+                }
+            }
+        }
+
+        if (index_start == index_goal) //cesta existuje
+        {
+            qDebug("Cesta existuje\n");
+
+            return true;
+        }
+
+        if (inc_ptr_indexs)
+        {
+            inc_ptr_indexs = false;
+            ptr_indexs++;
+        }
+        else
+        {
+            if (ptr_indexs + 1 < indexs.count())
+            {
+                ptr_indexs++;
+                continue;
+            }
+
+            qDebug("Cesta neexistuje\n");
+            qDebug(QString::number(index_start).toStdString().c_str());
+            return false;
+        }
     }
 }

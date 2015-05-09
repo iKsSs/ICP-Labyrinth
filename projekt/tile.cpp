@@ -25,6 +25,26 @@ unsigned int Move::getMove(){
     return num;
 }
 
+bool Move::moveUp()
+{
+    return this->up;
+}
+
+bool Move::moveDown()
+{
+    return this->down;
+}
+
+bool Move::moveRight()
+{
+    return this->right;
+}
+
+bool Move::moveLeft()
+{
+    return this->left;
+}
+
 Tile::Tile(){
     this->rotation = 1;
 }

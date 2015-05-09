@@ -29,6 +29,10 @@ public:
     Move(): up{false}, right{false}, down{false}, left{false} {};
     void setMove(bool up, bool right, bool down, bool left);
     unsigned int getMove();
+    bool moveUp();
+    bool moveDown();
+    bool moveRight();
+    bool moveLeft();
 };
 
 class Tile{
