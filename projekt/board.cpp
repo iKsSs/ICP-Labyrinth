@@ -396,7 +396,7 @@ void Board::insertNewTile(QPoint point){
                         case 0: p_0 = true; break;
                         case 1: p_1 = true; break;
                         case 2: p_2 = true; break;
-                        case 4: p_3 = true; break;
+                        case 3: p_3 = true; break;
                     }
                 }
             }
@@ -420,7 +420,7 @@ void Board::insertNewTile(QPoint point){
                         case 0: p_0 = true; break;
                         case 1: p_1 = true; break;
                         case 2: p_2 = true; break;
-                        case 4: p_3 = true; break;
+                        case 3: p_3 = true; break;
                     }
                 }
             }
@@ -443,7 +443,7 @@ void Board::insertNewTile(QPoint point){
                         case 0: p_0 = true; break;
                         case 1: p_1 = true; break;
                         case 2: p_2 = true; break;
-                        case 4: p_3 = true; break;
+                        case 3: p_3 = true; break;
                     }
                 }
             }
@@ -466,7 +466,7 @@ void Board::insertNewTile(QPoint point){
                         case 0: p_0 = true; break;
                         case 1: p_1 = true; break;
                         case 2: p_2 = true; break;
-                        case 4: p_3 = true; break;
+                        case 3: p_3 = true; break;
                     }
                 }
             }
