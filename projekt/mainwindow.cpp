@@ -13,6 +13,12 @@
 const unsigned int IMG_SIZE = 44;
 const unsigned int E_SIZE = 50;
 
+/**
+ * @brief MainWindow::MainWindow
+ * @param parent
+ *
+ * Contructor of main window
+ */
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -63,9 +69,16 @@ MainWindow::MainWindow(QWidget *parent) :
     gw_newTile->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
+/**
+ * @brief MainWindow::menu
+ *
+ * Start and show menu
+ */
 void MainWindow::menu(){
+    //skryt objekty hry
     this->hideGame();
 
+    //nastavit pozice
     l_addPlayers->setGeometry(QRect(250, 25, 40, 80));
     l_sizeView->setGeometry(QRect(20, 100, 90, 20));
     l_quantityView->setGeometry(QRect(350, 100, 120, 20));
@@ -100,6 +113,11 @@ void MainWindow::menu(){
     connect(btn_play, SIGNAL (released()), this, SLOT (handle_btn_play()));
 }
 
+/**
+ * @brief MainWindow::hideMenu
+ *
+ * Hide objects of menu
+ */
 void MainWindow::hideMenu(){
     btn_addPlayer->hide();
     l_sizeView->hide();
@@ -116,9 +134,15 @@ void MainWindow::hideMenu(){
     btn_play->hide();
 }
 
+/**
+ * @brief MainWindow::game
+ *
+ * Start and show game
+ */
 void MainWindow::game(){
-
+    //skryt menu
     this->hideMenu();
+    //zobrazit hru
     this->showGame();
 
    //lokalni promenne
@@ -155,13 +179,11 @@ void MainWindow::game(){
     for (i=0; i < quantity; ++i){
         ui->plainTextEdit->appendPlainText(QString::number(tr_pom->getTreasure(i)->getCode()));
     }
-
-    //ui->plainTextEdit->appendPlainText("\nCoor.  Rot.  Move");
 /* END DEBUG */
 
     gw_board->setInteractive(true);
 
-    this->genBoard();
+    this->genBoard();   //generovani hraciho pol
 
     this->width = this->size*IMG_SIZE+100;    //sirka sceny
     this->height = this->size*IMG_SIZE+100;   //vyska sceny
@@ -169,8 +191,8 @@ void MainWindow::game(){
     //nastaveni zobrazovani objektu
     gw_board->setGeometry(QRect(10, 10, width, height));    //prizpusobeni okna hraci desky
     btn_rotate->setGeometry(QRect(60, height+20, 50, 23));      //tlacitko rotace
-    l_players->setGeometry(QRect(240, height+15, 80, 60));
-    l_addPlayers->setGeometry(QRect(290, height+15, 80, 60));
+    l_players->setGeometry(QRect(240, height+15, 80, 60));      //stitek hraci
+    l_addPlayers->setGeometry(QRect(290, height+15, 80, 60));   //stitek seznam hracu
     ui->plainTextEdit->setGeometry(QRect(width+20, 10, 250, height+25));    //debug okno
     gw_newTile->setGeometry(QRect(10, height+20, 44, 44));      //novy kamen mimo hraci desku
     resize(10+width+20+250, 10+height+25+40);                       //cele okno
@@ -185,6 +207,11 @@ void MainWindow::game(){
     connect(btn_rotate, SIGNAL (released()), this, SLOT (handle_btn_rotate()));
 }
 
+/**
+ * @brief MainWindow::hideGame
+ *
+ * Hide objects of game
+ */
 void MainWindow::hideGame(){
 
     btn_rotate->hide();
@@ -192,6 +219,11 @@ void MainWindow::hideGame(){
     gw_newTile->hide();
 }
 
+/**
+ * @brief MainWindow::showGame
+ *
+ * Show objects of game
+ */
 void MainWindow::showGame(){
 
     btn_rotate->show();
@@ -199,6 +231,11 @@ void MainWindow::showGame(){
     gw_newTile->show();
 }
 
+/**
+ * @brief MainWindow::~MainWindow
+ *
+ * Implicit destructor
+ */
 MainWindow::~MainWindow()
 {
     delete this->board->getCards();
@@ -235,6 +272,12 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+/**
+ * @brief MainWindow::mousePressEvent
+ * @param event
+ *
+ * Event for left mouse click on board
+ */
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
     event->accept();
@@ -277,6 +320,14 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                         board->insertNewTile(QPoint(row, col));
                         this->genBoard();
                         this->drawNewTile();
+
+                        QMessageBox msgBox;
+                        msgBox.setWindowTitle("Kliknul jsi na obr��zek");
+                        msgBox.setText(QString::number(row) + " " + QString::number(col));
+
+                        msgBox.setStandardButtons(QMessageBox::Yes);
+                        msgBox.setDefaultButton(QMessageBox::No);
+                        //msgBox.exec();
                     }
                 }
             }
@@ -285,19 +336,24 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                 unsigned int row = (posY - 50) / IMG_SIZE;
                 unsigned int col = (posX - 50) / IMG_SIZE;
 
-                Player* p = this->board->getPlayer(0);
-                printf("pred: %d %d\n", p->getPosition().x(), p->getPosition().y());
+                Player* p = this->board->getActPlayer();
+
                 if (this->canMove(p->getPosition().x() * this->size + p->getPosition().y(), row * this->size + col)){
                     p->setPosition(QPoint(row,col));
+                    this->board->actPlus();
                 }
-                p = this->board->getPlayer(0);
-                printf("po: %d %d\n", p->getPosition().x(), p->getPosition().y());
+
                 this->genBoard();
             }
         }
     }
 }
 
+/**
+ * @brief MainWindow::handle_btn_rotate
+ *
+ * Handle button rotate
+ */
 void MainWindow::handle_btn_rotate()
 {
 //    ui->plainTextEdit->appendPlainText("Obsluha Rotate");
@@ -308,6 +364,11 @@ void MainWindow::handle_btn_rotate()
     this->drawNewTile();
 }
 
+/**
+ * @brief MainWindow::handle_btn_addPlayer
+ *
+ * Handle button add player
+ */
 void MainWindow::handle_btn_addPlayer()
 {
     unsigned int i, n;
@@ -336,12 +397,22 @@ void MainWindow::handle_btn_addPlayer()
     }
 }
 
+/**
+ * @brief MainWindow::drawNewTile
+ *
+ * Set new tile visible
+ */
 void MainWindow::drawNewTile()
 {
     this->newTile->addPixmap(board->getNewTile()->getImage());        //prida obrazek do okenka
     gw_newTile->setScene(newTile);  //zobrazi novy kamen
 }
 
+/**
+ * @brief MainWindow::drawPlayers
+ *
+ * Set players name visible
+ */
 void MainWindow::drawPlayers()
 {
     QString str;
@@ -354,30 +425,55 @@ void MainWindow::drawPlayers()
     l_addPlayers->repaint();
 }
 
+/**
+ * @brief MainWindow::handle_btn_size_5
+ *
+ * Handle button size 5
+ */
 void MainWindow::handle_btn_size_5()
 {
     this->size = 5;
     this->drawSize();
 }
 
+/**
+ * @brief MainWindow::handle_btn_size_7
+ *
+ * Handle button size 7
+ */
 void MainWindow::handle_btn_size_7()
 {
     this->size = 7;
     this->drawSize();
 }
 
+/**
+ * @brief MainWindow::handle_btn_size_9
+ *
+ * Handle button size 9
+ */
 void MainWindow::handle_btn_size_9()
 {
     this->size = 9;
     this->drawSize();
 }
 
+/**
+ * @brief MainWindow::handle_btn_size_11
+ *
+ * Handle button size 11
+ */
 void MainWindow::handle_btn_size_11()
 {
     this->size = 11;
     this->drawSize();
 }
 
+/**
+ * @brief MainWindow::drawSize
+ *
+ * Set size visible
+ */
 void MainWindow::drawSize(){
     QString str;
     str = "Choosen size: " + QString::number(this->size);
@@ -385,18 +481,33 @@ void MainWindow::drawSize(){
     l_sizeView->repaint();
 }
 
+/**
+ * @brief MainWindow::handle_btn_quantity_12
+ *
+ * Handle button quantity 12
+ */
 void MainWindow::handle_btn_quantity_12()
 {
     this->quantity = 12;
     this->drawQuantity();
 }
 
+/**
+ * @brief MainWindow::handle_btn_quantity_24
+ *
+ * Handle button quantity 24
+ */
 void MainWindow::handle_btn_quantity_24()
 {
     this->quantity = 24;
     this->drawQuantity();
 }
 
+/**
+ * @brief MainWindow::drawQuantity
+ *
+ * Set quantity visible
+ */
 void MainWindow::drawQuantity(){
     QString str;
     str = "Choosen quantity: " + QString::number(this->quantity);
@@ -404,6 +515,11 @@ void MainWindow::drawQuantity(){
     l_quantityView->repaint();
 }
 
+/**
+ * @brief MainWindow::handle_btn_play
+ *
+ * Handle button play
+ */
 void MainWindow::handle_btn_play()
 {
     if(board->getNumPlayers() >= 2){
@@ -416,6 +532,11 @@ void MainWindow::handle_btn_play()
     }
 }
 
+/**
+ * @brief MainWindow::genBoard
+ *
+ * Generate board
+ */
 void MainWindow::genBoard(){
 
     Tile * tile;
@@ -490,6 +611,15 @@ void MainWindow::genBoard(){
     }
 }
 
+/**
+ * @brief MainWindow::canMove
+ * @param index_start
+ * @param index_goal
+ * @return TRUE     move from start to end is possible
+ * @return FALSE    move from start to end is not possible
+ *
+ * Return if move from start to end is possible
+ */
 bool MainWindow::canMove(unsigned int index_start, unsigned int index_goal)
 {
     QVector<unsigned int> indexs;
@@ -501,8 +631,6 @@ bool MainWindow::canMove(unsigned int index_start, unsigned int index_goal)
     while (true)
     {
         index_start = indexs[ptr_indexs];
-
-        qDebug(QString::number(index_start).toStdString().c_str());
 
         Move move = board->getTile(index_start)->getMove();
 
@@ -519,7 +647,6 @@ bool MainWindow::canMove(unsigned int index_start, unsigned int index_goal)
 
                         inc_ptr_indexs = true;
 
-                        //qDebug(QString::number(index_start + this->size).toStdString().c_str());
                     }
                 }
             }
@@ -537,7 +664,6 @@ bool MainWindow::canMove(unsigned int index_start, unsigned int index_goal)
 
                         inc_ptr_indexs = true;
 
-                        //qDebug(QString::number(index_start - 1).toStdString().c_str());
                     }
                 }
             }
@@ -555,7 +681,6 @@ bool MainWindow::canMove(unsigned int index_start, unsigned int index_goal)
 
                         inc_ptr_indexs = true;
 
-                        //qDebug(QString::number(index_start + 1).toStdString().c_str());
                     }
                 }
             }
@@ -573,11 +698,8 @@ bool MainWindow::canMove(unsigned int index_start, unsigned int index_goal)
                     {
                         indexs.push_back(index_start - this->size);
 
-
-
                         inc_ptr_indexs = true;
 
-                        //qDebug(QString::number(index_start - this->size).toStdString().c_str());
                     }
                 }
             }
@@ -608,7 +730,6 @@ bool MainWindow::canMove(unsigned int index_start, unsigned int index_goal)
             }
 
             qDebug("Cesta neexistuje\n");
-            qDebug(QString::number(index_start).toStdString().c_str());
             return false;
         }
     }

@@ -28,7 +28,11 @@ public:
     Player(QString, QPoint position);     //jméno hráče a jeho výchozí pozice
 
     void setPosition(QPoint);
+    void setPositionX(unsigned int);
+    void setPositionY(unsigned int);
+
     QPoint getPosition();
+
     void setName(QString);
     void setImage();
 
