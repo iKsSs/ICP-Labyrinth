@@ -1,13 +1,27 @@
 #include "tile.h"
 
+void Move::setMove(bool up, bool right, bool down, bool left){
+    this->up = up;
+    this->right = right;
+    this->down = down;
+    this->left = left;
+}
+
+unsigned int Move::getMove(){
+    unsigned int num=0;
+    num += up    ? 1000 : 0;
+    num += right ? 100 : 0;
+    num += down  ? 10 : 0;
+    num += left  ? 1 : 0;
+    return num;
+}
+
 Tile::Tile(){
-    rotation = 1;
-    move = 0;
+    this->rotation = 1;
 }
 
 Tile::Tile(unsigned int r){
-    rotation = r;
-    move = 0;
+    this->rotation = r;
 }
 
 void Tile::setPosition(QPoint pos){
@@ -26,7 +40,7 @@ QPixmap Tile::getImage(){
     return this->image;
 }
 
-unsigned int Tile::getMove(){
+Move Tile::getMove(){
     return this->move;
 }
 
@@ -37,7 +51,8 @@ unsigned int Tile::getRotation(){
 TileStraight::TileStraight(unsigned int r){
     TileStraight::count++;
     this->rotation = r;
-    this->move = 2;
+
+    this->setMove();
 
     this->genImage();
 }
@@ -45,7 +60,8 @@ TileStraight::TileStraight(unsigned int r){
 TileCorner::TileCorner(unsigned int r){
     TileCorner::count++;
     this->rotation = r;
-    this->move = 2;
+
+    this->setMove();
 
     this->genImage();
 }
@@ -53,7 +69,8 @@ TileCorner::TileCorner(unsigned int r){
 TileCross::TileCross(unsigned int r){
     TileCross::count++;
     this->rotation = r;
-    this->move = 3;
+
+    this->setMove();
 
     this->genImage();
 }
@@ -61,19 +78,19 @@ TileCross::TileCross(unsigned int r){
 void TileStraight::rotate(){
     this->rotation++;
     if(this->rotation%3 == 0){this->rotation = 1;}
-    genImage();
+    this->genImage();
 }
 
 void TileCorner::rotate(){
     this->rotation++;
     if(this->rotation%5 == 0){this->rotation = 1;}
-    genImage();
+    this->genImage();
 }
 
 void TileCross::rotate(){
     this->rotation++;
     if(this->rotation%5 == 0){this->rotation = 1;}
-    genImage();
+    this->genImage();
 }
 
 void TileStraight::genImage()
@@ -104,6 +121,34 @@ void TileCross::genImage()
         case 3: this->image.load("images/T-3.png");break;
         case 4: this->image.load("images/T-4.png");break;
         default: this->image.load("images/C.png");
+    }
+}
+
+void TileStraight::setMove()
+{
+    switch(this->rotation){
+        case 1: move.setMove(F,T,F,T); break;
+        case 2: move.setMove(T,F,T,F); break;
+    }
+}
+
+void TileCorner::setMove()
+{
+    switch(this->rotation){
+        case 1: move.setMove(T,T,F,F); break;
+        case 2: move.setMove(T,F,F,T); break;
+        case 3: move.setMove(F,F,T,T); break;
+        case 4: move.setMove(F,T,T,F); break;
+    }
+}
+
+void TileCross::setMove()
+{
+    switch(this->rotation){
+        case 1: move.setMove(T,T,F,T); break;
+        case 2: move.setMove(T,F,T,T); break;
+        case 3: move.setMove(F,T,T,T); break;
+        case 4: move.setMove(T,T,T,F); break;
     }
 }
 
