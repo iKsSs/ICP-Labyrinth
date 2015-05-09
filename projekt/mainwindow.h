@@ -56,7 +56,7 @@ public:
 
     void genBoard();
 
-    bool uialg(unsigned int index_start, unsigned int index_goal);
+    bool canMove(unsigned int, unsigned int);
 
 private slots:
     void handle_btn_rotate();

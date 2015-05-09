@@ -285,28 +285,14 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                 unsigned int row = (posY - 50) / IMG_SIZE;
                 unsigned int col = (posX - 50) / IMG_SIZE;
 
-                //col = row;  //aby se nezobrazoval warning :D
-/* DEBUG */
-                //tady se zpracuje udalost
-                QMessageBox msgBox;
-                msgBox.setWindowTitle("Klik");
-        /*        msgBox.setText(QString::number(this->board->getTile(7)->getMove().getMove()) + " " +
-                               QString::number(this->board->getTile(8)->getMove().getMove()) + " " +
-                               QString::number(this->board->getTile(9)->getMove().getMove()) + " " +
-                               QString::number(this->board->getTile(10)->getMove().getMove()) + " " +
-                               QString::number(this->board->getTile(11)->getMove().getMove()) + " " +
-                               QString::number(this->board->getTile(12)->getMove().getMove()) + " " +
-                               QString::number(this->board->getTile(13)->getMove().getMove())
-                               );
-        */
-                this->uialg(0, row * size + col);
-
-
-                msgBox.setText(QString::number(row*this->size+col));
-                msgBox.setStandardButtons(QMessageBox::Yes);
-                msgBox.setDefaultButton(QMessageBox::No);
-                msgBox.exec();
-/* END DEBUG */
+                Player* p = this->board->getPlayer(0);
+                printf("pred: %d %d\n", p->getPosition().x(), p->getPosition().y());
+                if (this->canMove(p->getPosition().x() * this->size + p->getPosition().y(), row * this->size + col)){
+                    p->setPosition(QPoint(row,col));
+                }
+                p = this->board->getPlayer(0);
+                printf("po: %d %d\n", p->getPosition().x(), p->getPosition().y());
+                this->genBoard();
             }
         }
     }
@@ -331,17 +317,17 @@ void MainWindow::handle_btn_addPlayer()
     }
     else{
         if (le_player->text().isEmpty()){
-            this->board->addPlayer(Player());
+            this->board->addPlayer(new Player());
         }
         else{
             for (i=0; i < n; ++i ){
-                if(!(le_player->text().compare(board->getPlayer(i).getName()))){
+                if(!(le_player->text().compare(board->getPlayer(i)->getName()))){
                     ui->plainTextEdit->appendPlainText("Name already exists");
                     break;
                 }
             }
             if(i == board->getNumPlayers()){
-                this->board->addPlayer(Player(le_player->text()));
+                this->board->addPlayer(new Player(le_player->text()));
             }
         }
 
@@ -361,7 +347,7 @@ void MainWindow::drawPlayers()
     QString str;
     unsigned int i, n = board->getNumPlayers();
     for (i=0; i<n; ++i){
-        str += board->getPlayer(i).getName() + "\n";
+        str += board->getPlayer(i)->getName() + "\n";
     }
     str.remove(str.length()-1,1);   //odstraneni posledniho znaku
     l_addPlayers->setText(str);
@@ -482,10 +468,10 @@ void MainWindow::genBoard(){
             pixmapItem->setY(y+50);
 
             //vykresleni hracu
-            if (i == 0 || j == 0 || i == this->size-1 || j == this->size-1){    //podminka pro zrychleni
+           // if (i == 0 || j == 0 || i == this->size-1 || j == this->size-1){    //podminka pro zrychleni
                 for (l=0; l < board->getNumPlayers(); ++l){
                     Player* p;
-                    p = &board->getPlayer(l);
+                    p = board->getPlayer(l);
                     if (i == p->getPosition().x() && j == p->getPosition().y()){
                         obr = p->getImage();
                         pixmapItem = scene->addPixmap(obr); //prida obrazek do sceny a vrati odkaz na nej
@@ -494,7 +480,7 @@ void MainWindow::genBoard(){
                         pixmapItem->setY(y+50);
                     }
                 }
-            }
+          //  }
 
             x += IMG_SIZE; //posunuti v ose X
         }
@@ -504,7 +490,7 @@ void MainWindow::genBoard(){
     }
 }
 
-bool MainWindow::uialg(unsigned int index_start, unsigned int index_goal)
+bool MainWindow::canMove(unsigned int index_start, unsigned int index_goal)
 {
     QVector<unsigned int> indexs;
     unsigned int ptr_indexs = 0;

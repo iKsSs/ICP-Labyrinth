@@ -26,7 +26,7 @@ class Move{
     bool down;
     bool left;
 public:
-    Move(): up{false}, right{false}, down{false}, left{false} {};
+    Move(): up{false}, right{false}, down{false}, left{false} {}
     void setMove(bool up, bool right, bool down, bool left);
     unsigned int getMove();
     bool moveUp();
@@ -54,7 +54,7 @@ public:
 
   QPoint getPosition();
   QPixmap getImage();
-  Move getMove();   //treba zmenit navvratovy typ
+  Move getMove();
   unsigned int getRotation();
 
   void addPlayer(Player);

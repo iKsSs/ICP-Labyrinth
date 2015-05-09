@@ -17,6 +17,12 @@
  */
 Board::Board(): newTile{NULL}, treasures{NULL}, cards{NULL}, size{0} {}
 
+/**
+ * @brief Board::setBoard
+ * @param n
+ *
+ * Set board
+ */
 void Board::setBoard(unsigned int n){
     unsigned int High = 3;
     unsigned int Low = 1;
@@ -116,6 +122,12 @@ void Board::setBoard(unsigned int n){
    }
 }
 
+/**
+ * @brief Board::setOutterFields
+ * @param n
+ *
+ * Set outter fields
+ */
 void Board::setOutterFields(unsigned int n){
     unsigned int i;
     unsigned int count=0;    //pocet policek v jednom radku
@@ -129,8 +141,7 @@ void Board::setOutterFields(unsigned int n){
     }
     count *= 4;     //mame 4 strany
 
-
-    for (i=0; i<count; ++i){
+    for (i=0; i<count; ++i){    //vytvorim vektor policek
         Tile* x = new TileOutter(0);
         this->outter.push_back(x);
     }
@@ -241,7 +252,7 @@ TreasurePack* Board::getCards(){
  *
  * Add new player to vector players
  */
-void Board::addPlayer(Player play){
+void Board::addPlayer(Player* play){
    this->players.push_back(play);
 }
 
@@ -251,7 +262,7 @@ void Board::addPlayer(Player play){
  *
  * Remove player from vector players
  */
-void Board::removePlayer(Player play){
+void Board::removePlayer(Player* play){
     int n = this->players.size();
     for(int i = 0; i < n; ++i){
         if (this->players[i] == play){
@@ -274,11 +285,11 @@ unsigned int Board::getNumPlayers(){
 /**
  * @brief Board::getPlayer
  * @param i
- * @return player on index i
+ * @return reference to player on index i
  *
- * Return player on index i in vector players
+ * Return reference to player on index i in vector players
  */
-Player Board::getPlayer(unsigned int i){
+Player *Board::getPlayer(unsigned int i){
     return this->players[i];
 }
 
@@ -289,14 +300,14 @@ Player Board::getPlayer(unsigned int i){
  */
 void Board::setPlayerPos(){
     unsigned int i, n = this->players.size();
-    for (i=0; i < n; ++i){
+    for (i=0; i < n; ++i){  //pro kazdeho hrace se nastavi pozice
         switch(i){
-            case 0: this->players[i].setPosition(QPoint(this->size-1,0)); break;
-            case 1: this->players[i].setPosition(QPoint(0,this->size-1)); break;
-            case 2: this->players[i].setPosition(QPoint(0,0)); break;
-            case 3: this->players[i].setPosition(QPoint(this->size-1,this->size-1)); break;
+            case 0: this->players[i]->setPosition(QPoint(this->size-1,0)); break;
+            case 1: this->players[i]->setPosition(QPoint(0,this->size-1)); break;
+            case 2: this->players[i]->setPosition(QPoint(0,0)); break;
+            case 3: this->players[i]->setPosition(QPoint(this->size-1,this->size-1)); break;
         }
-        this->players[i].setImage();
+        this->players[i]->setImage();    //podle pozice se nastavi obrazek
     }
 }
 
