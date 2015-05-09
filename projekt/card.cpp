@@ -57,9 +57,9 @@ void TreasurePack::setTreasurePack(){
 
 /**
  * @brief TreasurePack::getTreasure
- * @return treasure on first index
+ * @return reference to treasure on first index
  *
- * Return first index of treasure
+ * Return reference to treasure on first index
  */
 Treasure* TreasurePack::getTreasure(){
     return this->treasures.first();
@@ -68,9 +68,9 @@ Treasure* TreasurePack::getTreasure(){
 /**
  * @brief TreasurePack::getTreasure
  * @param i
- * @return treasure on index i
+ * @return reference totreasure on index i
  *
- * Return i index of treasure
+ * Return reference to treasure on index i
  */
 Treasure* TreasurePack::getTreasure(unsigned int i){
     return this->treasures[i];
