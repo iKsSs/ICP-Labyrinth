@@ -1,14 +1,19 @@
-/*
-    Autor:      Jakub Pastuszek, xpastu00
-    Projekt:    ICP-Labyrinth 2014/2015
-    Datum:      Kveten 2015
-
-    Popis:      implementace funkci pro reprezentaci hrace a jeho obsluhu
-
-*/
+/**
+ * @file       player.cpp
+ * @author     Jakub Pastuszek (xpastu00@stud.fit.vutr.cz)
+ * @project    ICP-Labyrinth 2014/2015
+ * @date       May 2015
+ *
+ * Implementace funkci pro reprezentaci hrace a jeho obsluhu.
+ */
 
 #include "player.h"
 
+/**
+ * @brief Player::Player
+ *
+ * Implicit contructor - set name PlayerX
+ */
 Player::Player(void)
 {
     Player::countNoName++;
@@ -18,6 +23,12 @@ Player::Player(void)
     this->position.setY(0);
 }
 
+/**
+ * @brief Player::Player
+ * @param name
+ *
+ * Constructor witch name of player
+ */
 Player::Player(QString name)
 {
     this->name = name;
@@ -26,6 +37,13 @@ Player::Player(QString name)
     this->position.setY(0);
 }
 
+/**
+ * @brief Player::Player
+ * @param name
+ * @param position
+ *
+ * Contructor with specified name and positon of player
+ */
 Player::Player(QString name, QPoint position)
 {
     this->name = name;
@@ -33,27 +51,50 @@ Player::Player(QString name, QPoint position)
     this->position = position;
 }
 
+/**
+ * @brief Player::setPosition
+ * @param position
+ *
+ * Set player position
+ */
 void Player::setPosition(QPoint position)
 {
     this->position = position;
 }
 
+/**
+ * @brief Player::getPosition
+ * @return position
+ *
+ * Get player position
+ */
 QPoint Player::getPosition()
 {
     return this->position;
 }
 
+/**
+ * @brief Player::setName
+ * @param name
+ *
+ * Set player name
+ */
 void Player::setName(QString name)
 {
     this->name = name;
 }
 
+/**
+ * @brief Player::setImage
+ *
+ * Set image to player according to position
+ */
 void Player::setImage(){
     unsigned int sw;
-    if(this->position.x() == 0 && this->position.y() == 0){ sw = 3; }
-    else if(this->position.x() == 0 && this->position.y() != 0){ sw = 2; }
-    else if(this->position.x() != 0 && this->position.y() == 0){ sw = 1; }
-    else { sw = 4; }
+    if     (this->position.x() == 0 && this->position.y() == 0){ sw = 3; }  //LH roh
+    else if(this->position.x() == 0 && this->position.y() != 0){ sw = 2; }  //PH roh
+    else if(this->position.x() != 0 && this->position.y() == 0){ sw = 1; }  //LS roh
+    else { sw = 4; }    //PS roh
 
     switch(sw){
         case 1: image.load("images/P-1.png"); break;
@@ -64,30 +105,57 @@ void Player::setImage(){
     }
 }
 
+/**
+ * @brief Player::getImage
+ * @return image
+ *
+ * Return image of player.
+ */
 QPixmap Player::getImage(){
     return this->image;
 }
 
+/**
+ * @brief Player::getName
+ * @return name
+ *
+ * Return name of player
+ */
 QString Player::getName()
 {
     return this->name;
 }
 
+/**
+ * @brief Player::getPoints
+ * @return points
+ *
+ * Return points of player
+ */
 unsigned int Player::getPoints()
 {
     return this->points;
 }
 
+/**
+ * @brief Player::addPoints
+ * @param add
+ *
+ * Add points to player
+ */
 void Player::addPoints(unsigned int add)
 {
     this->points += add;
 }
 
-void Player::run()
-{
-
-}
-
+/**
+ * @brief Player::operator ==
+ * @param p
+ * @return TRUE     Are equal
+ * @return FALSE    Are NOT equal
+ *
+ * Compare players by name
+ */
 bool Player::operator ==(const Player& p) const
 {
     if (this->name == p.name)
@@ -96,4 +164,5 @@ bool Player::operator ==(const Player& p) const
         return false;
 }
 
+//inicializace staticke promenne
 unsigned int Player::countNoName = 0;

@@ -1,11 +1,11 @@
-/*
-    Autor:      Jakub Pastuszek, xpastu00
-    Projekt:    ICP-Labyrinth 2014/2015
-    Datum:      Kveten 2015
-
-    Popis:      hlavni program -> spusteni hlavniho zobrazovaciho okna
-
-*/
+/**
+ * @file       main.cpp
+ * @Author     Jakub Pastuszek (xpastu00@stud.fit.vutr.cz)
+ * @Project    ICP-Labyrinth 2014/2015
+ * @date       May 2015
+ *
+ * Hlavni program -> spusteni hlavniho zobrazovaciho okna
+ */
 
 #include "mainwindow.h"
 #include <QApplication>
