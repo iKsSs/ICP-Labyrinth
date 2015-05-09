@@ -26,6 +26,7 @@ class Board
     QVector<Player*> players;
     Tile* newTile;
     unsigned int size;
+    unsigned int act;
 
     TreasurePack *treasures;
     TreasurePack *cards;
@@ -54,9 +55,14 @@ public:
     void removePlayer(Player *);
     unsigned int getNumPlayers();
     Player* getPlayer(unsigned int);
+    Player* getActPlayer();
+    void actPlus();
 
     void insertNewTile(QPoint);
     void undo();
+
+    void updatePlayersV(bool, bool, bool, bool, int);
+    void updatePlayersH(bool, bool, bool, bool, int);
 
     int genRand(unsigned int, unsigned int);
 protected:

@@ -63,6 +63,26 @@ void Player::setPosition(QPoint position)
 }
 
 /**
+ * @brief Player::setPositionX
+ * @param p
+ *
+ * Set position X
+ */
+void Player::setPositionX(unsigned int p){
+    this->position.setX(p);
+}
+
+/**
+ * @brief Player::setPositionY
+ * @param p
+ *
+ * Set position Y
+ */
+void Player::setPositionY(unsigned int p){
+    this->position.setY(p);
+}
+
+/**
  * @brief Player::getPosition
  * @return position
  *
