@@ -46,6 +46,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     l_size = new QLabel("Choose size:", this);
     l_quantity = new QLabel("Choose quantity:", this);
+    l_player_res  = new QLabel(this);
 
     gw_board = new QGraphicsView(this);
     gw_newTile = new QGraphicsView(this);
@@ -89,6 +90,7 @@ void MainWindow::menu(){
 
     l_size->setGeometry(QRect(20, 20, 60, 20));
     l_quantity->setGeometry(QRect(350, 20, 90, 20));
+    l_player_res->setGeometry(QRect(50, 250, 90, 20));
     l_players->setGeometry(QRect(250, 20, 60, 20));
 
     btn_quantity_12->setGeometry(QRect(350, 40, 20, 20));
@@ -102,8 +104,6 @@ void MainWindow::menu(){
 
     btn_addPlayer->setGeometry(QRect(150, 50, 75, 23));      //tlacitko pridat hrace
     resize(500, 400);                       //cele okno
-
-    ui->plainTextEdit->setGeometry(QRect(20, 220, 400, 150));    //debug okno
 
     //connections
     connect(btn_quantity_12, SIGNAL (released()), this, SLOT (handle_btn_quantity_12()));
@@ -160,37 +160,14 @@ void MainWindow::game(){
     this->board->getCards()->shuffle();     //zamicha karty
     this->board->getTreasures()->shuffle(); //zamicha poklady
 
-/* DEBUG */
-    ui->plainTextEdit->appendPlainText("Generated tiles");
-    ui->plainTextEdit->appendPlainText("Straight:\t");
-    ui->plainTextEdit->insertPlainText(QString::number(TileStraight::count));
-    ui->plainTextEdit->appendPlainText("Corner:\t");
-    ui->plainTextEdit->insertPlainText(QString::number(TileCorner::count));
-    ui->plainTextEdit->appendPlainText("Cross:\t");
-    ui->plainTextEdit->insertPlainText(QString::number(TileCross::count));
-
-    TreasurePack* tr_pom = this->board->getCards();
-
-    ui->plainTextEdit->appendPlainText("\nCards:");
-
-    for (i=0; i < quantity; ++i){
-        ui->plainTextEdit->appendPlainText(QString::number(tr_pom->getTreasure(i)->getCode()));
-    }
-
-    tr_pom = this->board->getTreasures();
-
-    ui->plainTextEdit->appendPlainText("\nTreasures:");
-    for (i=0; i < quantity; ++i){
-        ui->plainTextEdit->appendPlainText(QString::number(tr_pom->getTreasure(i)->getCode()));
-    }
-/* END DEBUG */
-
     gw_board->setInteractive(true);
 
     this->genBoard();   //generovani hraciho pole
 
     this->width = this->size*IMG_SIZE+100;    //sirka sceny
     this->height = this->size*IMG_SIZE+100;   //vyska sceny
+
+    l_player_res->setText(this->board->getActPlayer()->getName());
 
     //nastaveni zobrazovani objektu
     gw_board->setGeometry(QRect(10, 10, width, height));    //prizpusobeni okna hraci desky
@@ -199,7 +176,7 @@ void MainWindow::game(){
     btn_load->setGeometry(QRect(width+20, 40, 50, 23));      //tlacitko load
     l_players->setGeometry(QRect(240, height+15, 80, 60));      //stitek hraci
     l_addPlayers->setGeometry(QRect(290, height+15, 80, 60));   //stitek seznam hracu
-    ui->plainTextEdit->setGeometry(QRect(width+20, 10, 250, height+25));    //debug okno
+    l_player_res->setGeometry(QRect(width+20, 80, 90, 20));          //aktualni hrac
     gw_newTile->setGeometry(QRect(10, height+20, 44, 44));      //novy kamen mimo hraci desku
     resize(10+width+20+250, 10+height+25+40);                       //cele okno
 
@@ -266,6 +243,7 @@ MainWindow::~MainWindow()
 
     delete l_size;
     delete l_quantity;
+    delete l_player_res;
     delete le_player;
 
     delete btn_quantity_12;
@@ -347,6 +325,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                 if (this->canMove(p->getPosition().x() * this->size + p->getPosition().y(), row * this->size + col)){
                     p->setPosition(QPoint(row,col));
                     this->board->actPlus();
+                    l_player_res->setText(this->board->getActPlayer()->getName());
                 }
 
                 this->genBoard();
@@ -362,8 +341,6 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
  */
 void MainWindow::handle_btn_rotate()
 {
-//    ui->plainTextEdit->appendPlainText("Obsluha Rotate");
-
     this->board->getNewTile()->rotate();   //otoceni
 
     //zavola prekresleni
@@ -380,7 +357,7 @@ void MainWindow::handle_btn_addPlayer()
     unsigned int i, n;
     n = this->board->getNumPlayers();
     if (n >= 4){
-       ui->plainTextEdit->appendPlainText("MAX 4 Players");
+       l_player_res->setText("MAX 4 Players");
     }
     else{
         if (le_player->text().isEmpty()){
@@ -389,7 +366,7 @@ void MainWindow::handle_btn_addPlayer()
         else{
             for (i=0; i < n; ++i ){
                 if(!(le_player->text().compare(board->getPlayer(i)->getName()))){
-                    ui->plainTextEdit->appendPlainText("Name already exists");
+                    l_player_res->setText("Name already exists");
                     break;
                 }
             }
@@ -537,7 +514,7 @@ void MainWindow::handle_btn_play()
         this->game();
     }
     else{
-        ui->plainTextEdit->appendPlainText("Restriction: 2-4 players needed for game");
+        l_player_res->setText("Restriction: 2-4 players needed for game");
     }
 }
 
@@ -649,7 +626,7 @@ bool MainWindow::canMove(unsigned int index_start, unsigned int index_goal)
     QVector<unsigned int> indexs;
     unsigned int ptr_indexs = 0;
 
-    indexs.push_back(index_start);
+    indexs.push_back(index_start);  //startovaci index do vektoru
     bool inc_ptr_indexs = false;
 
     while (true)
@@ -657,6 +634,40 @@ bool MainWindow::canMove(unsigned int index_start, unsigned int index_goal)
         index_start = indexs[ptr_indexs];
 
         Move move = board->getTile(index_start)->getMove();
+
+        if (move.moveUp())
+        {
+            if (index_start - this->size < this->size * this->size)
+            {
+                Move move = board->getTile(index_start - this->size)->getMove();
+                if (move.moveDown())
+                {
+                    if (indexs.indexOf(index_start - this->size) == -1)
+                    {
+                        indexs.push_back(index_start - this->size);
+
+                        inc_ptr_indexs = true;
+                    }
+                }
+            }
+        }
+
+        if (move.moveRight())
+        {
+            if (index_start + 1 % (this->size) != 0 && index_start + 1 < this->size * this->size)
+            {
+                Move move = board->getTile(index_start + 1)->getMove();
+                if (move.moveLeft())
+                {
+                    if (indexs.indexOf(index_start + 1) == -1)
+                    {
+                        indexs.push_back(index_start + 1);
+
+                        inc_ptr_indexs = true;
+                    }
+                }
+            }
+        }
 
         if (move.moveDown())
         {
@@ -670,11 +681,11 @@ bool MainWindow::canMove(unsigned int index_start, unsigned int index_goal)
                         indexs.push_back(index_start + this->size);
 
                         inc_ptr_indexs = true;
-
                     }
                 }
             }
         }
+
         if (move.moveLeft())
         {
             if (index_start % this->size != 0 && index_start - 1 >= 0)
@@ -687,43 +698,6 @@ bool MainWindow::canMove(unsigned int index_start, unsigned int index_goal)
                         indexs.push_back(index_start - 1);
 
                         inc_ptr_indexs = true;
-
-                    }
-                }
-            }
-        }
-        if (move.moveRight())
-        {
-            if (index_start + 1 % (this->size) != 0 && index_start + 1 < this->size * this->size)
-            {
-                Move move = board->getTile(index_start + 1)->getMove();
-                if (move.moveLeft())
-                {
-                    if (indexs.indexOf(index_start + 1) == -1)
-                    {
-                        indexs.push_back(index_start + 1);
-
-                        inc_ptr_indexs = true;
-
-                    }
-                }
-            }
-        }
-        if (move.moveUp())
-        {
-            if (index_start - this->size < this->size * this->size)
-            {
-                qDebug(QString::number(index_start - this->size).toStdString().c_str());
-
-                Move move = board->getTile(index_start - this->size)->getMove();
-                if (move.moveDown())
-                {
-                    if (indexs.indexOf(index_start - this->size) == -1)
-                    {
-                        indexs.push_back(index_start - this->size);
-
-                        inc_ptr_indexs = true;
-
                     }
                 }
             }

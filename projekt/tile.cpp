@@ -393,7 +393,7 @@ void TileOutter::genImage()
 
 /**
  * @brief Tile::toCSV
- * @return
+ * @return csv
  */
 QString Tile::toCSV()
 {

@@ -100,6 +100,7 @@ private:
 
     QLabel* l_size;
     QLabel* l_quantity;
+    QLabel* l_player_res;
     QLineEdit* le_player;
 
     QPushButton* btn_quantity_12;

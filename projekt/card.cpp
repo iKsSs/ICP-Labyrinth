@@ -39,14 +39,9 @@ void Treasure::setImage(){
     image.load(str);
 }
 
-QString TreasurePack::toCSV()
-{
-    return "";
-}
-
 /**
  * @brief TreasurePack::toCSV
- * @return
+ * @return csv
  */
 QString TreasurePack::toCSV()
 {
