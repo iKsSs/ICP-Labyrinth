@@ -186,3 +186,17 @@ bool Player::operator ==(const Player& p) const
 
 //inicializace staticke promenne
 unsigned int Player::countNoName = 0;
+
+
+QString Player::toCSV()
+{
+    //crati retezec CSV formatu pro player
+
+    QString csv = "";
+    csv.append("P;");
+    csv.append(QString::number(this->position.x()) + ";");
+    csv.append(QString::number(this->position.y()) + ";");
+    csv.append(this->name + "\n");
+
+    return csv;
+}

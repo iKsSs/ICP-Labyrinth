@@ -597,3 +597,8 @@ void Board::updatePlayersH(bool p_0, bool p_1, bool p_2, bool p_3, int add){
             }
         }
 }
+
+QString Board::toCSV()
+{
+    return "";
+}

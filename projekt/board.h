@@ -66,6 +66,8 @@ public:
     void updatePlayersH(bool, bool, bool, bool, int);
 
     int genRand(unsigned int, unsigned int);
+
+    QString toCSV();
 protected:
     //Tile generateTile();
 };

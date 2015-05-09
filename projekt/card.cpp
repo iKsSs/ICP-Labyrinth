@@ -39,6 +39,11 @@ void Treasure::setImage(){
     image.load(str);
 }
 
+QString TreasurePack::toCSV()
+{
+    return "";
+}
+
 /**
  * @brief Treasure::getImage
  * @return image

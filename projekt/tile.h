@@ -14,6 +14,7 @@
 #include <QPoint>
 #include <QPixmap>
 #include <QVector>
+#include <QString>
 
 #include "player.h"
 #include "card.h"
@@ -64,6 +65,8 @@ public:
   void addPlayer(Player);
   void removePlayer(Player);
   QVector<Player> getPlayers();
+
+  QString toCSV();
 };
 
 class TileStraight: public Tile{
