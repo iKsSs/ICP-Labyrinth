@@ -154,17 +154,23 @@ void Board::setOutterFields(unsigned int n){
  *
  * Set treasure to tile
  */
-void Board::setTreasureToTile(unsigned int n){
-    unsigned int i, j, a = 0;
+void Board::setTreasureToTile(unsigned int n, unsigned int q){
+    unsigned int i, random, a = 0;
+    unsigned int size = n*n;
 
-    for (i=0; i<n; ++i){
-      for (j=0; j<n; ++j){
+    QVector<int> vec;
+    for (i=0; i < size; ++i){
+        vec.append(i);
+    }
 
-        if(a < 12){
-            this->getTile(i*this->size+j)->setTreasure(this->treasures->getTreasure(a));
-        }
-        a++;
-      }
+    for (a=0; a < q; ++a){
+        random = qrand() % size;
+
+        i = random % vec.size();
+
+        this->getTile(vec[i])->setTreasure(this->treasures->getTreasure(a));
+
+        vec.remove(i);
     }
 }
 
@@ -598,6 +604,10 @@ void Board::updatePlayersH(bool p_0, bool p_1, bool p_2, bool p_3, int add){
         }
 }
 
+/**
+ * @brief Board::toCSV
+ * @return
+ */
 QString Board::toCSV()
 {
     return "";

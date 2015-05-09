@@ -58,6 +58,9 @@ MainWindow::MainWindow(QWidget *parent) :
     btn_size_9 = new QPushButton("9", this);
     btn_size_11 = new QPushButton("11", this);
 
+    btn_save = new QPushButton("Save", this);
+    btn_load = new QPushButton("Load", this);
+
     btn_play = new QPushButton("Play!", this);
 
     board = new Board();
@@ -152,7 +155,7 @@ void MainWindow::game(){
     this->board->setOutterFields(this->size);   //vygenerování policek pro vsunuti kamene
     this->board->setTreasures(this->quantity);   //vygenerovat poklady
     this->board->setCards(this->quantity);   //vygenerovat karty
-    this->board->setTreasureToTile(this->size);   //prirazeni pokladu kamenum
+    this->board->setTreasureToTile(this->size, this->quantity);   //prirazeni pokladu kamenum
 
     this->board->getCards()->shuffle();     //zamicha karty
     this->board->getTreasures()->shuffle(); //zamicha poklady
@@ -192,6 +195,8 @@ void MainWindow::game(){
     //nastaveni zobrazovani objektu
     gw_board->setGeometry(QRect(10, 10, width, height));    //prizpusobeni okna hraci desky
     btn_rotate->setGeometry(QRect(60, height+20, 50, 23));      //tlacitko rotace
+    btn_save->setGeometry(QRect(width+20, 10, 50, 23));      //tlacitko save
+    btn_load->setGeometry(QRect(width+20, 40, 50, 23));      //tlacitko load
     l_players->setGeometry(QRect(240, height+15, 80, 60));      //stitek hraci
     l_addPlayers->setGeometry(QRect(290, height+15, 80, 60));   //stitek seznam hracu
     ui->plainTextEdit->setGeometry(QRect(width+20, 10, 250, height+25));    //debug okno
@@ -206,6 +211,8 @@ void MainWindow::game(){
 
     //connections
     connect(btn_rotate, SIGNAL (released()), this, SLOT (handle_btn_rotate()));
+    connect(btn_save, SIGNAL (released()), this, SLOT (handle_btn_save()));
+    connect(btn_load, SIGNAL (released()), this, SLOT (handle_btn_load()));
 }
 
 /**
@@ -218,6 +225,8 @@ void MainWindow::hideGame(){
     btn_rotate->hide();
     gw_board->hide();
     gw_newTile->hide();
+    btn_save->hide();
+    btn_load->hide();
 }
 
 /**
@@ -230,6 +239,8 @@ void MainWindow::showGame(){
     btn_rotate->show();
     gw_board->show();
     gw_newTile->show();
+    btn_save->show();
+    btn_load->show();
 }
 
 /**
@@ -263,6 +274,8 @@ MainWindow::~MainWindow()
     delete btn_size_7;
     delete btn_size_9;
     delete btn_size_11;
+    delete btn_save;
+    delete btn_load;
     delete btn_play;
 
     delete gw_board;
@@ -398,6 +411,9 @@ void MainWindow::handle_btn_addPlayer()
 void MainWindow::drawNewTile()
 {
     this->newTile->addPixmap(board->getNewTile()->getImage());        //prida obrazek do okenka
+    if(board->getNewTile()->getTreasure() != NULL){
+        this->newTile->addPixmap(board->getNewTile()->getTreasure()->getImage());     //ziska obrazek
+    }
     gw_newTile->setScene(newTile);  //zobrazi novy kamen
 }
 
@@ -526,6 +542,26 @@ void MainWindow::handle_btn_play()
 }
 
 /**
+ * @brief MainWindow::handle_btn_save
+ *
+ * Handle button save
+ */
+void MainWindow::handle_btn_save()
+{
+
+}
+
+/**
+ * @brief MainWindow::handle_btn_load
+ *
+ * Handle button load
+ */
+void MainWindow::handle_btn_load()
+{
+
+}
+
+/**
  * @brief MainWindow::genBoard
  *
  * Generate board
@@ -558,16 +594,16 @@ void MainWindow::genBoard(){
             }
             int souradnice = j+i*this->size;
             tile = board->getTile(souradnice);    //odkaz na kamen
-            obr = tile->getImage();     //ziska obrazek
 
+            //vykresleni kamenu
+            obr = tile->getImage();     //ziska obrazek
 
             pixmapItem = scene->addPixmap(obr); //prida obrazek do sceny a vrati odkaz na nej
 
             pixmapItem->setX(x+50);
             pixmapItem->setY(y+50);
 
-
-
+            //vykresleni pokladu
             if(tile->getTreasure() != NULL){
                 obr = tile->getTreasure()->getImage();     //ziska obrazek
 
@@ -576,9 +612,7 @@ void MainWindow::genBoard(){
 
                 pixmapItem->setX(x+50);
                 pixmapItem->setY(y+50);
-
             }
-
 
             //vykresleni hracu
             for (l=0; l < board->getNumPlayers(); ++l){

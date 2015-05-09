@@ -36,6 +36,8 @@ class TreasurePack{
     void shuffle();
     QString toCSV();
 
+    QString toCSV();
+
     ~TreasurePack();
 };
 
