@@ -45,6 +45,15 @@ QString TreasurePack::toCSV()
 }
 
 /**
+ * @brief TreasurePack::toCSV
+ * @return
+ */
+QString TreasurePack::toCSV()
+{
+    return "";
+}
+
+/**
  * @brief Treasure::getImage
  * @return image
  *

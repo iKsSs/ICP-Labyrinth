@@ -56,6 +56,8 @@ public:
   void setMove();
   void setTreasure(Treasure*);
 
+  void removeTreasure();
+
   QPoint getPosition();
   QPixmap getImage();
   Move getMove();

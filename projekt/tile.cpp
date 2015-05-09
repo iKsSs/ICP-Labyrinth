@@ -148,6 +148,15 @@ void Tile::setTreasure(Treasure *t){
 }
 
 /**
+ * @brief Tile::removeTreasure
+ *
+ * Remove treasure
+ */
+void Tile::removeTreasure(){
+    this->treasure = NULL;
+}
+
+/**
  * @brief Tile::getPosition
  * @return position
  *
@@ -382,9 +391,13 @@ void TileOutter::genImage()
    this->image.load("images/E.png");
 }
 
+/**
+ * @brief Tile::toCSV
+ * @return
+ */
 QString Tile::toCSV()
 {
-    //crati retezec CSV formatu pro tail
+    //vrati retezec CSV formatu pro tail
 
     QString csv = "";
     csv.append("T;");

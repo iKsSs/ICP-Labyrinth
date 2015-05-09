@@ -12,6 +12,7 @@
 
 #include <QPoint>
 #include <QVector>
+#include <QSet>
 #include <QTime>
 #include <qglobal.h>
 
@@ -37,7 +38,7 @@ public:
     Board();
     void setBoard(unsigned int);
     void setOutterFields(unsigned int);
-    void setTreasureToTile(unsigned int);
+    void setTreasureToTile(unsigned int, unsigned int);
     void setTreasures(unsigned int);
     void setCards(unsigned int);
     void setNewTile(void);
