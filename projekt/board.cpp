@@ -10,6 +10,11 @@
 
 #include "board.h"
 
+/**
+ * @brief Board::Board
+ *
+ * Implicit contrusctor
+ */
 Board::Board(): newTile{NULL}, treasures{NULL}, cards{NULL}, size{0} {}
 
 void Board::setBoard(unsigned int n){
@@ -131,14 +136,31 @@ void Board::setOutterFields(unsigned int n){
     }
 }
 
+/**
+ * @brief Board::setTreasures
+ * @param n
+ *
+ * Set treasure pack
+ */
 void Board::setTreasures(unsigned int n){
     this->treasures = new TreasurePack(n);
 }
 
+/**
+ * @brief Board::setCards
+ * @param n
+ *
+ * Set card pack
+ */
 void Board::setCards(unsigned int n){
     this->cards = new TreasurePack(n);
 }
 
+/**
+ * @brief Board::setNewTile
+ *
+ * Set new tile out of board
+ */
 void Board::setNewTile(void){
     unsigned int choice = this->genRand(1, 3);
     switch(choice){
@@ -148,39 +170,87 @@ void Board::setNewTile(void){
             this->newTile = new TileCorner(1); break;
         case 3:
             this->newTile = new TileCross(1); break;
-
-        default: this->newTile = NULL;
     }
 }
 
+/**
+ * @brief Board::setSize
+ * @param size
+ *
+ * Set board size
+ */
 void Board::setSize(unsigned int size){
     this->size = size;
 }
 
+/**
+ * @brief Board::getTile
+ * @param i
+ * @return tile on index i
+ *
+ * Get tile on index i
+ */
 Tile* Board::getTile(int i){
     return this->tiles[i];
 }
 
+/**
+ * @brief Board::getOutterField
+ * @param i
+ * @return outter tile on index i
+ *
+ * Get outter tile on index i
+ */
 Tile* Board::getOutterField(unsigned int i){
     return this->outter[i];
 }
 
+/**
+ * @brief Board::getNewTile
+ * @return new tile
+ *
+ * Get new tile
+ */
 Tile* Board::getNewTile(void){
     return this->newTile;
 }
 
+/**
+ * @brief Board::getTreasures
+ * @return reference to treasures
+ *
+ * Return reference to treasures
+ */
 TreasurePack* Board::getTreasures(){
     return this->treasures;
 }
 
+/**
+ * @brief Board::getCards
+ * @return reference to cards
+ *
+ * Return reference to cards
+ */
 TreasurePack* Board::getCards(){
     return this->cards;
 }
 
+/**
+ * @brief Board::addPlayer
+ * @param play
+ *
+ * Add new player to vector players
+ */
 void Board::addPlayer(Player play){
    this->players.push_back(play);
 }
 
+/**
+ * @brief Board::removePlayer
+ * @param play
+ *
+ * Remove player from vector players
+ */
 void Board::removePlayer(Player play){
     int n = this->players.size();
     for(int i = 0; i < n; ++i){
@@ -191,14 +261,32 @@ void Board::removePlayer(Player play){
     }
 }
 
+/**
+ * @brief Board::getNumPlayers
+ * @return size of vector players
+ *
+ * Return size of vector players
+ */
 unsigned int Board::getNumPlayers(){
     return this->players.size();
 }
 
+/**
+ * @brief Board::getPlayer
+ * @param i
+ * @return player on index i
+ *
+ * Return player on index i in vector players
+ */
 Player Board::getPlayer(unsigned int i){
     return this->players[i];
 }
 
+/**
+ * @brief Board::setPlayerPos
+ *
+ * Set player position
+ */
 void Board::setPlayerPos(){
     unsigned int i, n = this->players.size();
     for (i=0; i < n; ++i){
@@ -212,10 +300,24 @@ void Board::setPlayerPos(){
     }
 }
 
+/**
+ * @brief Board::genRand
+ * @param Low
+ * @param High
+ * @return generated number
+ *
+ * Generate number in interval <Low, High>
+ */
 int Board::genRand(unsigned int Low, unsigned int High){
     return qrand() % ((High + 1) - Low) + Low;
 }
 
+/**
+ * @brief Board::insertNewTile
+ * @param point
+ *
+ * Insert new tile into board and shift row or col
+ */
 void Board::insertNewTile(QPoint point){
     unsigned int i, j;
     Tile* x;
