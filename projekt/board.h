@@ -23,7 +23,7 @@ class Board
 {
     QVector<Tile*> tiles;
     QVector<Tile*> outter;
-    QVector<Player> players;
+    QVector<Player*> players;
     Tile* newTile;
     unsigned int size;
 
@@ -50,10 +50,10 @@ public:
     TreasurePack* getTreasures();
     TreasurePack* getCards();
 
-    void addPlayer(Player);
-    void removePlayer(Player);
+    void addPlayer(Player *);
+    void removePlayer(Player *);
     unsigned int getNumPlayers();
-    Player getPlayer(unsigned int);
+    Player* getPlayer(unsigned int);
 
     void insertNewTile(QPoint);
     void undo();
