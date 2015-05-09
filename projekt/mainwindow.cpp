@@ -152,6 +152,7 @@ void MainWindow::game(){
     this->board->setOutterFields(this->size);   //vygenerování policek pro vsunuti kamene
     this->board->setTreasures(this->quantity);   //vygenerovat poklady
     this->board->setCards(this->quantity);   //vygenerovat karty
+    this->board->setTreasureToTile(this->size);   //prirazeni pokladu kamenum
 
     this->board->getCards()->shuffle();     //zamicha karty
     this->board->getTreasures()->shuffle(); //zamicha poklady
@@ -183,7 +184,7 @@ void MainWindow::game(){
 
     gw_board->setInteractive(true);
 
-    this->genBoard();   //generovani hraciho pol
+    this->genBoard();   //generovani hraciho pole
 
     this->width = this->size*IMG_SIZE+100;    //sirka sceny
     this->height = this->size*IMG_SIZE+100;   //vyska sceny
@@ -320,14 +321,6 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                         board->insertNewTile(QPoint(row, col));
                         this->genBoard();
                         this->drawNewTile();
-
-                        QMessageBox msgBox;
-                        msgBox.setWindowTitle("Kliknul jsi na obr��zek");
-                        msgBox.setText(QString::number(row) + " " + QString::number(col));
-
-                        msgBox.setStandardButtons(QMessageBox::Yes);
-                        msgBox.setDefaultButton(QMessageBox::No);
-                        //msgBox.exec();
                     }
                 }
             }
@@ -567,41 +560,37 @@ void MainWindow::genBoard(){
             tile = board->getTile(souradnice);    //odkaz na kamen
             obr = tile->getImage();     //ziska obrazek
 
-/* DEBUG */
-//                int rot, mov;
-//                QPoint pos;
-//                pos = tile->getPosition();
-//                rot = tile->getRotation();
-//                mov = tile->getMove();
-
-//                ui->plainTextEdit->appendPlainText(QString::number(pos.x()+1));
-//                ui->plainTextEdit->insertPlainText("x");
-//                ui->plainTextEdit->insertPlainText(QString::number(pos.y()+1));
-//                ui->plainTextEdit->insertPlainText(" :    ");
-//                ui->plainTextEdit->insertPlainText(QString::number(rot));
-//                ui->plainTextEdit->insertPlainText("        ");
-//                ui->plainTextEdit->insertPlainText(QString::number(mov));
-/* END DEBUG */
 
             pixmapItem = scene->addPixmap(obr); //prida obrazek do sceny a vrati odkaz na nej
 
             pixmapItem->setX(x+50);
             pixmapItem->setY(y+50);
 
-            //vykresleni hracu
-           // if (i == 0 || j == 0 || i == this->size-1 || j == this->size-1){    //podminka pro zrychleni
-                for (l=0; l < board->getNumPlayers(); ++l){
-                    Player* p;
-                    p = board->getPlayer(l);
-                    if (i == p->getPosition().x() && j == p->getPosition().y()){
-                        obr = p->getImage();
-                        pixmapItem = scene->addPixmap(obr); //prida obrazek do sceny a vrati odkaz na nej
 
-                        pixmapItem->setX(x+50);
-                        pixmapItem->setY(y+50);
-                    }
+
+            obr = tile->getTreasure()->getImage();     //ziska obrazek
+
+
+            pixmapItem = scene->addPixmap(obr); //prida obrazek do sceny a vrati odkaz na nej
+
+            pixmapItem->setX(x+50);
+            pixmapItem->setY(y+50);
+
+
+
+
+            //vykresleni hracu
+            for (l=0; l < board->getNumPlayers(); ++l){
+                Player* p;
+                p = board->getPlayer(l);
+                if (i == p->getPosition().x() && j == p->getPosition().y()){
+                    obr = p->getImage();
+                    pixmapItem = scene->addPixmap(obr); //prida obrazek do sceny a vrati odkaz na nej
+
+                    pixmapItem->setX(x+50);
+                    pixmapItem->setY(y+50);
                 }
-          //  }
+            }
 
             x += IMG_SIZE; //posunuti v ose X
         }

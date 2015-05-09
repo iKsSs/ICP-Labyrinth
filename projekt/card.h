@@ -11,15 +11,17 @@
 #define CARD
 
 #include <QVector>
-#include <QImage>
+#include <QPixmap>
 
 class Treasure{
     unsigned int code;
-    QImage image;
+    QPixmap image;
   public:
     Treasure();
     Treasure(unsigned int);
     unsigned int getCode();
+    void setImage();
+    QPixmap getImage();
 };
 
 class TreasurePack{

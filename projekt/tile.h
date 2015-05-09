@@ -16,6 +16,7 @@
 #include <QVector>
 
 #include "player.h"
+#include "card.h"
 
 const bool T = true;
 const bool F = false;
@@ -40,6 +41,7 @@ protected:
   QPoint position;
   QPixmap image;
   Move move;
+  Treasure *treasure;
   unsigned int rotation;
 
 public:
@@ -51,10 +53,12 @@ public:
   void setPosition(QPoint);
   void setRotation(unsigned int);
   void setMove();
+  void setTreasure(Treasure*);
 
   QPoint getPosition();
   QPixmap getImage();
   Move getMove();
+  Treasure* getTreasure();
   unsigned int getRotation();
 
   void addPlayer(Player);

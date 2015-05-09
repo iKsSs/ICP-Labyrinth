@@ -149,6 +149,23 @@ void Board::setOutterFields(unsigned int n){
 }
 
 /**
+ * @brief Board::setTreasureToTile
+ * @param n
+ *
+ * Set treasure to tile
+ */
+void Board::setTreasureToTile(unsigned int n){
+    unsigned int i, j, a=1;
+    Tile* x;
+    for (i=0; i<n; ++i){
+      for (j=0; j<n; ++j){
+        x = this->getTile(i*this->size+j);
+        x->setTreasure(this->treasures->getTreasure(a));
+      }
+    }
+}
+
+/**
  * @brief Board::setTreasures
  * @param n
  *
@@ -403,7 +420,7 @@ void Board::insertNewTile(QPoint point){
             newTile = x;
             j += this->size;
         }
-        // printf("%d %d %d %d\n", p_0, p_1, p_2, p_3);
+
         this->updatePlayersV(p_0, p_1, p_2, p_3, 1);
     }
     //shift left

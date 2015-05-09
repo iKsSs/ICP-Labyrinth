@@ -30,6 +30,26 @@ unsigned int Treasure::getCode(){
 }
 
 /**
+ * @brief Treasure::setImage
+ *
+ * Set image
+ */
+void Treasure::setImage(){
+    QString str = "images/treasure/T-" + QString::number(this->code) + ".png";
+    image.load(str);
+}
+
+/**
+ * @brief Treasure::getImage
+ * @return image
+ *
+ * Return image
+ */
+QPixmap Treasure::getImage(){
+    return this->image;
+}
+
+/**
  * @brief TreasurePack::TreasurePack
  * @param quantity
  *
@@ -46,7 +66,7 @@ TreasurePack::TreasurePack(unsigned int quantity){
  * Set pack of treasures
  */
 void TreasurePack::setTreasurePack(){
-    unsigned int code = 0;
+    unsigned int code = 1;
     unsigned int i;
     for (i=0; i < this->quantity; ++i){ //pocet pokladu je quantity
         Treasure *x = new Treasure(code);

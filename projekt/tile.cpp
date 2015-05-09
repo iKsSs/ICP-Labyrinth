@@ -136,6 +136,16 @@ void Tile::setRotation(unsigned int r){
 }
 
 /**
+ * @brief Tile::setTreasure
+ *
+ * Set treasure
+ */
+void Tile::setTreasure(Treasure *t){
+    this->treasure = t;
+    this->treasure->setImage();
+}
+
+/**
  * @brief Tile::getPosition
  * @return position
  *
@@ -163,6 +173,16 @@ QPixmap Tile::getImage(){
  */
 Move Tile::getMove(){
     return this->move;
+}
+
+/**
+ * @brief getTreasure
+ * @return treasure
+ *
+ * Return treasure
+ */
+Treasure* Tile::getTreasure(){
+    return this->treasure;
 }
 
 /**

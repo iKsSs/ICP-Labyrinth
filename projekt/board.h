@@ -37,6 +37,7 @@ public:
     Board();
     void setBoard(unsigned int);
     void setOutterFields(unsigned int);
+    void setTreasureToTile(unsigned int);
     void setTreasures(unsigned int);
     void setCards(unsigned int);
     void setNewTile(void);
