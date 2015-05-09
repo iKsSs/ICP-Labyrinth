@@ -49,6 +49,8 @@ public:
     static unsigned int countNoName;
 
     //~Player();
+
+    QString toCSV();
 };
 
 #endif // PLAYER

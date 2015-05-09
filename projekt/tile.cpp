@@ -382,6 +382,19 @@ void TileOutter::genImage()
    this->image.load("images/E.png");
 }
 
+QString Tile::toCSV()
+{
+    //crati retezec CSV formatu pro tail
+
+    QString csv = "";
+    csv.append("T;");
+    csv.append(QString::number(this->move.getMove()) + ";");
+    csv.append(QString::number(this->rotation) + ";");
+    csv.append(QString::number(this->treasure->getCode()) + "\n");
+
+    return csv;
+}
+
 //inicializace statickych promennych
 unsigned int TileStraight::count = 0;
 unsigned int TileCorner::count = 0;
