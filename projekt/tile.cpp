@@ -1,11 +1,11 @@
-/*
-    Autor:      Jakub Pastuszek, xpastu00
-    Projekt:    ICP-Labyrinth 2014/2015
-    Datum:      Kveten 2015
-
-    Popis:      implementace funkci pro reprezentaci kamene a jeho obsluhu
-
-*/
+/**
+ * @file       tile.cpp
+ * @author     Jakub Pastuszek (xpastu00@stud.fit.vutr.cz)
+ * @project    ICP-Labyrinth 2014/2015
+ * @date       May 2015
+ *
+ * Implementace funkci pro reprezentaci kamene a jeho obsluhu.
+ */
 
 #include "tile.h"
 
