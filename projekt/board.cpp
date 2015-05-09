@@ -155,12 +155,16 @@ void Board::setOutterFields(unsigned int n){
  * Set treasure to tile
  */
 void Board::setTreasureToTile(unsigned int n){
-    unsigned int i, j, a=1;
-    Tile* x;
+    unsigned int i, j, a = 0;
+
     for (i=0; i<n; ++i){
       for (j=0; j<n; ++j){
-        x = this->getTile(i*this->size+j);
-        x->setTreasure(this->treasures->getTreasure(a));
+
+        if(a < 2){
+            printf("%d\n", a);
+            this->getTile(i*this->size+j)->setTreasure(this->treasures->getTreasure(a));
+        }
+       // a+=1;
       }
     }
 }
