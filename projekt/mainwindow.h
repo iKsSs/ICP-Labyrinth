@@ -66,8 +66,8 @@ private slots:
     void handle_btn_addPlayer();
     void handle_btn_play();
 
-    void handle_btn_treasure_12();
-    void handle_btn_treasure_24();
+    void handle_btn_quantity_12();
+    void handle_btn_quantity_24();
 
 private:
     Ui::MainWindow *ui;
@@ -98,6 +98,8 @@ private:
     QLabel* l_quantity;
     QLineEdit* le_player;
 
+    QPushButton* btn_quantity_12;
+    QPushButton* btn_quantity_24;
     QPushButton* btn_size_5;
     QPushButton* btn_size_7;
     QPushButton* btn_size_9;

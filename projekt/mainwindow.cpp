@@ -45,6 +45,8 @@ MainWindow::MainWindow(QWidget *parent) :
     gw_newTile = new QGraphicsView(this);
     le_player = new QLineEdit(this);
 
+    btn_quantity_12 = new QPushButton("12", this);
+    btn_quantity_24 = new QPushButton("24", this);
     btn_size_5 = new QPushButton("5", this);
     btn_size_7 = new QPushButton("7", this);
     btn_size_9 = new QPushButton("9", this);
@@ -73,6 +75,8 @@ void MainWindow::menu(){
     l_quantity->setGeometry(QRect(350, 20, 90, 20));
     l_players->setGeometry(QRect(250, 20, 60, 20));
 
+    btn_quantity_12->setGeometry(QRect(350, 40, 20, 20));
+    btn_quantity_24->setGeometry(QRect(370, 40, 20, 20));
     btn_size_5->setGeometry(QRect(40, 40, 20, 20));
     btn_size_7->setGeometry(QRect(60, 40, 20, 20));
     btn_size_9->setGeometry(QRect(80, 40, 20, 20));
@@ -86,6 +90,8 @@ void MainWindow::menu(){
     ui->plainTextEdit->setGeometry(QRect(20, 220, 400, 150));    //debug okno
 
     //connections
+    connect(btn_quantity_12, SIGNAL (released()), this, SLOT (handle_btn_quantity_12()));
+    connect(btn_quantity_24, SIGNAL (released()), this, SLOT (handle_btn_quantity_24()));
     connect(btn_size_5, SIGNAL (released()), this, SLOT (handle_btn_size_5()));
     connect(btn_size_7, SIGNAL (released()), this, SLOT (handle_btn_size_7()));
     connect(btn_size_9, SIGNAL (released()), this, SLOT (handle_btn_size_9()));
@@ -101,6 +107,8 @@ void MainWindow::hideMenu(){
     l_size->hide();
     l_quantity->hide();
     le_player->hide();
+    btn_quantity_12->hide();
+    btn_quantity_24->hide();
     btn_size_5->hide();
     btn_size_7->hide();
     btn_size_9->hide();
@@ -211,6 +219,8 @@ MainWindow::~MainWindow()
     delete l_quantity;
     delete le_player;
 
+    delete btn_quantity_12;
+    delete btn_quantity_24;
     delete btn_size_5;
     delete btn_size_7;
     delete btn_size_9;
@@ -275,12 +285,12 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                 unsigned int row = (posY - 50) / IMG_SIZE;
                 unsigned int col = (posX - 50) / IMG_SIZE;
 
-                col = row;  //aby se nezobrazoval warning :D
+                //col = row;  //aby se nezobrazoval warning :D
 /* DEBUG */
                 //tady se zpracuje udalost
                 QMessageBox msgBox;
                 msgBox.setWindowTitle("Klik");
-                msgBox.setText(QString::number(this->board->getTile(7)->getMove().getMove()) + " " +
+        /*        msgBox.setText(QString::number(this->board->getTile(7)->getMove().getMove()) + " " +
                                QString::number(this->board->getTile(8)->getMove().getMove()) + " " +
                                QString::number(this->board->getTile(9)->getMove().getMove()) + " " +
                                QString::number(this->board->getTile(10)->getMove().getMove()) + " " +
@@ -288,6 +298,8 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                                QString::number(this->board->getTile(12)->getMove().getMove()) + " " +
                                QString::number(this->board->getTile(13)->getMove().getMove())
                                );
+        */
+                msgBox.setText(QString::number(row*this->size+col));
                 msgBox.setStandardButtons(QMessageBox::Yes);
                 msgBox.setDefaultButton(QMessageBox::No);
                 msgBox.exec();
@@ -384,16 +396,16 @@ void MainWindow::drawSize(){
     l_sizeView->repaint();
 }
 
-void MainWindow::handle_btn_treasure_12()
+void MainWindow::handle_btn_quantity_12()
 {
     this->quantity = 12;
-    this->drawSize();
+    this->drawQuantity();
 }
 
-void MainWindow::handle_btn_treasure_24()
+void MainWindow::handle_btn_quantity_24()
 {
-    this->size = 24;
-    this->drawSize();
+    this->quantity = 24;
+    this->drawQuantity();
 }
 
 void MainWindow::drawQuantity(){
