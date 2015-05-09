@@ -568,15 +568,16 @@ void MainWindow::genBoard(){
 
 
 
-            obr = tile->getTreasure()->getImage();     //ziska obrazek
+            if(tile->getTreasure() != NULL){
+                obr = tile->getTreasure()->getImage();     //ziska obrazek
 
 
-            pixmapItem = scene->addPixmap(obr); //prida obrazek do sceny a vrati odkaz na nej
+                pixmapItem = scene->addPixmap(obr); //prida obrazek do sceny a vrati odkaz na nej
 
-            pixmapItem->setX(x+50);
-            pixmapItem->setY(y+50);
+                pixmapItem->setX(x+50);
+                pixmapItem->setY(y+50);
 
-
+            }
 
 
             //vykresleni hracu

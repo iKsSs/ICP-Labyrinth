@@ -160,11 +160,10 @@ void Board::setTreasureToTile(unsigned int n){
     for (i=0; i<n; ++i){
       for (j=0; j<n; ++j){
 
-        if(a < 2){
-            printf("%d\n", a);
+        if(a < 12){
             this->getTile(i*this->size+j)->setTreasure(this->treasures->getTreasure(a));
         }
-       // a+=1;
+        a++;
       }
     }
 }
