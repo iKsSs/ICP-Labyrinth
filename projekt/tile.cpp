@@ -51,45 +51,42 @@ unsigned int Tile::getRotation(){
 TileStraight::TileStraight(unsigned int r){
     TileStraight::count++;
     this->rotation = r;
-
     this->setMove();
-
     this->genImage();
 }
 
 TileCorner::TileCorner(unsigned int r){
     TileCorner::count++;
     this->rotation = r;
-
     this->setMove();
-
     this->genImage();
 }
 
 TileCross::TileCross(unsigned int r){
     TileCross::count++;
     this->rotation = r;
-
     this->setMove();
-
     this->genImage();
 }
 
 void TileStraight::rotate(){
     this->rotation++;
     if(this->rotation%3 == 0){this->rotation = 1;}
+    this->setMove();
     this->genImage();
 }
 
 void TileCorner::rotate(){
     this->rotation++;
     if(this->rotation%5 == 0){this->rotation = 1;}
+    this->setMove();
     this->genImage();
 }
 
 void TileCross::rotate(){
     this->rotation++;
     if(this->rotation%5 == 0){this->rotation = 1;}
+    this->setMove();
     this->genImage();
 }
 
@@ -154,7 +151,6 @@ void TileCross::setMove()
 
 TileOutter::TileOutter(unsigned int r){
     this->rotation = r;
-
     this->genImage();
 }
 
