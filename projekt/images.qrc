@@ -16,5 +16,29 @@
         <file>images/P-2.png</file>
         <file>images/P-3.png</file>
         <file>images/P-4.png</file>
+        <file>images/treasure/T-1.png</file>
+        <file>images/treasure/T-2.png</file>
+        <file>images/treasure/T-3.png</file>
+        <file>images/treasure/T-4.png</file>
+        <file>images/treasure/T-5.png</file>
+        <file>images/treasure/T-6.png</file>
+        <file>images/treasure/T-7.png</file>
+        <file>images/treasure/T-8.png</file>
+        <file>images/treasure/T-9.png</file>
+        <file>images/treasure/T-10.png</file>
+        <file>images/treasure/T-11.png</file>
+        <file>images/treasure/T-12.png</file>
+        <file>images/treasure/T-13.png</file>
+        <file>images/treasure/T-14.png</file>
+        <file>images/treasure/T-15.png</file>
+        <file>images/treasure/T-16.png</file>
+        <file>images/treasure/T-17.png</file>
+        <file>images/treasure/T-18.png</file>
+        <file>images/treasure/T-19.png</file>
+        <file>images/treasure/T-20.png</file>
+        <file>images/treasure/T-21.png</file>
+        <file>images/treasure/T-22.png</file>
+        <file>images/treasure/T-23.png</file>
+        <file>images/treasure/T-24.png</file>
     </qresource>
 </RCC>
