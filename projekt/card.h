@@ -34,7 +34,6 @@ class TreasurePack{
     Treasure* getTreasure();
     Treasure* getTreasure(unsigned int);
     void shuffle();
-    QString toCSV();
 
     QString toCSV();
 
