@@ -1,7 +1,7 @@
 /**
  * @file       card.cpp
  * @author     Jakub Pastuszek (xpastu00@stud.fit.vutr.cz)
- * @Project    ICP-Labyrinth 2014/2015
+ * @project    ICP-Labyrinth 2014/2015
  * @date       May 2015
  *
  * Implementace funkci pro reprezentaci pokladu a hracich karet a jejich obsluhu

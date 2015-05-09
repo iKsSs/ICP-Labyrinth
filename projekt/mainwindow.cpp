@@ -1,11 +1,11 @@
-/*
-    Autor:      Jakub Pastuszek, xpastu00
-    Projekt:    ICP-Labyrinth 2014/2015
-    Datum:      Kveten 2015
-
-    Popis:      implementace funkci pro zobrazeni hlavniho okna, jak menu, tak samotne hry
-
-*/
+/**
+ * @file       mainwindow.cpp
+ * @author     Jakub Pastuszek (xpastu00@stud.fit.vutr.cz)
+ * @project    ICP-Labyrinth 2014/2015
+ * @date       May 2015
+ *
+ * Implementace funkci pro zobrazeni hlavniho okna, jak menu, tak samotne hry
+ */
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"

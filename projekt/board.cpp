@@ -1,12 +1,12 @@
-/*
-    Autor:      Jakub Pastuszek, xpastu00
-    Projekt:    ICP-Labyrinth 2014/2015
-    Datum:      Kveten 2015
-
-    Popis:      implementace funkci pro reprezentaci hraci desky a jeji obsluhu; trida take implementuje
-                zobrazovani hracu, vkladaneho kamene, hraci karty a stav hry
-
-*/
+/**
+ * @file       board.cpp
+ * @author     Jakub Pastuszek (xpastu00@stud.fit.vutr.cz)
+ * @project    ICP-Labyrinth 2014/2015
+ * @date       May 2015
+ *
+ * Implementace funkci pro reprezentaci hraci desky a jeji obsluhu; trida take implementuje
+ * zobrazovani hracu, vkladaneho kamene, hraci karty a stav hry,
+ */
 
 #include "board.h"
 

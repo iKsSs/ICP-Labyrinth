@@ -1,7 +1,7 @@
 /**
  * @file       main.cpp
- * @Author     Jakub Pastuszek (xpastu00@stud.fit.vutr.cz)
- * @Project    ICP-Labyrinth 2014/2015
+ * @author     Jakub Pastuszek (xpastu00@stud.fit.vutr.cz)
+ * @project    ICP-Labyrinth 2014/2015
  * @date       May 2015
  *
  * Hlavni program -> spusteni hlavniho zobrazovaciho okna
