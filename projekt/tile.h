@@ -26,12 +26,12 @@ class Move{
     bool down;
     bool left;
 public:
-    Move(): up{false}, right{false}, down{false}, left{false} {}
-    void setMove(bool up, bool right, bool down, bool left);
+    Move();
+    void setMove(bool, bool, bool, bool);
     unsigned int getMove();
     bool moveUp();
-    bool moveDown();
     bool moveRight();
+    bool moveDown();
     bool moveLeft();
 };
 

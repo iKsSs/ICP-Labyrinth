@@ -9,6 +9,23 @@
 
 #include "tile.h"
 
+/**
+ * @brief Move::Move
+ *
+ * Constructor with directions up, right, down and left
+ */
+Move::Move(): up{false}, right{false}, down{false}, left{false}
+{}
+
+/**
+ * @brief Move::setMove
+ * @param up
+ * @param right
+ * @param down
+ * @param left
+ *
+ * Set directions up, right, down and left
+ */
 void Move::setMove(bool up, bool right, bool down, bool left){
     this->up = up;
     this->right = right;
@@ -16,6 +33,12 @@ void Move::setMove(bool up, bool right, bool down, bool left){
     this->left = left;
 }
 
+/**
+ * @brief Move::getMove
+ * @return coded directions
+ *
+ * Get coded directions
+ */
 unsigned int Move::getMove(){
     unsigned int num=0;
     num += up    ? 1000 : 0;
@@ -25,58 +48,139 @@ unsigned int Move::getMove(){
     return num;
 }
 
+/**
+ * @brief Move::moveUp
+ * @return TRUE     up way opened
+ * @return FALSE    up way closed
+ *
+ * Return if there is up way opened
+ */
 bool Move::moveUp()
 {
     return this->up;
 }
 
-bool Move::moveDown()
-{
-    return this->down;
-}
-
+/**
+ * @brief Move::moveRight
+ * @return TRUE     right way opened
+ * @return FALSE    right way closed
+ *
+ * Return if there is right way opened
+ */
 bool Move::moveRight()
 {
     return this->right;
 }
 
+/**
+ * @brief Move::moveDown
+ * @return TRUE     down way opened
+ * @return FALSE    down way closed
+ *
+ * Return if there is down way opened
+ */
+bool Move::moveDown()
+{
+    return this->down;
+}
+
+/**
+ * @brief Move::moveLeft
+ * @return TRUE     left way opened
+ * @return FALSE    left way closed
+ *
+ * Return if there is left way opened
+ */
 bool Move::moveLeft()
 {
     return this->left;
 }
 
+/**
+ * @brief Tile::Tile
+ *
+ * Implicit constructor
+ */
 Tile::Tile(){
     this->rotation = 1;
 }
 
+/**
+ * @brief Tile::Tile
+ * @param r
+ *
+ * Constructor with rotation
+ */
 Tile::Tile(unsigned int r){
     this->rotation = r;
 }
 
+/**
+ * @brief Tile::setPosition
+ * @param pos
+ *
+ * Set position
+ */
 void Tile::setPosition(QPoint pos){
     this->position = pos;
 }
 
+/**
+ * @brief Tile::setRotation
+ * @param r
+ *
+ * Set rotation
+ */
 void Tile::setRotation(unsigned int r){
     this->rotation = r;
 }
 
+/**
+ * @brief Tile::getPosition
+ * @return position
+ *
+ * Get position
+ */
 QPoint Tile::getPosition(){
     return this->position;
 }
 
+/**
+ * @brief Tile::getImage
+ * @return image
+ *
+ * Get image
+ */
 QPixmap Tile::getImage(){
     return this->image;
 }
 
+/**
+ * @brief Tile::getMove
+ * @return move
+ *
+ * Get move
+ */
 Move Tile::getMove(){
     return this->move;
 }
 
+/**
+ * @brief Tile::getRotation
+ * @return rotation
+ *
+ * Get rotation
+ */
 unsigned int Tile::getRotation(){
     return this->rotation;
 }
 
+/**
+ * @brief TileStraight::TileStraight
+ * @param r
+ *
+ * Constructor with rotation
+ */
 TileStraight::TileStraight(unsigned int r){
     TileStraight::count++;
     this->rotation = r;
@@ -84,6 +188,12 @@ TileStraight::TileStraight(unsigned int r){
     this->genImage();
 }
 
+/**
+ * @brief TileCorner::TileCorner
+ * @param r
+ *
+ * Constructor with rotation
+ */
 TileCorner::TileCorner(unsigned int r){
     TileCorner::count++;
     this->rotation = r;
@@ -91,6 +201,12 @@ TileCorner::TileCorner(unsigned int r){
     this->genImage();
 }
 
+/**
+ * @brief TileCross::TileCross
+ * @param r
+ *
+ * Constructor with rotation
+ */
 TileCross::TileCross(unsigned int r){
     TileCross::count++;
     this->rotation = r;
@@ -98,6 +214,11 @@ TileCross::TileCross(unsigned int r){
     this->genImage();
 }
 
+/**
+ * @brief TileStraight::rotate
+ *
+ * Rotate tile, update move and gen image
+ */
 void TileStraight::rotate(){
     this->rotation++;
     if(this->rotation%3 == 0){this->rotation = 1;}
@@ -105,6 +226,11 @@ void TileStraight::rotate(){
     this->genImage();
 }
 
+/**
+ * @brief TileCorner::rotate
+ *
+ * Rotate tile, update move and gen image
+ */
 void TileCorner::rotate(){
     this->rotation++;
     if(this->rotation%5 == 0){this->rotation = 1;}
@@ -112,6 +238,11 @@ void TileCorner::rotate(){
     this->genImage();
 }
 
+/**
+ * @brief TileCross::rotate
+ *
+ * Rotate tile, update move and gen image
+ */
 void TileCross::rotate(){
     this->rotation++;
     if(this->rotation%5 == 0){this->rotation = 1;}
@@ -119,6 +250,11 @@ void TileCross::rotate(){
     this->genImage();
 }
 
+/**
+ * @brief TileStraight::genImage
+ *
+ * Generate image
+ */
 void TileStraight::genImage()
 {
     switch(this->rotation){
@@ -128,6 +264,11 @@ void TileStraight::genImage()
     }
 }
 
+/**
+ * @brief TileCorner::genImage
+ *
+ * Generate image
+ */
 void TileCorner::genImage()
 {
     switch(this->rotation){
@@ -139,6 +280,11 @@ void TileCorner::genImage()
     }
 }
 
+/**
+ * @brief TileCross::genImage
+ *
+ * Generate image
+ */
 void TileCross::genImage()
 {
     switch(this->rotation){
@@ -150,6 +296,11 @@ void TileCross::genImage()
     }
 }
 
+/**
+ * @brief TileStraight::setMove
+ *
+ * Set move
+ */
 void TileStraight::setMove()
 {
     switch(this->rotation){
@@ -158,6 +309,11 @@ void TileStraight::setMove()
     }
 }
 
+/**
+ * @brief TileCorner::setMove
+ *
+ * Set move
+ */
 void TileCorner::setMove()
 {
     switch(this->rotation){
@@ -168,6 +324,11 @@ void TileCorner::setMove()
     }
 }
 
+/**
+ * @brief TileCross::setMove
+ *
+ * Set move
+ */
 void TileCross::setMove()
 {
     switch(this->rotation){
@@ -178,16 +339,28 @@ void TileCross::setMove()
     }
 }
 
+/**
+ * @brief TileOutter::TileOutter
+ * @param r
+ *
+ * Constructor with rotation
+ */
 TileOutter::TileOutter(unsigned int r){
     this->rotation = r;
     this->genImage();
 }
 
+/**
+ * @brief TileOutter::genImage
+ *
+ * Generate image
+ */
 void TileOutter::genImage()
 {
    this->image.load("images/E.png");
 }
 
+//inicializace statickych promennych
 unsigned int TileStraight::count = 0;
 unsigned int TileCorner::count = 0;
 unsigned int TileCross::count = 0;
