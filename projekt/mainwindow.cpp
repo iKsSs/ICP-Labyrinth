@@ -170,7 +170,7 @@ void MainWindow::game(){
     l_player_res->setText(this->board->getActPlayer()->getName());
 
     //nastaveni zobrazovani objektu
-    gw_board->setGeometry(QRect(10, 10, width, height));    //prizpusobeni okna hraci desky
+    gw_board->setGeometry(QRect(10, 10, width+2, height+2));    //prizpusobeni okna hraci desky
     btn_rotate->setGeometry(QRect(60, height+20, 50, 23));      //tlacitko rotace
     btn_save->setGeometry(QRect(width+20, 10, 50, 23));      //tlacitko save
     btn_load->setGeometry(QRect(width+20, 40, 50, 23));      //tlacitko load
