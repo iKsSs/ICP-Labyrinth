@@ -1,3 +1,13 @@
+/*
+    Autor:      Jakub Pastuszek, xpastu00
+    Projekt:    ICP-Labyrinth 2014/2015
+    Datum:      Kveten 2015
+
+    Popis:      hlavickicky funkci pro reprezentaci kamene ve hre, jak jiz hlavniho pole, klikatelnych poli kolem hraciho pole,
+                tak i kamen mimo hraci desku; trida reprezentujici mozne odchozi cesty z kamene; kazdy druh kamene ma svou tridu
+
+*/
+
 #ifndef TILE
 #define TILE
 

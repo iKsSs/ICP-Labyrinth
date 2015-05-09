@@ -1,3 +1,13 @@
+/*
+    Autor:      Jakub Pastuszek, xpastu00
+    Projekt:    ICP-Labyrinth 2014/2015
+    Datum:      Kveten 2015
+
+    Popis:      implementace funkci pro reprezentaci hraci desky a jeji obsluhu; trida take implementuje
+                zobrazovani hracu, vkladaneho kamene, hraci karty a stav hry
+
+*/
+
 #include "board.h"
 
 Board::Board(): newTile{NULL}, treasures{NULL}, cards{NULL}, size{0} {}

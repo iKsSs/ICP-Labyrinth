@@ -1,3 +1,12 @@
+/*
+    Autor:      Jakub Pastuszek, xpastu00
+    Projekt:    ICP-Labyrinth 2014/2015
+    Datum:      Kveten 2015
+
+    Popis:      hlavickicky funkci pro zobrazeni hlavniho okna aplikace
+
+*/
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -43,6 +52,7 @@ public:
     void drawNewTile();
     void drawPlayers();
     void drawSize();
+    void drawQuantity();
 
     void genBoard();
 
@@ -55,6 +65,9 @@ private slots:
     void handle_btn_size_11();
     void handle_btn_addPlayer();
     void handle_btn_play();
+
+    void handle_btn_treasure_12();
+    void handle_btn_treasure_24();
 
 private:
     Ui::MainWindow *ui;
@@ -76,11 +89,13 @@ private:
     QLabel* l_addPlayers;
     QLabel* l_players;
     QLabel* l_sizeView;
+    QLabel* l_quantityView;
 
     QGraphicsView* gw_board;
     QGraphicsView* gw_newTile;
 
     QLabel* l_size;
+    QLabel* l_quantity;
     QLineEdit* le_player;
 
     QPushButton* btn_size_5;
