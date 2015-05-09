@@ -601,8 +601,12 @@ bool MainWindow::uialg(int index_start, int index_goal)
 
         if (inc_ptr_indexs)
         {
-            inc_ptr_indexs = false;
-            ptr_indexs++;
+            if (ptr_indexs + 1 < indexs.count())
+            {
+                ptr_indexs++;
+                inc_ptr_indexs = false;
+                continue;
+            }
         }
         else
         {
