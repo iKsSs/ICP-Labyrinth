@@ -1,3 +1,12 @@
+/*
+    Autor:      Jakub Pastuszek, xpastu00
+    Projekt:    ICP-Labyrinth 2014/2015
+    Datum:      Kveten 2015
+
+    Popis:      hlavickicky funkci pro zobrazeni pokladu a hracich karet a jejich tridy
+
+*/
+
 #ifndef CARD
 #define CARD
 

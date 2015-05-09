@@ -1,3 +1,12 @@
+/*
+    Autor:      Jakub Pastuszek, xpastu00
+    Projekt:    ICP-Labyrinth 2014/2015
+    Datum:      Kveten 2015
+
+    Popis:      implementace funkci pro reprezentaci kamene a jeho obsluhu
+
+*/
+
 #include "tile.h"
 
 void Move::setMove(bool up, bool right, bool down, bool left){

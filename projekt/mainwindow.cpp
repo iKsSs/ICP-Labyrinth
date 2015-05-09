@@ -1,3 +1,12 @@
+/*
+    Autor:      Jakub Pastuszek, xpastu00
+    Projekt:    ICP-Labyrinth 2014/2015
+    Datum:      Kveten 2015
+
+    Popis:      implementace funkci pro zobrazeni hlavniho okna, jak menu, tak samotne hry
+
+*/
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -27,8 +36,10 @@ MainWindow::MainWindow(QWidget *parent) :
     l_addPlayers = new QLabel(this);
     l_players = new QLabel("Players:", this);
     l_sizeView = new QLabel("Choosen size: " + QString::number(this->size), this);
+    l_quantityView = new QLabel("Choosen quantity: " + QString::number(this->quantity), this);
 
     l_size = new QLabel("Choose size:", this);
+    l_quantity = new QLabel("Choose quantity:", this);
 
     gw_board = new QGraphicsView(this);
     gw_newTile = new QGraphicsView(this);
@@ -55,9 +66,11 @@ void MainWindow::menu(){
 
     l_addPlayers->setGeometry(QRect(250, 25, 40, 80));
     l_sizeView->setGeometry(QRect(20, 100, 90, 20));
+    l_quantityView->setGeometry(QRect(350, 100, 120, 20));
     le_player->setGeometry(QRect(150, 20, 80, 20));
 
     l_size->setGeometry(QRect(20, 20, 60, 20));
+    l_quantity->setGeometry(QRect(350, 20, 90, 20));
     l_players->setGeometry(QRect(250, 20, 60, 20));
 
     btn_size_5->setGeometry(QRect(40, 40, 20, 20));
@@ -84,6 +97,9 @@ void MainWindow::menu(){
 void MainWindow::hideMenu(){
     btn_addPlayer->hide();
     l_sizeView->hide();
+    l_quantityView->hide();
+    l_size->hide();
+    l_quantity->hide();
     le_player->hide();
     btn_size_5->hide();
     btn_size_7->hide();
@@ -164,16 +180,13 @@ void MainWindow::game(){
 void MainWindow::hideGame(){
 
     btn_rotate->hide();
-    //ui->plainTextEdit->hide();
     gw_board->hide();
     gw_newTile->hide();
-
 }
 
 void MainWindow::showGame(){
 
     btn_rotate->show();
-    //ui->plainTextEdit->show();
     gw_board->show();
     gw_newTile->show();
 }
@@ -192,10 +205,21 @@ MainWindow::~MainWindow()
     delete l_addPlayers;
     delete l_players;
     delete l_sizeView;
+    delete l_quantityView;
+
+    delete l_size;
+    delete l_quantity;
+    delete le_player;
+
+    delete btn_size_5;
+    delete btn_size_7;
+    delete btn_size_9;
+    delete btn_size_11;
+    delete btn_play;
 
     delete gw_board;
     delete gw_newTile;
-    delete le_player;
+
     delete board;
 
     delete ui;
@@ -360,6 +384,25 @@ void MainWindow::drawSize(){
     l_sizeView->repaint();
 }
 
+void MainWindow::handle_btn_treasure_12()
+{
+    this->quantity = 12;
+    this->drawSize();
+}
+
+void MainWindow::handle_btn_treasure_24()
+{
+    this->size = 24;
+    this->drawSize();
+}
+
+void MainWindow::drawQuantity(){
+    QString str;
+    str = "Choosen quantity: " + QString::number(this->quantity);
+    l_quantityView->setText(str);
+    l_quantityView->repaint();
+}
+
 void MainWindow::handle_btn_play()
 {
     if(board->getNumPlayers() >= 2){
@@ -423,7 +466,7 @@ void MainWindow::genBoard(){
             pixmapItem->setX(x+50);
             pixmapItem->setY(y+50);
 
-            //vykresleni gracu
+            //vykresleni hracu
             if (i == 0 || j == 0 || i == this->size-1 || j == this->size-1){    //podminka pro zrychleni
                 for (l=0; l < board->getNumPlayers(); ++l){
                     Player* p;

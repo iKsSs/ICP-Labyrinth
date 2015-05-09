@@ -1,3 +1,12 @@
+/*
+    Autor:      Jakub Pastuszek, xpastu00
+    Projekt:    ICP-Labyrinth 2014/2015
+    Datum:      Kveten 2015
+
+    Popis:      implementace funkci pro reprezentaci pokladu a hracich karet a jejich obsluhu
+
+*/
+
 #include "card.h"
 
 Treasure::Treasure(unsigned int code){

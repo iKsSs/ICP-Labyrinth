@@ -1,3 +1,12 @@
+/*
+    Autor:      Jakub Pastuszek, xpastu00
+    Projekt:    ICP-Labyrinth 2014/2015
+    Datum:      Kveten 2015
+
+    Popis:      hlavickicky funkci pro reprezentaci hrace ve hre
+
+*/
+
 #ifndef PLAYER
 #define PLAYER
 
