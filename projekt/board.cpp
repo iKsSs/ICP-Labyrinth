@@ -726,6 +726,10 @@ void Board::load(QString filename)
             Treasure *t = new Treasure(l[1].toInt());
             ts.push_back(t);
         }
+        else if (l.size() == 2 && l[0] == "ST")
+        {
+            this->state = l[1].toInt();
+        }
         else if (l.size() == 7 && l[0] == "P")
         {
             QPoint pos;

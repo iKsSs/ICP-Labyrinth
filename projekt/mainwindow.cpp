@@ -635,7 +635,8 @@ void MainWindow::handle_btn_load()
     tr("Files (*.csv)"));
 
     board->load(fileName);
-        this->board->recoverPlayerImage();
+    this->board->recoverPlayerImage();
+    this->drawNewTile();
     this->genBoard();
 
 }
