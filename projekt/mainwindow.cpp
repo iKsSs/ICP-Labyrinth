@@ -1,10 +1,10 @@
+//ICP-Labyrinth 2014/2015
 /**
  * @file       mainwindow.cpp
  * @author     Jakub Pastuszek (xpastu00@stud.fit.vutr.cz)
- * @project    ICP-Labyrinth 2014/2015
  * @date       May 2015
  *
- * Implementace funkci pro zobrazeni hlavniho okna, jak menu, tak samotne hry
+ * Implementation of functions for show main application window (menu and game).
  */
 
 #include "mainwindow.h"
@@ -636,7 +636,7 @@ void MainWindow::handle_btn_load()
 
     board->load(fileName);
     this->board->recoverPlayerImage();
-    this->drawNewTile();
+	this->drawNewTile();
     this->genBoard();
 
 }

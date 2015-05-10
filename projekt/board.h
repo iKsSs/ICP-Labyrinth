@@ -1,10 +1,10 @@
+//ICP-Labyrinth 2014/2015
 /**
  * @file       board.h
  * @author     Jakub Pastuszek (xpastu00@stud.fit.vutr.cz)
- * @project    ICP-Labyrinth 2014/2015
  * @date       May 2015
  *
- * Hlavicky funkci pro zobrazeni hraci desky + trida uchovavajici cely stav hry
+ * Function headers for show game board and class hold whole state of game.
  */
 
 #ifndef BOARD

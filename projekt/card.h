@@ -1,10 +1,10 @@
+//ICP-Labyrinth 2014/2015
 /**
  * @file       card.h
  * @author     Jakub Pastuszek (xpastu00@stud.fit.vutr.cz)
- * @project    ICP-Labyrinth 2014/2015
  * @date       May 2015
  *
- * Hlavicky funkci pro zobrazeni pokladu a hracich karet a jejich tridy
+ * Function headers for show treasures and cards plus their classes.
  */
 
 #ifndef CARD

@@ -1,11 +1,11 @@
+//ICP-Labyrinth 2014/2015
 /**
  * @file       board.cpp
  * @author     Jakub Pastuszek (xpastu00@stud.fit.vutr.cz)
- * @project    ICP-Labyrinth 2014/2015
  * @date       May 2015
  *
- * Implementace funkci pro reprezentaci hraci desky a jeji obsluhu; trida take implementuje
- * zobrazovani hracu, vkladaneho kamene, hraci karty a stav hry,
+ * Implementation of functions for representation game board and its handle. Class implement
+ * showing players, inserting tile, card and state of game too.
  */
 
 #include "board.h"

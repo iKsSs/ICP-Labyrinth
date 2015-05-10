@@ -1,11 +1,20 @@
+//ICP-Labyrinth 2014/2015
 /**
  * @file       main.cpp
  * @author     Jakub Pastuszek (xpastu00@stud.fit.vutr.cz)
- * @project    ICP-Labyrinth 2014/2015
  * @date       May 2015
  *
- * Hlavni program -> spusteni hlavniho zobrazovaciho okna
+ * Main program -> execute main imaging window
  */
+
+/** @mainpage Project Labyrinth: VUT FIT ICP 2014/2015
+*   @par Author:
+*    Jakub Pastuszek (xpastu00@stud.fit.vutr.cz)
+*   @par Description:
+*   - Well known board game Labyrinth implemented in C++ with Qt toolkit.
+*
+*/
+
 
 #include "mainwindow.h"
 #include <QApplication>
@@ -17,10 +26,7 @@ int main(int argc, char *argv[])
 
     w.show();
 
-
     w.menu();
-
-   // w.game();
 
     return a.exec();
 }
