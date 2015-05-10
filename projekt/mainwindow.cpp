@@ -132,7 +132,7 @@ void MainWindow::hideMenu(){
     btn_addPlayer->hide();
     l_sizeView->hide();
     l_quantityView->hide();
-    l_size->hide();
+    //l_size->hide();
     l_quantity->hide();
     le_player->hide();
     btn_quantity_12->hide();
@@ -183,10 +183,18 @@ void MainWindow::game(){
     btn_load->setGeometry(QRect(width+20, 40, 50, 23));      //tlacitko load
     l_players->setGeometry(QRect(240, height+15, 80, 60));      //stitek hraci
     l_addPlayers->setGeometry(QRect(290, height+15, 80, 60));   //stitek seznam hracu
+    l_size->setGeometry(QRect(340, height+15, 80, 60));   //stitek seznam hracu
     l_player_res->setGeometry(QRect(width+20, 80, 90, 20));          //aktualni hrac
     gw_newTile->setGeometry(QRect(10, height+20, 44, 44));      //novy kamen mimo hraci desku
     gw_card->setGeometry(QRect(width+20, 120, 44, 44));      //karta
     resize(10+width+20+250, 10+height+25+40);                       //cele okno
+
+    switch(this->board->getNumPlayers()){
+        case 1: l_size->setText("red"); break;
+        case 2: l_size->setText("red\nblue"); break;
+        case 3: l_size->setText("red\nblue\ngreen"); break;
+        case 4: l_size->setText("red\nblue\ngreen\ngrey"); break;
+    }
 
     board->setNewTile();          //vygenerovani noveho kamenu mimo desku
 
