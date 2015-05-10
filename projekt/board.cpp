@@ -648,7 +648,9 @@ QString Board::data()
     data.append(this->cards->toCSV());
 
 
+    data.append("S;");
     data.append(QString::number(this->size) + ";");
+    data.append("A;");
     data.append(QString::number(this->act) + "\n");
 
     return data;
