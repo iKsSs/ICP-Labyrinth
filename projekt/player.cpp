@@ -125,6 +125,15 @@ void Player::setImage(){
     }
 }
 
+void Player::setCard(Treasure* t){
+    this->card = t;
+    this->card->setImage();
+}
+
+Treasure* Player::getCard(){
+    return this->card;
+}
+
 /**
  * @brief Player::getImage
  * @return image

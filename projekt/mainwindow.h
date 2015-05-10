@@ -50,6 +50,7 @@ public:
     void showGame();
 
     void drawNewTile();
+    void drawCard(Player *);
     void drawPlayers();
     void drawSize();
     void drawQuantity();
@@ -86,6 +87,7 @@ private:
 
     QGraphicsScene *scene;
     QGraphicsScene *newTile;
+    QGraphicsScene *card;
 
     QPushButton *btn_rotate;
     QPushButton *btn_addPlayer;
@@ -97,6 +99,7 @@ private:
 
     QGraphicsView* gw_board;
     QGraphicsView* gw_newTile;
+    QGraphicsView* gw_card;
 
     QLabel* l_size;
     QLabel* l_quantity;
