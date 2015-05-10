@@ -233,6 +233,10 @@ void Board::setSize(unsigned int size){
     this->size = size;
 }
 
+unsigned int Board::getSize(){
+    return this->size;
+}
+
 /**
  * @brief Board::getTile
  * @param i
@@ -739,7 +743,7 @@ void Board::load(QString filename)
             p->addPoints(l[3].toInt());
             Treasure *t = new Treasure(l[6].toInt());
             p->setCard(t);
-            this->players.push_front(p);
+            this->players.push_back(p);
 
         }
         else if (l.size() == 3 && l[0] == "OT")

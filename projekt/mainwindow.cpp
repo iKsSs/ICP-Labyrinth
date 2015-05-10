@@ -171,6 +171,19 @@ void MainWindow::game(){
 
     gw_board->setInteractive(true);
 
+    board->setNewTile();          //vygenerovani noveho kamenu mimo desku
+
+    this->board->state = Board::SHIFT;
+
+    this->load();
+
+    //connections
+    connect(btn_rotate, SIGNAL (released()), this, SLOT (handle_btn_rotate()));
+    connect(btn_save, SIGNAL (released()), this, SLOT (handle_btn_save()));
+    connect(btn_load, SIGNAL (released()), this, SLOT (handle_btn_load()));
+}
+
+void MainWindow::load(){
     this->genBoard();   //generovani hraciho pole
 
     this->width = this->size*IMG_SIZE+100;    //sirka sceny
@@ -200,18 +213,9 @@ void MainWindow::game(){
         case 4: l_size->setText("red\nblue\ngreen\ngrey"); break;
     }
 
-    board->setNewTile();          //vygenerovani noveho kamenu mimo desku
-
     this->drawNewTile();        //zobrazi novy kamen
 
     gw_board->setScene(scene);  //zobrazi board
-
-    this->board->state = Board::SHIFT;
-
-    //connections
-    connect(btn_rotate, SIGNAL (released()), this, SLOT (handle_btn_rotate()));
-    connect(btn_save, SIGNAL (released()), this, SLOT (handle_btn_save()));
-    connect(btn_load, SIGNAL (released()), this, SLOT (handle_btn_load()));
 }
 
 /**
@@ -635,10 +639,12 @@ void MainWindow::handle_btn_load()
     tr("Files (*.csv)"));
 
     board->load(fileName);
-    this->board->recoverPlayerImage();
-	this->drawNewTile();
-    this->genBoard();
 
+    this->size = this->board->getSize();
+
+    this->board->recoverPlayerImage();
+
+    this->load();
 }
 
 /**
