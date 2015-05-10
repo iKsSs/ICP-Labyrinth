@@ -18,6 +18,7 @@
 #include <QVector>
 #include <QPixmap>
 #include <QGraphicsPixmapItem>
+#include <QFileDialog>
 
 #include <QMessageBox>
 #include <QMouseEvent>
