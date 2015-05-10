@@ -368,7 +368,7 @@ void Board::setPlayerPos(){
             case 2: this->players[i]->setPosition(QPoint(0,0)); break;
             case 3: this->players[i]->setPosition(QPoint(this->size-1,this->size-1)); break;
         }
-        this->players[i]->setImage();    //podle pozice se nastavi obrazek
+        this->players[i]->setImage(i);    //podle pozice se nastavi obrazek
     }
 }
 
@@ -376,7 +376,7 @@ void Board::recoverPlayerImage(){
     unsigned int i, n = this->players.size();
     for (i=0; i < n; ++i){  //pro kazdeho hrace se nastavi pozice
 
-        this->players[i]->setImage();    //podle pozice se nastavi obrazek
+        this->players[i]->setImage(i);    //podle pozice se nastavi obrazek
     }
 }
 
