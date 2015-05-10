@@ -678,8 +678,11 @@ void Board::load(QString filename)
 
     //treasures vectory nemuzu mazat, metoda jen pro nastaveni
     //vytvarim pomocne vektory
-    QVector<Treasure> ts;
-    QVector<Treasure> cs;
+    QVector<Treasure *> ts;
+    QVector<Treasure *> cs;
+
+    int active;
+    int size;
 
     QFile file(filename);
 
@@ -694,6 +697,42 @@ void Board::load(QString filename)
         QStringList l = line.split(';');
 
         //parsovani řadku
+
+        if (l.size() == 2 && l[0] == "A")
+        {
+            active = l[1].toInt();
+        }
+        else if (l.size() == 2 && l[0] == "S")
+        {
+            size = l[1].toInt();
+        }
+        else if (l.size() == 2 && l[0] == "CB")
+        {
+            Treasure *t = new Treasure(l[1].toInt());
+            cs.push_back(t);
+        }
+        else if (l.size() == 2 && l[0] == "B")
+        {
+            Treasure *t = new Treasure(l[1].toInt());
+            ts.push_back(t);
+        }
+
+        else if (l.size() == 3 && l[0] == "OT")
+        {
+
+        }
+        else if (l.size() == 5 && l[0] == "OT")
+        {
+
+        }
+        else if (l.size() == 3 && l[0] == "T")
+        {
+
+        }
+        else if (l.size() == 5 && l[0] == "T")
+        {
+
+        }
     }
 
     file.close();
