@@ -48,6 +48,7 @@ public:
     void menu();        //!< start menu
     void hideMenu();    //!< hide menu objects
 
+    void load();
     void game();        //!< start game
     void hideGame();    //!< hide game objects
     void showGame();    //!< show game objects

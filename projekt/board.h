@@ -47,6 +47,8 @@ public:
     void setNewTile(void);
     void setSize(unsigned int);
 
+    unsigned int getSize();
+
     void setPlayerPos();
     void recoverPlayerImage();      //!< set player image after load
 
