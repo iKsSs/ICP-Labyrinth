@@ -626,7 +626,7 @@ void MainWindow::handle_btn_save()
  */
 void MainWindow::handle_btn_load()
 {
-
+    board->load("data.csv");
 }
 
 /**

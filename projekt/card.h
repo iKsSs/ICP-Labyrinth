@@ -39,7 +39,7 @@ class TreasurePack{
     void shuffle();
     void setVector(QVector<Treasure*>);
 
-    QString toCSV();
+    QString toCSV(bool);
 
     ~TreasurePack();
 };

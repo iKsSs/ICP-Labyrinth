@@ -43,13 +43,14 @@ void Treasure::setImage(){
  * @brief TreasurePack::toCSV
  * @return csv
  */
-QString TreasurePack::toCSV()
+QString TreasurePack::toCSV(bool card = false)
 {
     QString csv = "";
 
     for (int i = 0; i < this->treasures.count(); i++)
     {
         Treasure *t = this->treasures[i];
+        if(card == true) csv.append("C");
         csv.append(t->toCSV());
     }
 
@@ -153,6 +154,7 @@ void TreasurePack::shuffle(){
 void TreasurePack::setVector(QVector<Treasure *> vec)
 {
     this->treasures = vec;
+    this->quantity = vec.count();       //snad ok
 }
 
 /**

@@ -634,7 +634,7 @@ QString Board::data()
     for (int i = 0; i < this->outter.count(); i++)
     {
         Tile *t = this->tiles[i];
-        data.append(t->toCSV());
+        data.append("O" + t->toCSV());
     }
 
     //ulozi hrace
@@ -645,10 +645,10 @@ QString Board::data()
     }
 
     //ulozi poklady
-    data.append(this->treasures->toCSV());
+    data.append(this->treasures->toCSV(false));
 
     //ulozi karty
-    data.append(this->cards->toCSV());
+    data.append(this->cards->toCSV(true));
 
 
     data.append("S;");
@@ -674,12 +674,62 @@ void Board::load(QString filename)
     this->tiles.clear();
     this->outter.clear();
     this->players.clear();
+    this->board.clear();
 
     //treasures vectory nemuzu mazat, metoda jen pro nastaveni
+    //vytvarim pomocne vektory
+    QVector<Treasure> ts;
+    QVector<Treasure> cs;
 
     QFile file(filename);
 
     file.open(QFile::ReadOnly | QFile::Text);
 
     QTextStream in(&file);
+
+    while (!in.atEnd())
+    {
+        QString line;
+        line = in.readLine();
+
+        if(line[0] == 'T')  //tails
+        {
+            QStringList l = line.split(';');
+
+            for (int i = 0; i < l.size(); i++)
+            {
+                QString s = l[i];
+
+            }
+
+        }
+        else if(line[0] == 'O')     //out tails
+        {
+            QStringList l = line.split(';');
+
+            for (int i = 0; i < l.size(); i++)
+            {
+                QString s = l[i];
+
+            }
+        }
+        else if(line[0] == 'P')     //player
+        {
+
+        }
+        else if(line[0] == 'B')     //poklady
+        {
+
+        }
+        else if(line[0] == 'C')     //karty
+        {
+
+        }
+        else if(line[0] == 'S')     //nastaveni
+        {
+
+        }
+    }
+
+    file.close();
 }
