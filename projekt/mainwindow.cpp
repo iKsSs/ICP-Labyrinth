@@ -183,7 +183,8 @@ void MainWindow::game(){
     btn_load->setGeometry(QRect(width+20, 40, 50, 23));      //tlacitko load
     l_players->setGeometry(QRect(240, height+15, 80, 60));      //stitek hraci
     l_addPlayers->setGeometry(QRect(290, height+15, 80, 60));   //stitek seznam hracu
-    l_size->setGeometry(QRect(340, height+15, 80, 60));   //stitek seznam hracu
+    l_size->setGeometry(QRect(340, height+15, 80, 60));   //stitek barev hracu
+    l_quantity->setGeometry(QRect(width+20, height-100, 80, 60));   //stitek vitezneho hrace
     l_player_res->setGeometry(QRect(width+20, 80, 90, 20));          //aktualni hrac
     gw_newTile->setGeometry(QRect(10, height+20, 44, 44));      //novy kamen mimo hraci desku
     gw_card->setGeometry(QRect(width+20, 120, 44, 44));      //karta
@@ -370,9 +371,12 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                             qDebug("HURA");
                             p->addPoints(1);
 
-                            if(p->getPoints() >= this->quantity / this->board->getNumPlayers()){
+                            if(p->getPoints() >= 1){//this->quantity / this->board->getNumPlayers()
                                 qDebug("KONEC");
                                 this->board->state = Board::STAY;
+                                QString str = p->getName() + "\nwon!";
+                                l_quantity->setText(str);
+                                l_quantity->show();
                             }
 
                             p->setCard(this->board->getCards()->getTreasure());
