@@ -10,6 +10,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QTextStream>
+#include <QFile>
+
 const unsigned int IMG_SIZE = 44;
 const unsigned int E_SIZE = 50;
 
@@ -604,7 +607,16 @@ void MainWindow::handle_btn_play()
 void MainWindow::handle_btn_save()
 {
     //zapise do souboru csv data
-    qDebug(board->data().toStdString().c_str());
+    //qDebug(board->data().toStdString().c_str());
+
+    QFile file("data.csv");
+    file.open(QFile::WriteOnly | QFile::Text);
+
+    QTextStream out(&file);
+    out << board->data();
+
+    file.flush();
+    file.close();
 }
 
 /**
