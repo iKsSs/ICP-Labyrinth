@@ -22,6 +22,8 @@ class Treasure{
     unsigned int getCode();
     void setImage();
     QPixmap getImage();
+
+    QString toCSV();
 };
 
 class TreasurePack{

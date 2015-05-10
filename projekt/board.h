@@ -63,13 +63,12 @@ public:
 
     void insertNewTile(QPoint);
     void undo();
+    QString data();
 
     void updatePlayersV(bool, bool, bool, bool, int);
     void updatePlayersH(bool, bool, bool, bool, int);
 
     int genRand(unsigned int, unsigned int);
-
-    QString toCSV();
 
     unsigned int state;
 

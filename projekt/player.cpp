@@ -205,6 +205,8 @@ QString Player::toCSV()
     csv.append("P;");
     csv.append(QString::number(this->position.x()) + ";");
     csv.append(QString::number(this->position.y()) + ";");
+    csv.append(QString::number(this->points) + ";");
+    csv.append(this->card->toCSV() + ";");
     csv.append(this->name + "\n");
 
     return csv;

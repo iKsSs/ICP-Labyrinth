@@ -45,7 +45,26 @@ void Treasure::setImage(){
  */
 QString TreasurePack::toCSV()
 {
-    return "";
+    QString csv = "";
+
+    for (int i = 0; i < this->treasures.count(); i++)
+    {
+        Treasure *t = this->treasures[i];
+        csv.append(t->toCSV());
+    }
+
+    return csv;
+}
+
+QString Treasure::toCSV()
+{
+    //unsigned int code;
+    QString csv = "";
+
+    csv.append("B;");
+    csv.append(QString::number(this->code) + "\n");
+
+    return csv;
 }
 
 /**

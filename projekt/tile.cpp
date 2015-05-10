@@ -404,8 +404,14 @@ QString Tile::toCSV()
     QString csv = "";
     csv.append("T;");
     csv.append(QString::number(this->move.getMove()) + ";");
-    csv.append(QString::number(this->rotation) + ";");
-    csv.append(QString::number(this->treasure->getCode()) + "\n");
+    csv.append(QString::number(this->rotation));
+
+    if (this->treasure != NULL)
+    {
+        csv.append(";" + this->treasure->toCSV());
+    }
+
+    csv.append("\n");
 
     return csv;
 }
