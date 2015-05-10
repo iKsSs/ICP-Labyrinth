@@ -652,7 +652,7 @@ QString Board::data()
 
 
     data.append("S;");
-    data.append(QString::number(this->size) + ";");
+    data.append(QString::number(this->size) + "\n");
     data.append("A;");
     data.append(QString::number(this->act) + "\n");
 
@@ -726,6 +726,10 @@ void Board::load(QString filename)
 
         }
         else if(line[0] == 'S')     //nastaveni
+        {
+
+        }
+        else if(line[0] == 'A')     //aktivni
         {
 
         }
