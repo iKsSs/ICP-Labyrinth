@@ -33,6 +33,8 @@ namespace Ui {
 class MainWindow;
 }
 
+/*! Class representing MainWindow */
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -42,12 +44,12 @@ public:
 
     ~MainWindow();
 
-    void menu();
-    void hideMenu();
+    void menu();        //!< start menu
+    void hideMenu();    //!< hide menu objects
 
-    void game();
-    void hideGame();
-    void showGame();
+    void game();        //!< start game
+    void hideGame();    //!< hide game objects
+    void showGame();    //!< show game objects
 
     void drawNewTile();
     void drawCard(Player *);
@@ -55,9 +57,9 @@ public:
     void drawSize();
     void drawQuantity();
 
-    void genBoard();
+    void genBoard();    //!< generate game board
 
-    bool canMove(unsigned int, unsigned int);
+    bool canMove(unsigned int, unsigned int);   //!< look for path from start_index to end_index
 
 private slots:
     void handle_btn_rotate();
@@ -118,7 +120,7 @@ private:
     QPushButton* btn_play;
 
 protected:
-    void mousePressEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);   //!< handle mouse click event
 };
 
 #endif // MAINWINDOW_H
