@@ -454,6 +454,7 @@ void MainWindow::handle_btn_addPlayer()
             }
             if(i == board->getNumPlayers()){
                 this->board->addPlayer(new Player(le_player->text()));
+                le_player->clear();
             }
         }
 
