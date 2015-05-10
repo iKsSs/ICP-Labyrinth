@@ -666,6 +666,9 @@ QString Board::data()
 
     data.append("I" + this->newTile->toCSV());
 
+    data.append("ST");
+    data.append(QString::number(this->state) + "\n");
+
     return data;
 }
 
