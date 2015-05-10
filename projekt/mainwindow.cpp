@@ -305,7 +305,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
             {
                 //mimo hraci plochu
               if (this->board->state == Board::SHIFT){
-                this->board->state = Board::MOVE;
+
                 if ((posX > width - IMG_SIZE || posX < IMG_SIZE) || (posY > height - IMG_SIZE || posY < IMG_SIZE))
                 {
 
@@ -325,18 +325,23 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                     unsigned int row = (posY) / IMG_SIZE;
                     unsigned int col = (posX) / IMG_SIZE;
 
-              //      if (!(row == 0 && col == b_col && b_row == this->size+1)){   //nevraceni zpet v nasledujich tahu
+                    if ((row == b_row && (col == this->size - b_col +1 || col == this->size + b_col +1)) ||
+                            (col == b_col && (row == this->size - b_row +1 || row == this->size + b_row +1))
+                            ){   //nevraceni zpet v nasledujich tahu
+                        return;
+                    }
                         if (row % 2 == 0 && col % 2 == 0)
                         {
                             board->insertNewTile(QPoint(row, col));
                             this->genBoard();
                             this->drawNewTile();
+                            this->board->state = Board::MOVE;
                         }
-              //      }
+
                     this->b_row = row;
                     this->b_col = col;
+                  }
                 }
-              }
             }
             else
             {
