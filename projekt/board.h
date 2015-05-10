@@ -64,6 +64,7 @@ public:
     void insertNewTile(QPoint);
     void undo();
     QString data();
+    void load(QString filename);
 
     void updatePlayersV(bool, bool, bool, bool, int);
     void updatePlayersH(bool, bool, bool, bool, int);

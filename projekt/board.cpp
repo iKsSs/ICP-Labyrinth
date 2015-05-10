@@ -10,6 +10,9 @@
 
 #include "board.h"
 
+#include <QFile>
+#include <QTextStream>
+
 /**
  * @brief Board::Board
  *
@@ -654,4 +657,29 @@ QString Board::data()
     data.append(QString::number(this->act) + "\n");
 
     return data;
+}
+
+void Board::load(QString filename)
+{
+    //nuluje vnitrni vektory
+    //QVector<Tile*> tiles;
+    //QVector<Tile*> outter;
+    //QVector<Player*> players;
+    //unsigned int size;
+    //unsigned int act;
+    //TreasurePack* treasures;
+    //TreasurePack* cards;
+    //QVector<Board> board;
+
+    this->tiles.clear();
+    this->outter.clear();
+    this->players.clear();
+
+    //treasures vectory nemuzu mazat, metoda jen pro nastaveni
+
+    QFile file(filename);
+
+    file.open(QFile::ReadOnly | QFile::Text);
+
+    QTextStream in(&file);
 }
