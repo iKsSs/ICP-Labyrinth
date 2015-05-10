@@ -372,6 +372,14 @@ void Board::setPlayerPos(){
     }
 }
 
+void Board::recoverPlayerImage(){
+    unsigned int i, n = this->players.size();
+    for (i=0; i < n; ++i){  //pro kazdeho hrace se nastavi pozice
+
+        this->players[i]->setImage();    //podle pozice se nastavi obrazek
+    }
+}
+
 /**
  * @brief Board::genRand
  * @param Low
@@ -725,7 +733,7 @@ void Board::load(QString filename)
             p->addPoints(l[3].toInt());
             Treasure *t = new Treasure(l[6].toInt());
             p->setCard(t);
-            this->players.push_back(p);
+            this->players.push_front(p);
 
         }
         else if (l.size() == 3 && l[0] == "OT")
@@ -733,17 +741,17 @@ void Board::load(QString filename)
             int move = l[1].toInt();
             if (move == 1010 || move == 0101)
             {
-                Tile *tile = new TileStraight(l[2].toInt());
+                Tile *tile = new TileOutter(l[2].toInt());
                 this->outter.push_back(tile);
             }
             else if (move == 1100 || move == 110 || move == 11 || move == 1001)
             {
-                Tile *tile = new TileCorner(l[2].toInt());
+                Tile *tile = new TileOutter(l[2].toInt());
                 this->outter.push_back(tile);
             }
             else
             {
-                Tile *tile = new TileCross(l[2].toInt());
+                Tile *tile = new TileOutter(l[2].toInt());
                 this->outter.push_back(tile);
             }
         }
@@ -752,17 +760,17 @@ void Board::load(QString filename)
             int move = l[1].toInt();
             if (move == 1010 || move == 0101)
             {
-                Tile *tile = new TileStraight(l[2].toInt());
+                Tile *tile = new TileOutter(l[2].toInt());
                 this->outter.push_back(tile);
             }
             else if (move == 1100 || move == 110 || move == 11 || move == 1001)
             {
-                Tile *tile = new TileCorner(l[2].toInt());
+                Tile *tile = new TileOutter(l[2].toInt());
                 this->outter.push_back(tile);
             }
             else
             {
-                Tile *tile = new TileCross(l[2].toInt());
+                Tile *tile = new TileOutter(l[2].toInt());
                 this->outter.push_back(tile);
             }
         }

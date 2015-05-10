@@ -46,6 +46,7 @@ public:
     void setSize(unsigned int);
 
     void setPlayerPos();
+    void recoverPlayerImage();
 
     //Tile* getTile(QPoint);   //vraci kamen pro danou souradnici
     Tile* getTile(int);     //vraci kamen pro dany index
