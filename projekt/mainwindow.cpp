@@ -35,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //GUI objekty
     scene = new QGraphicsScene(this);
     newTile = new QGraphicsScene(this);
+    card = new QGraphicsScene(this);
 
     btn_rotate = new QPushButton("Rotate", this);
     btn_addPlayer = new QPushButton("Add Player", this);
@@ -50,6 +51,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     gw_board = new QGraphicsView(this);
     gw_newTile = new QGraphicsView(this);
+    gw_card = new QGraphicsView(this);
     le_player = new QLineEdit(this);
 
     btn_quantity_12 = new QPushButton("12", this);
@@ -71,6 +73,8 @@ MainWindow::MainWindow(QWidget *parent) :
     gw_board->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     gw_newTile->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     gw_newTile->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    gw_card->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    gw_card->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
 /**
@@ -148,14 +152,12 @@ void MainWindow::game(){
     //zobrazit hru
     this->showGame();
 
-   //lokalni promenne
-    unsigned int i;
-
     this->board->setBoard(this->size);   //vygenerovat kameny pro hraci desku
     this->board->setOutterFields(this->size);   //vygenerování policek pro vsunuti kamene
     this->board->setTreasures(this->quantity);   //vygenerovat poklady
     this->board->setCards(this->quantity);   //vygenerovat karty
-    this->board->setTreasureToTile(this->size, this->quantity);   //prirazeni pokladu kamenum
+    this->board->setTreasureToTile(this->size, this->quantity);   //prirazeni kamenum poklad
+    this->board->setCardToPlayers();         //prirazeni karty hraci
 
     this->board->getCards()->shuffle();     //zamicha karty
     this->board->getTreasures()->shuffle(); //zamicha poklady
@@ -167,6 +169,7 @@ void MainWindow::game(){
     this->width = this->size*IMG_SIZE+100;    //sirka sceny
     this->height = this->size*IMG_SIZE+100;   //vyska sceny
 
+    this->drawCard(this->board->getActPlayer());
     l_player_res->setText(this->board->getActPlayer()->getName());
 
     //nastaveni zobrazovani objektu
@@ -178,6 +181,7 @@ void MainWindow::game(){
     l_addPlayers->setGeometry(QRect(290, height+15, 80, 60));   //stitek seznam hracu
     l_player_res->setGeometry(QRect(width+20, 80, 90, 20));          //aktualni hrac
     gw_newTile->setGeometry(QRect(10, height+20, 44, 44));      //novy kamen mimo hraci desku
+    gw_card->setGeometry(QRect(width+20, 120, 44, 44));      //karta
     resize(10+width+20+250, 10+height+25+40);                       //cele okno
 
     board->setNewTile();          //vygenerovani noveho kamenu mimo desku
@@ -185,6 +189,8 @@ void MainWindow::game(){
     this->drawNewTile();        //zobrazi novy kamen
 
     gw_board->setScene(scene);  //zobrazi board
+
+    this->board->state = board->State::SHIFT;
 
     //connections
     connect(btn_rotate, SIGNAL (released()), this, SLOT (handle_btn_rotate()));
@@ -202,6 +208,7 @@ void MainWindow::hideGame(){
     btn_rotate->hide();
     gw_board->hide();
     gw_newTile->hide();
+    gw_card->hide();
     btn_save->hide();
     btn_load->hide();
 }
@@ -216,6 +223,7 @@ void MainWindow::showGame(){
     btn_rotate->show();
     gw_board->show();
     gw_newTile->show();
+    gw_card->show();
     btn_save->show();
     btn_load->show();
 }
@@ -227,11 +235,12 @@ void MainWindow::showGame(){
  */
 MainWindow::~MainWindow()
 {
-    delete this->board->getCards();
+    //delete this->board->getCards();
     delete this->board->getTreasures();
 
     delete scene;
     delete newTile;
+    delete card;
 
     delete btn_rotate;
     delete btn_addPlayer;
@@ -258,6 +267,7 @@ MainWindow::~MainWindow()
 
     delete gw_board;
     delete gw_newTile;
+    delete gw_card;
 
     delete board;
 
@@ -287,7 +297,8 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
             if ((posX > width - 50 || posX < 50) || (posY > height - 50 || posY < 50))
             {
                 //mimo hraci plochu
-
+              if (this->board->state == board->State::SHIFT){
+                this->board->state = board->State::MOVE;
                 if ((posX > width - IMG_SIZE || posX < IMG_SIZE) || (posY > height - IMG_SIZE || posY < IMG_SIZE))
                 {
 
@@ -314,21 +325,29 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                         this->drawNewTile();
                     }
                 }
+              }
             }
             else
             {
-                unsigned int row = (posY - 50) / IMG_SIZE;
-                unsigned int col = (posX - 50) / IMG_SIZE;
+                if (this->board->state == board->State::MOVE){
+                    this->board->state = board->State::SHIFT;
 
-                Player* p = this->board->getActPlayer();
+                    unsigned int row = (posY - 50) / IMG_SIZE;
+                    unsigned int col = (posX - 50) / IMG_SIZE;
 
-                if (this->canMove(p->getPosition().x() * this->size + p->getPosition().y(), row * this->size + col)){
-                    p->setPosition(QPoint(row,col));
-                    this->board->actPlus();
-                    l_player_res->setText(this->board->getActPlayer()->getName());
+
+
+                    Player* p = this->board->getActPlayer();
+
+                    if (this->canMove(p->getPosition().x() * this->size + p->getPosition().y(), row * this->size + col)){
+                        p->setPosition(QPoint(row,col));
+                        this->board->actPlus();
+                        l_player_res->setText(this->board->getActPlayer()->getName());
+                        this->drawCard(p);
+                    }
+
+                    this->genBoard();
                 }
-
-                this->genBoard();
             }
         }
     }
@@ -392,6 +411,20 @@ void MainWindow::drawNewTile()
         this->newTile->addPixmap(board->getNewTile()->getTreasure()->getImage());     //ziska obrazek
     }
     gw_newTile->setScene(newTile);  //zobrazi novy kamen
+}
+
+/**
+ * @brief MainWindow::drawCard
+ *
+ * Set card visible
+ */
+void MainWindow::drawCard(Player* p)
+{
+    QPixmap pix("images/E.png");
+    this->card->addPixmap(pix);
+    this->card->addPixmap(p->getCard()->getImage());
+
+    gw_card->setScene(card);
 }
 
 /**

@@ -39,6 +39,7 @@ public:
     void setBoard(unsigned int);
     void setOutterFields(unsigned int);
     void setTreasureToTile(unsigned int, unsigned int);
+    void setCardToPlayers();
     void setTreasures(unsigned int);
     void setCards(unsigned int);
     void setNewTile(void);
@@ -69,6 +70,9 @@ public:
     int genRand(unsigned int, unsigned int);
 
     QString toCSV();
+
+    enum class State { SHIFT, MOVE, STAY };
+    State state;
 protected:
     //Tile generateTile();
 };

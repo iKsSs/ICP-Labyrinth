@@ -15,7 +15,7 @@
  *
  * Implicit contructor
  */
-Board::Board(): newTile{NULL}, treasures{NULL}, cards{NULL}, size{0}, act{0}
+Board::Board(): newTile{NULL}, treasures{NULL}, cards{NULL}, size{0}, act{0}, state{State::STAY}
 {}
 
 /**
@@ -171,6 +171,15 @@ void Board::setTreasureToTile(unsigned int n, unsigned int q){
         this->getTile(vec[i])->setTreasure(this->treasures->getTreasure(a));
 
         vec.remove(i);
+    }
+}
+
+void Board::setCardToPlayers(){
+    unsigned int i, n = this->players.size();
+    for (i=0; i < n; ++i){
+        this->players[i]->setCard(this->cards->getTreasure());
+        this->players[i]->getCard()->setImage();
+        this->cards->removeTreasure();
     }
 }
 

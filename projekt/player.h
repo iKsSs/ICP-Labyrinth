@@ -15,13 +15,15 @@
 #include <QImage>
 #include <QPixmap>
 
+#include "card.h"
+
 class Player
 {
     QPoint position;
     QString name;
     QPixmap image;
     unsigned int points;
-    //QVector<Card> cards;
+    Treasure* card;
 public:
     Player();
     Player(QString);     //jmeno hráče
@@ -35,6 +37,9 @@ public:
 
     void setName(QString);
     void setImage();
+
+    void setCard(Treasure*);
+    Treasure* getCard();
 
     QPixmap getImage();
     QString getName();
