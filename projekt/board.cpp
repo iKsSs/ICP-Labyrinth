@@ -691,48 +691,9 @@ void Board::load(QString filename)
     {
         QString line;
         line = in.readLine();
+        QStringList l = line.split(';');
 
-        if(line[0] == 'T')  //tails
-        {
-            QStringList l = line.split(';');
-
-            for (int i = 0; i < l.size(); i++)
-            {
-                QString s = l[i];
-
-            }
-
-        }
-        else if(line[0] == 'O')     //out tails
-        {
-            QStringList l = line.split(';');
-
-            for (int i = 0; i < l.size(); i++)
-            {
-                QString s = l[i];
-
-            }
-        }
-        else if(line[0] == 'P')     //player
-        {
-
-        }
-        else if(line[0] == 'B')     //poklady
-        {
-
-        }
-        else if(line[0] == 'C')     //karty
-        {
-
-        }
-        else if(line[0] == 'S')     //nastaveni
-        {
-
-        }
-        else if(line[0] == 'A')     //aktivni
-        {
-
-        }
+        //parsovani řadku
     }
 
     file.close();
