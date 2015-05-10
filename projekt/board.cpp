@@ -613,11 +613,43 @@ void Board::updatePlayersH(bool p_0, bool p_1, bool p_2, bool p_3, int add){
         }
 }
 
-/**
- * @brief Board::toCSV
- * @return
- */
-QString Board::toCSV()
+QString Board::data()
 {
-    return "";
+    QString data = "";
+
+    //unsigned int size;
+    //unsigned int act;
+
+    //ulozi sutry
+    for (int i  = 0; i < this->tiles.count(); i++)
+    {
+        Tile *t = this->tiles[i];
+        data.append(t->toCSV());
+    }
+
+    //ulozi venkovni sutry
+    for (int i = 0; i < this->outter.count(); i++)
+    {
+        Tile *t = this->tiles[i];
+        data.append(t->toCSV());
+    }
+
+    //ulozi hrace
+    for (int i = 0; i < this->players.count(); i++)
+    {
+        Player *p = this->players[i];
+        data.append(p->toCSV());
+    }
+
+    //ulozi poklady
+    data.append(this->treasures->toCSV());
+
+    //ulozi karty
+    data.append(this->cards->toCSV());
+
+
+    data.append(QString::number(this->size) + ";");
+    data.append(QString::number(this->act) + "\n");
+
+    return data;
 }

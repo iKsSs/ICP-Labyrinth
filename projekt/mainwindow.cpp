@@ -603,7 +603,8 @@ void MainWindow::handle_btn_play()
  */
 void MainWindow::handle_btn_save()
 {
-
+    //zapise do souboru csv data
+    qDebug(board->data().toStdString().c_str());
 }
 
 /**
