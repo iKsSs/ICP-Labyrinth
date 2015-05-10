@@ -184,6 +184,9 @@ void MainWindow::game(){
 }
 
 void MainWindow::load(){
+
+    this->scene->clear();
+
     this->genBoard();   //generovani hraciho pole
 
     this->width = this->size*IMG_SIZE+100;    //sirka sceny
@@ -215,7 +218,7 @@ void MainWindow::load(){
 
     this->drawNewTile();        //zobrazi novy kamen
 
-    gw_board->setScene(scene);  //zobrazi board
+    gw_board->setScene(this->scene);  //zobrazi board
 }
 
 /**
