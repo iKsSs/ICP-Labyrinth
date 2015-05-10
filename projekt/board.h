@@ -35,7 +35,7 @@ class Board
     TreasurePack* cards;
 
     //...
-    QVector<QString> bckpList;
+    QVector<QString> bckpList;  //!< backup state for undo */
 public:
     Board();
     void setBoard(unsigned int);
@@ -68,7 +68,7 @@ public:
 
     void insertNewTile(QPoint);
     QString data();
-    void load(QString filename, QString);        //!< load game from file
+    void load(QString, QString);        //!< load game from file or string
     void makeBckp();
     void undo();
 

@@ -13,8 +13,8 @@
 #include <QTextStream>
 #include <QFile>
 
-const unsigned int IMG_SIZE = 44;
-const unsigned int E_SIZE = 50;
+const unsigned int IMG_SIZE = 44;   //!< image size */
+const unsigned int E_SIZE = 50;     //!< size of space outter main board */
 
 /**
  * @brief MainWindow::MainWindow
@@ -32,7 +32,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     this->size = 7;
-    this->numPlayers = 0;
     this->quantity = 12;
 
     this->b_row = 100;
@@ -101,7 +100,7 @@ void MainWindow::menu(){
 
     l_size->setGeometry(QRect(20, 20, 60, 20));
     l_quantity->setGeometry(QRect(350, 20, 90, 20));
-    l_player_res->setGeometry(QRect(50, 250, 250, 20));
+    l_player_res->setGeometry(QRect(20, 160, 250, 20));
     l_players->setGeometry(QRect(250, 20, 60, 20));
 
     btn_quantity_12->setGeometry(QRect(350, 40, 20, 20));
@@ -111,10 +110,10 @@ void MainWindow::menu(){
     btn_size_9->setGeometry(QRect(80, 40, 20, 20));
     btn_size_11->setGeometry(QRect(100, 40, 20, 20));
 
-    btn_play->setGeometry(QRect(200, 140, 75, 40));
+    btn_play->setGeometry(QRect(280, 140, 75, 40));
 
     btn_addPlayer->setGeometry(QRect(150, 50, 75, 23));      //tlacitko pridat hrace
-    resize(500, 400);                       //cele okno
+    setFixedSize(500, 200);                       //cele okno
 
     //connections
     connect(btn_quantity_12, SIGNAL (released()), this, SLOT (handle_btn_quantity_12()));
@@ -176,6 +175,8 @@ void MainWindow::game(){
 
     this->board->state = Board::SHIFT;
 
+    gw_board->setCursor(Qt::PointingHandCursor);
+
     this->load();
 
     //connections
@@ -185,6 +186,11 @@ void MainWindow::game(){
     connect(btn_undo, SIGNAL (released()), this, SLOT (handle_btn_undo()));
 }
 
+/**
+ * @brief MainWindow::load
+ *
+ * Load object for game after menu or file load
+ */
 void MainWindow::load(){
 
     this->scene->clear();
@@ -210,7 +216,7 @@ void MainWindow::load(){
     l_player_res->setGeometry(QRect(width+20, 80, 90, 20));          //aktualni hrac
     gw_newTile->setGeometry(QRect(10, height+20, 44, 44));      //novy kamen mimo hraci desku
     gw_card->setGeometry(QRect(width+20, 120, 44, 44));      //karta
-    resize(10+width+20+250, 10+height+25+40);                       //cele okno
+    setFixedSize(10+width+20+50, 10+height+25+40);                       //cele okno
 
     switch(this->board->getNumPlayers()){
         case 1: l_size->setText("red"); break;
@@ -352,11 +358,11 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                     unsigned int row = (posY) / IMG_SIZE;
                     unsigned int col = (posX) / IMG_SIZE;
 
-                    if ((row == b_row && (col == this->size - b_col +1 || col == this->size + b_col +1)) ||
-                            (col == b_col && (row == this->size - b_row +1 || row == this->size + b_row +1))
-                            ){   //nevraceni zpet v nasledujich tahu
-                        return;
-                    }
+//                    if ((row == b_row && (col == this->size - b_col +1 || col == this->size + b_col +1)) ||
+//                            (col == b_col && (row == this->size - b_row +1 || row == this->size + b_row +1))
+//                            ){   //nevraceni zpet v nasledujich tahu
+//                        return;
+//                    }
                         if (row % 2 == 0 && col % 2 == 0)
                         {
                             board->insertNewTile(QPoint(row, col));
@@ -389,7 +395,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                             qDebug("HURA");
                             p->addPoints(1);
 
-                            if(p->getPoints() >= 1){//this->quantity / this->board->getNumPlayers()
+                            if(p->getPoints() >= this->quantity / this->board->getNumPlayers()){//quantity / pocet hracu
                                 qDebug("KONEC");
                                 this->board->state = Board::STAY;
                                 QString str = p->getName() + "\nwon!";
@@ -840,14 +846,14 @@ bool MainWindow::canMove(unsigned int index_start, unsigned int index_goal)
 
         if (index_start == index_goal) //cesta existuje
         {
-            qDebug("Cesta existuje\n");
+           // qDebug("Cesta existuje\n");
 
             return true;
         }
 
         if (inc_ptr_indexs)
         {
-            if (ptr_indexs + 1 < indexs.count())
+            if (ptr_indexs + 1 < static_cast<unsigned int>(indexs.count()))
             {
                 ptr_indexs++;
                 inc_ptr_indexs = false;
@@ -856,13 +862,13 @@ bool MainWindow::canMove(unsigned int index_start, unsigned int index_goal)
         }
         else
         {
-            if (ptr_indexs + 1 < indexs.count())
+            if (ptr_indexs + 1 < static_cast<unsigned int>(indexs.count()))
             {
                 ptr_indexs++;
                 continue;
             }
 
-            qDebug("Cesta neexistuje\n");
+           // qDebug("Cesta neexistuje\n");
             return false;
         }
     }

@@ -119,11 +119,23 @@ void Player::setImage(unsigned int i){
     }
 }
 
+/**
+ * @brief Player::setCard
+ * @param t
+ *
+ * Set card
+ */
 void Player::setCard(Treasure* t){
     this->card = t;
     this->card->setImage();
 }
 
+/**
+ * @brief Player::getCard
+ * @return card
+ *
+ * Get card
+ */
 Treasure* Player::getCard(){
     return this->card;
 }
@@ -190,6 +202,8 @@ bool Player::operator ==(const Player& p) const
 /**
  * @brief Player::toCSV
  * @return csv
+ *
+ * Save state to csv file
  */
 QString Player::toCSV()
 {
