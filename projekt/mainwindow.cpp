@@ -609,7 +609,11 @@ void MainWindow::handle_btn_save()
     //zapise do souboru csv data
     //qDebug(board->data().toStdString().c_str());
 
-    QFile file("data.csv");
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save as"),
+    "",
+    tr("Files (*.csv)"));
+
+    QFile file(fileName);
     file.open(QFile::WriteOnly | QFile::Text);
 
     QTextStream out(&file);
@@ -626,7 +630,11 @@ void MainWindow::handle_btn_save()
  */
 void MainWindow::handle_btn_load()
 {
-    board->load("data.csv");
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+    "",
+    tr("Files (*.csv)"));
+
+    board->load(fileName);
         this->board->recoverPlayerImage();
     this->genBoard();
 
