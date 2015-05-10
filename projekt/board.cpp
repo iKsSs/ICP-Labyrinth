@@ -716,22 +716,93 @@ void Board::load(QString filename)
             Treasure *t = new Treasure(l[1].toInt());
             ts.push_back(t);
         }
+        else if (l.size() == 7 && l[0] == "P")
+        {
+            QPoint pos;
+            pos.setX(l[1].toInt());
+            pos.setY(l[2].toInt());
+            Player *p = new Player(l[4], pos);
+            p->addPoints(l[3].toInt());
+            Treasure *t = new Treasure(l[6].toInt());
+            p->setCard(t);
+            this->players.push_back(p);
 
+        }
         else if (l.size() == 3 && l[0] == "OT")
         {
-
+            int move = l[1].toInt();
+            if (move == 1010 || move == 0101)
+            {
+                Tile *tile = new TileStraight(l[2].toInt());
+                this->outter.push_back(tile);
+            }
+            else if (move == 1100 || move == 110 || move == 11 || move == 1001)
+            {
+                Tile *tile = new TileCorner(l[2].toInt());
+                this->outter.push_back(tile);
+            }
+            else
+            {
+                Tile *tile = new TileCross(l[2].toInt());
+                this->outter.push_back(tile);
+            }
         }
         else if (l.size() == 5 && l[0] == "OT")
         {
-
+            int move = l[1].toInt();
+            if (move == 1010 || move == 0101)
+            {
+                Tile *tile = new TileStraight(l[2].toInt());
+                this->outter.push_back(tile);
+            }
+            else if (move == 1100 || move == 110 || move == 11 || move == 1001)
+            {
+                Tile *tile = new TileCorner(l[2].toInt());
+                this->outter.push_back(tile);
+            }
+            else
+            {
+                Tile *tile = new TileCross(l[2].toInt());
+                this->outter.push_back(tile);
+            }
         }
         else if (l.size() == 3 && l[0] == "T")
         {
-
+            int move = l[1].toInt();
+            if (move == 1010 || move == 0101)
+            {
+                Tile *tile = new TileStraight(l[2].toInt());
+                this->tiles.push_back(tile);
+            }
+            else if (move == 1100 || move == 110 || move == 11 || move == 1001)
+            {
+                Tile *tile = new TileCorner(l[2].toInt());
+                this->tiles.push_back(tile);
+            }
+            else
+            {
+                Tile *tile = new TileCross(l[2].toInt());
+                this->tiles.push_back(tile);
+            }
         }
         else if (l.size() == 5 && l[0] == "T")
         {
-
+            int move = l[1].toInt();
+            if (move == 1010 || move == 0101)
+            {
+                Tile *tile = new TileStraight(l[2].toInt());
+                this->tiles.push_back(tile);
+            }
+            else if (move == 1100 || move == 110 || move == 11 || move == 1001)
+            {
+                Tile *tile = new TileCorner(l[2].toInt());
+                this->tiles.push_back(tile);
+            }
+            else
+            {
+                Tile *tile = new TileCross(l[2].toInt());
+                this->tiles.push_back(tile);
+            }
         }
     }
 
