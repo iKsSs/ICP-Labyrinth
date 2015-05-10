@@ -1,10 +1,10 @@
+//ICP-Labyrinth 2014/2015
 /**
  * @file       player.cpp
  * @author     Jakub Pastuszek (xpastu00@stud.fit.vutr.cz)
- * @project    ICP-Labyrinth 2014/2015
  * @date       May 2015
  *
- * Implementace funkci pro reprezentaci hrace a jeho obsluhu.
+ * Implementation of functions for representation player and its handle.
  */
 
 #include "player.h"

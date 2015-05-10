@@ -1,10 +1,10 @@
+//ICP-Labyrinth 2014/2015
 /**
  * @file       mainwindow.h
  * @author     Jakub Pastuszek (xpastu00@stud.fit.vutr.cz)
- * @project    ICP-Labyrinth 2014/2015
  * @date       May 2015
  *
- * Hlavicky funkci pro zobrazeni hlavniho okna aplikace
+ * Function headers for show main application window.
  */
 
 #ifndef MAINWINDOW_H

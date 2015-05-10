@@ -1,11 +1,12 @@
+//ICP-Labyrinth 2014/2015
 /**
  * @file       tile.h
  * @author     Jakub Pastuszek (xpastu00@stud.fit.vutr.cz)
- * @project    ICP-Labyrinth 2014/2015
  * @date       May 2015
  *
- * Hlavicky funkci pro reprezentaci kamene ve hre, jak jiz hlavniho pole, klikatelnych poli kolem hraciho pole,
- * tak i kamen mimo hraci desku; trida reprezentujici mozne odchozi cesty z kamene; kazdy druh kamene ma svou tridu
+ * Function headers for represenatation tile in game as has the main and linkable fields around game board, and
+ * tile outside of board for insert. Class representing possible outbound paths from tile. Every type of tile has
+ * a separate class.
  */
 
 #ifndef TILE

@@ -1,10 +1,10 @@
+//ICP-Labyrinth 2014/2015
 /**
  * @file       player.h
  * @author     Jakub Pastuszek (xpastu00@stud.fit.vutr.cz)
- * @project    ICP-Labyrinth 2014/2015
  * @date       May 2015
  *
- * Hlavicky funkci pro reprezentaci hrace ve hre
+ * Function headers for represenatation players in game.
  */
 
 #ifndef PLAYER
