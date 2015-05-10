@@ -150,6 +150,11 @@ void TreasurePack::shuffle(){
     }
 }
 
+void TreasurePack::setVector(QVector<Treasure *> vec)
+{
+    this->treasures = vec;
+}
+
 /**
  * @brief TreasurePack::~TreasurePack
  *

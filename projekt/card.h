@@ -37,6 +37,7 @@ class TreasurePack{
     Treasure* getTreasure(unsigned int);
     void removeTreasure();
     void shuffle();
+    void setVector(QVector<Treasure*>);
 
     QString toCSV();
 
