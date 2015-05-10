@@ -73,6 +73,7 @@ private slots:
     void handle_btn_addPlayer();
     void handle_btn_save();
     void handle_btn_load();
+    void handle_btn_undo();
     void handle_btn_play();
 
     void handle_btn_quantity_12();
@@ -119,6 +120,7 @@ private:
     QPushButton* btn_size_11;
     QPushButton* btn_save;
     QPushButton* btn_load;
+    QPushButton* btn_undo;
     QPushButton* btn_play;
 
 protected:
