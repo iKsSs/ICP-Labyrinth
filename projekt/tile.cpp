@@ -144,7 +144,9 @@ void Tile::setRotation(unsigned int r){
  */
 void Tile::setTreasure(Treasure *t){
     this->treasure = t;
-    this->treasure->setImage();
+    if (this->treasure != NULL){
+        this->treasure->setImage();
+    }
 }
 
 /**
