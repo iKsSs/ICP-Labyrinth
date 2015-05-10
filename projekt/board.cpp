@@ -664,6 +664,8 @@ QString Board::data()
     data.append("A;");
     data.append(QString::number(this->act) + "\n");
 
+    data.append("I" + this->newTile->toCSV());
+
     return data;
 }
 
@@ -689,9 +691,6 @@ void Board::load(QString filename)
     QVector<Treasure *> ts;
     QVector<Treasure *> cs;
 
-    int active;
-    int size;
-
     QFile file(filename);
 
     file.open(QFile::ReadOnly | QFile::Text);
@@ -708,11 +707,11 @@ void Board::load(QString filename)
 
         if (l.size() == 2 && l[0] == "A")
         {
-            active = l[1].toInt();
+            this->act = l[1].toInt();
         }
         else if (l.size() == 2 && l[0] == "S")
         {
-            size = l[1].toInt();
+            this->size = l[1].toInt();
         }
         else if (l.size() == 2 && l[0] == "CB")
         {
@@ -773,6 +772,8 @@ void Board::load(QString filename)
                 Tile *tile = new TileOutter(l[2].toInt());
                 this->outter.push_back(tile);
             }
+
+            //tu poklad neni, netreba resit
         }
         else if (l.size() == 3 && l[0] == "T")
         {
@@ -796,21 +797,69 @@ void Board::load(QString filename)
         else if (l.size() == 5 && l[0] == "T")
         {
             int move = l[1].toInt();
+            Tile *tile;
+            if (move == 1010 || move == 0101)
+            {
+                tile = new TileStraight(l[2].toInt());
+            }
+            else if (move == 1100 || move == 110 || move == 11 || move == 1001)
+            {
+                tile = new TileCorner(l[2].toInt());
+
+            }
+            else
+            {
+                tile = new TileCross(l[2].toInt());
+            }
+
+            //poklad na kameni
+
+            Treasure *t = new Treasure(l[4].toInt());
+            tile->setTreasure(t);
+            this->tiles.push_back(tile);
+        }
+        else if (l.size() == 3 && l[0] == "IT")
+        {
+            int move = l[1].toInt();
             if (move == 1010 || move == 0101)
             {
                 Tile *tile = new TileStraight(l[2].toInt());
-                this->tiles.push_back(tile);
+                this->newTile = tile;
             }
             else if (move == 1100 || move == 110 || move == 11 || move == 1001)
             {
                 Tile *tile = new TileCorner(l[2].toInt());
-                this->tiles.push_back(tile);
+                this->newTile = tile;
             }
             else
             {
                 Tile *tile = new TileCross(l[2].toInt());
-                this->tiles.push_back(tile);
+                this->newTile = tile;;
             }
+        }
+        else if (l.size() == 5 && l[0] == "T")
+        {
+            int move = l[1].toInt();
+            Tile *tile;
+            if (move == 1010 || move == 0101)
+            {
+                tile = new TileStraight(l[2].toInt());
+            }
+            else if (move == 1100 || move == 110 || move == 11 || move == 1001)
+            {
+                tile = new TileCorner(l[2].toInt());
+
+            }
+            else
+            {
+                tile = new TileCross(l[2].toInt());
+            }
+
+            //poklad na kameni
+
+            Treasure *t = new Treasure(l[4].toInt());
+            tile->setTreasure(t);
+            this->newTile = tile;
         }
     }
 
