@@ -22,20 +22,24 @@
 const bool T = true;
 const bool F = false;
 
+/*! Class representing possible ways out of Tile */
+
 class Move{
-    bool up;
-    bool right;
-    bool down;
-    bool left;
+    bool up;        //!< way up */
+    bool right;     //!< way right */
+    bool down;      //!< way down */
+    bool left;      //!< way left */
 public:
     Move();
     void setMove(bool, bool, bool, bool);
-    unsigned int getMove();
+    unsigned int getMove();     //!< get coded move
     bool moveUp();
     bool moveRight();
     bool moveDown();
     bool moveLeft();
 };
+
+/*! Class representing Tile - abstract class */
 
 class Tile{
 protected:
@@ -47,7 +51,7 @@ protected:
 
 public:
   Tile();
-  Tile(unsigned int);    //kontruktor s rotaci
+  Tile(unsigned int);       //!< constructor with rotation
   virtual void rotate()=0;
   virtual void genImage()=0;
 
@@ -68,46 +72,54 @@ public:
   void removePlayer(Player);
   QVector<Player> getPlayers();
 
-  QString toCSV();
+  QString toCSV();          //!< method to data game in file
 };
+
+/*! Class representing straight Tile */
 
 class TileStraight: public Tile{
 
 public:
     static unsigned int count;
-  TileStraight(unsigned int);    //kontruktor s rotaci
+  TileStraight(unsigned int);    //!< constructor with rotation
   TileStraight(){TileStraight::count++;}
   virtual void rotate();
   virtual void genImage();
   void setMove();
 };
 
+/*! Class representing corner Tile */
+
 class TileCorner: public Tile{
 
 public:
     static unsigned int count;
-  TileCorner(unsigned int);    //kontruktor s rotaci
+  TileCorner(unsigned int);    //!< constructor with rotation
   TileCorner(){TileCorner::count++;}
   virtual void rotate();
   virtual void genImage();
   void setMove();
 };
 
+/*! Class representing cross Tile */
+
 class TileCross: public Tile{
 
 public:
     static unsigned int count;
-  TileCross(unsigned int);    //kontruktor s rotaci
+  TileCross(unsigned int);    //!< constructor with rotation
   TileCross(){TileCross::count++;}
   virtual void rotate();
   virtual void genImage();
   void setMove();
 };
 
+/*! Class representing outter Tile */
+
 class TileOutter: public Tile{
 
 public:
-  TileOutter(unsigned int);    //kontruktor s rotaci
+  TileOutter(unsigned int);    //!< constructor with rotation
   TileOutter(){}
   virtual void rotate(){}
   virtual void genImage();

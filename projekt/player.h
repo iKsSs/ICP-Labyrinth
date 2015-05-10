@@ -17,17 +17,19 @@
 
 #include "card.h"
 
+/*! Class representing Player */
+
 class Player
 {
     QPoint position;
     QString name;
     QPixmap image;
     unsigned int points;
-    Treasure* card;
+    Treasure* card;         //!< searched card(treasure) */
 public:
     Player();
-    Player(QString);     //jmeno hráče
-    Player(QString, QPoint position);     //jméno hráče a jeho výchozí pozice
+    Player(QString);      //!< constructor with name
+    Player(QString, QPoint);     //!< constructor with name and position
 
     void setPosition(QPoint);
     void setPositionX(unsigned int);
@@ -47,15 +49,13 @@ public:
 
     void addPoints(unsigned int);
 
-    void run();
+    bool operator == (const Player&) const;   //!< operator to compare players name
 
-    bool operator == (const Player&) const;
-
-    static unsigned int countNoName;
+    static unsigned int countNoName;    //!< auxiliary var for generating "noname palyer" */
 
     //~Player();
 
-    QString toCSV();
+    QString toCSV();        //!< method to save data in file
 };
 
 #endif // PLAYER

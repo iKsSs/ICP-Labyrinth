@@ -20,14 +20,16 @@
 #include "tile.h"
 #include "card.h"
 
+/*! Class representing game */
+
 class Board
 {
     QVector<Tile*> tiles;
     QVector<Tile*> outter;
     QVector<Player*> players;
-    Tile* newTile;
-    unsigned int size;
-    unsigned int act;
+    Tile* newTile;      //!< tile to insert */
+    unsigned int size;  //!< game board size */
+    unsigned int act;   //!< num of active player */
 
     TreasurePack* treasures;
     TreasurePack* cards;
@@ -46,7 +48,7 @@ public:
     void setSize(unsigned int);
 
     void setPlayerPos();
-    void recoverPlayerImage();
+    void recoverPlayerImage();      //!< set player image after load
 
     //Tile* getTile(QPoint);   //vraci kamen pro danou souradnici
     Tile* getTile(int);     //vraci kamen pro dany index
@@ -60,19 +62,19 @@ public:
     unsigned int getNumPlayers();
     Player* getPlayer(unsigned int);
     Player* getActPlayer();
-    void actPlus();
+    void actPlus();         //!< change active player
 
     void insertNewTile(QPoint);
-    void undo();
+    void undo();                    //!< step backward
     QString data();
-    void load(QString filename);
+    void load(QString filename);        //!< load game from file
 
-    void updatePlayersV(bool, bool, bool, bool, int);
-    void updatePlayersH(bool, bool, bool, bool, int);
+    void updatePlayersV(bool, bool, bool, bool, int);   //!< method to move player with tile vertically
+    void updatePlayersH(bool, bool, bool, bool, int);   //!< method to move player with tile horizontally
 
-    int genRand(unsigned int, unsigned int);
+    int genRand(unsigned int, unsigned int);        //!< random generator from Low to High
 
-    unsigned int state;
+    unsigned int state;         //!< state in game (shift/move/stay)
 
     static const unsigned int SHIFT = 1;
     static const unsigned int MOVE = 2;
