@@ -1,21 +1,21 @@
 <RCC>
     <qresource prefix="/">
+        <file>images/C.png</file>
         <file>images/E.png</file>
+        <file>images/L-1.png</file>
+        <file>images/L-2.png</file>
+        <file>images/L-3.png</file>
+        <file>images/L-4.png</file>
+        <file>images/P-1.png</file>
+        <file>images/P-2.png</file>
+        <file>images/P-3.png</file>
+        <file>images/P-4.png</file>
         <file>images/S-1.png</file>
         <file>images/S-2.png</file>
         <file>images/T-1.png</file>
         <file>images/T-2.png</file>
         <file>images/T-3.png</file>
         <file>images/T-4.png</file>
-        <file>images/L-1.png</file>
-        <file>images/L-2.png</file>
-        <file>images/L-3.png</file>
-        <file>images/L-4.png</file>
-        <file>images/C.png</file>
-        <file>images/P-1.png</file>
-        <file>images/P-2.png</file>
-        <file>images/P-3.png</file>
-        <file>images/P-4.png</file>
         <file>images/treasure/T-1.png</file>
         <file>images/treasure/T-2.png</file>
         <file>images/treasure/T-3.png</file>
