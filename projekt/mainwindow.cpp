@@ -69,6 +69,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     btn_save = new QPushButton("Save", this);
     btn_load = new QPushButton("Load", this);
+    btn_undo = new QPushButton("Undo", this);
 
     btn_play = new QPushButton("Play!", this);
 
@@ -100,7 +101,7 @@ void MainWindow::menu(){
 
     l_size->setGeometry(QRect(20, 20, 60, 20));
     l_quantity->setGeometry(QRect(350, 20, 90, 20));
-    l_player_res->setGeometry(QRect(50, 250, 90, 20));
+    l_player_res->setGeometry(QRect(50, 250, 250, 20));
     l_players->setGeometry(QRect(250, 20, 60, 20));
 
     btn_quantity_12->setGeometry(QRect(350, 40, 20, 20));
@@ -181,6 +182,7 @@ void MainWindow::game(){
     connect(btn_rotate, SIGNAL (released()), this, SLOT (handle_btn_rotate()));
     connect(btn_save, SIGNAL (released()), this, SLOT (handle_btn_save()));
     connect(btn_load, SIGNAL (released()), this, SLOT (handle_btn_load()));
+    connect(btn_undo, SIGNAL (released()), this, SLOT (handle_btn_undo()));
 }
 
 void MainWindow::load(){
@@ -200,6 +202,7 @@ void MainWindow::load(){
     btn_rotate->setGeometry(QRect(60, height+20, 50, 23));      //tlacitko rotace
     btn_save->setGeometry(QRect(width+20, 10, 50, 23));      //tlacitko save
     btn_load->setGeometry(QRect(width+20, 40, 50, 23));      //tlacitko load
+    btn_undo->setGeometry(QRect(width+20, 240, 50, 23));      //tlacitko load
     l_players->setGeometry(QRect(240, height+15, 80, 60));      //stitek hraci
     l_addPlayers->setGeometry(QRect(290, height+15, 80, 60));   //stitek seznam hracu
     l_size->setGeometry(QRect(340, height+15, 80, 60));   //stitek barev hracu
@@ -234,6 +237,7 @@ void MainWindow::hideGame(){
     gw_card->hide();
     btn_save->hide();
     btn_load->hide();
+    btn_undo->hide();
 }
 
 /**
@@ -249,6 +253,7 @@ void MainWindow::showGame(){
     gw_card->show();
     btn_save->show();
     btn_load->show();
+    btn_undo->show();
 }
 
 /**
@@ -286,6 +291,7 @@ MainWindow::~MainWindow()
     delete btn_size_11;
     delete btn_save;
     delete btn_load;
+    delete btn_undo;
     delete btn_play;
 
     delete gw_board;
@@ -648,6 +654,16 @@ void MainWindow::handle_btn_load()
     this->board->recoverPlayerImage();
 
     this->load();
+}
+
+/**
+ * @brief MainWindow::handle_btn_undo
+ *
+ * Undo current operation
+ */
+void MainWindow::handle_btn_undo()
+{
+
 }
 
 /**
