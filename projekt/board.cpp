@@ -177,6 +177,11 @@ void Board::setTreasureToTile(unsigned int n, unsigned int q){
     }
 }
 
+/**
+ * @brief Board::setCardToPlayers
+ *
+ * Set card to each player
+ */
 void Board::setCardToPlayers(){
     unsigned int i, n = this->players.size();
     for (i=0; i < n; ++i){
@@ -233,6 +238,12 @@ void Board::setSize(unsigned int size){
     this->size = size;
 }
 
+/**
+ * @brief Board::getSize
+ * @return size
+ *
+ * Return board size
+ */
 unsigned int Board::getSize(){
     return this->size;
 }
@@ -376,6 +387,11 @@ void Board::setPlayerPos(){
     }
 }
 
+/**
+ * @brief Board::recoverPlayerImage
+ *
+ * Set image to player after load/undo
+ */
 void Board::recoverPlayerImage(){
     unsigned int i, n = this->players.size();
     for (i=0; i < n; ++i){  //pro kazdeho hrace se nastavi pozice
@@ -506,11 +522,11 @@ void Board::insertNewTile(QPoint point){
 
 /**
  * @brief Board::updatePlayersV
- * @param p_0
- * @param p_1
- * @param p_2
- * @param p_3
- * @param add
+ * @param p_0   player 0
+ * @param p_1   player 1
+ * @param p_2   player 2
+ * @param p_3   player 3
+ * @param add   direction
  *
  * Update player position during shifting - vertical shift
  */
@@ -568,11 +584,11 @@ void Board::updatePlayersV(bool p_0, bool p_1, bool p_2, bool p_3, int add){
 
 /**
  * @brief Board::updatePlayersH
- * @param p_0
- * @param p_1
- * @param p_2
- * @param p_3
- * @param add
+ * @param p_0   player 0
+ * @param p_1   player 1
+ * @param p_2   player 2
+ * @param p_3   player 3
+ * @param add   direction
  *
  * Update player position during shifting - horizontal shift
  */
@@ -628,13 +644,15 @@ void Board::updatePlayersH(bool p_0, bool p_1, bool p_2, bool p_3, int add){
         }
 }
 
+/**
+ * @brief Board::data
+ * @return data
+ *
+ * Set game fingerprint
+ */
 QString Board::data()
 {
     QString data = "";
-    int tmp = this->state;
-
-    //unsigned int size;
-    //unsigned int act;
 
     //ulozi sutry
     for (int i  = 0; i < this->tiles.count(); i++)
@@ -678,6 +696,13 @@ QString Board::data()
     return data;
 }
 
+/**
+ * @brief Board::load
+ * @param filename      file load
+ * @param cfgString     undo
+ *
+ * Load fingerprint from file/undo
+ */
 void Board::load(QString filename, QString cfgString = "")
 {
     //nuluje vnitrni vektory
@@ -720,7 +745,7 @@ void Board::load(QString filename, QString cfgString = "")
         line = in->readLine();
         QStringList l = line.split(';');
 
-        //parsovani řadku
+        //parsovani radku
 
         if (l.size() == 2 && l[0] == "A")
         {
@@ -887,11 +912,21 @@ void Board::load(QString filename, QString cfgString = "")
     }
 }
 
+/**
+ * @brief Board::makeBckp
+ *
+ * Save fingerprint for possible undo
+ */
 void Board::makeBckp()
 {
     this->bckpList.push_back(this->data());
 }
 
+/**
+ * @brief Board::undo
+ *
+ * Operation undo while playing
+ */
 void Board::undo()
 {
     if (this->bckpList.isEmpty()) return;

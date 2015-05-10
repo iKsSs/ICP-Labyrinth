@@ -396,6 +396,8 @@ void TileOutter::genImage()
 /**
  * @brief Tile::toCSV
  * @return csv
+ *
+ * Save state to csv file
  */
 QString Tile::toCSV()
 {

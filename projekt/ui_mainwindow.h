@@ -15,7 +15,6 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -24,7 +23,6 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    QMenuBar *menuBar;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -38,11 +36,6 @@ public:
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         MainWindow->setCentralWidget(centralWidget);
-        menuBar = new QMenuBar(MainWindow);
-        menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setEnabled(false);
-        menuBar->setGeometry(QRect(0, 0, 604, 20));
-        MainWindow->setMenuBar(menuBar);
 
         retranslateUi(MainWindow);
 

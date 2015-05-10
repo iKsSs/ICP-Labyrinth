@@ -57,9 +57,14 @@ QString TreasurePack::toCSV(bool card = false)
     return csv;
 }
 
+/**
+ * @brief Treasure::toCSV
+ * @return csv
+ *
+ * Save state to csv file
+ */
 QString Treasure::toCSV()
 {
-    //unsigned int code;
     QString csv = "";
 
     csv.append("B;");
@@ -151,10 +156,16 @@ void TreasurePack::shuffle(){
     }
 }
 
+/**
+ * @brief TreasurePack::setVector
+ * @param vec
+ *
+ * Set auxiliary vector of treasures
+ */
 void TreasurePack::setVector(QVector<Treasure *> vec)
 {
     this->treasures = vec;
-    this->quantity = vec.count();       //snad ok
+    this->quantity = vec.count();
 }
 
 /**
