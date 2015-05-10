@@ -631,6 +631,7 @@ void Board::updatePlayersH(bool p_0, bool p_1, bool p_2, bool p_3, int add){
 QString Board::data()
 {
     QString data = "";
+    int tmp = this->state;
 
     //unsigned int size;
     //unsigned int act;
@@ -670,13 +671,14 @@ QString Board::data()
 
     data.append("I" + this->newTile->toCSV());
 
-    data.append("ST");
+    data.append("ST;");
+
     data.append(QString::number(this->state) + "\n");
 
     return data;
 }
 
-void Board::load(QString filename)
+void Board::load(QString filename, QString cfgString = "")
 {
     //nuluje vnitrni vektory
     //QVector<Tile*> tiles;
@@ -691,23 +693,31 @@ void Board::load(QString filename)
     this->tiles.clear();
     this->outter.clear();
     this->players.clear();
-    this->board.clear();
+    //this->bckpList.clear();
 
     //treasures vectory nemuzu mazat, metoda jen pro nastaveni
     //vytvarim pomocne vektory
     QVector<Treasure *> ts;
     QVector<Treasure *> cs;
 
-    QFile file(filename);
+    QTextStream *in;
 
-    file.open(QFile::ReadOnly | QFile::Text);
+    if (cfgString.isEmpty())
+    {
+        QFile file(filename);
+        file.open(QFile::ReadOnly | QFile::Text);
+        in = new QTextStream(&file);
+        file.close();
+    }
+    else
+    {
+        in = new QTextStream(&cfgString);
+    }
 
-    QTextStream in(&file);
-
-    while (!in.atEnd())
+    while (!in->atEnd())
     {
         QString line;
-        line = in.readLine();
+        line = in->readLine();
         QStringList l = line.split(';');
 
         //parsovani řadku
@@ -733,6 +743,8 @@ void Board::load(QString filename)
         else if (l.size() == 2 && l[0] == "ST")
         {
             this->state = l[1].toInt();
+
+            qDebug("obnova stavu");
         }
         else if (l.size() == 7 && l[0] == "P")
         {
@@ -873,6 +885,17 @@ void Board::load(QString filename)
             this->newTile = tile;
         }
     }
+}
 
-    file.close();
+void Board::makeBckp()
+{
+    this->bckpList.push_back(this->data());
+}
+
+void Board::undo()
+{
+    qDebug(QString::number(this->state).toStdString().c_str());
+    this->load("", this->bckpList.last());
+    this->bckpList.pop_back();
+    qDebug(QString::number(this->state).toStdString().c_str());
 }

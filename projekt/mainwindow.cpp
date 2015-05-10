@@ -326,6 +326,8 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 
         if((posX > 0 && posX < width) && (posY > 0 && posY < height)){
 
+            this->board->makeBckp();
+
             if ((posX > width - 50 || posX < 50) || (posY > height - 50 || posY < 50))
             {
                 //mimo hraci plochu
@@ -647,7 +649,7 @@ void MainWindow::handle_btn_load()
     "",
     tr("Files (*.csv)"));
 
-    board->load(fileName);
+    board->load(fileName, "");
 
     this->size = this->board->getSize();
 
@@ -663,7 +665,11 @@ void MainWindow::handle_btn_load()
  */
 void MainWindow::handle_btn_undo()
 {
+    this->board->undo();
 
+    this->board->recoverPlayerImage();
+
+    this->load();
 }
 
 /**
