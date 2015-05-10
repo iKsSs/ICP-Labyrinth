@@ -109,18 +109,12 @@ void Player::setName(QString name)
  *
  * Set image to player according to position
  */
-void Player::setImage(){
-    unsigned int sw;
-    if     (this->position.x() == 0 && this->position.y() == 0){ sw = 3; }  //LH roh
-    else if(this->position.x() == 0 && this->position.y() != 0){ sw = 2; }  //PH roh
-    else if(this->position.x() != 0 && this->position.y() == 0){ sw = 1; }  //LS roh
-    else { sw = 4; }    //PS roh
-
-    switch(sw){
-        case 1: image.load("images/P-1.png"); break;
-        case 2: image.load("images/P-2.png"); break;
-        case 3: image.load("images/P-3.png"); break;
-        case 4: image.load("images/P-4.png"); break;
+void Player::setImage(unsigned int i){
+    switch(i){
+        case 0: image.load("images/P-1.png"); break;
+        case 1: image.load("images/P-2.png"); break;
+        case 2: image.load("images/P-3.png"); break;
+        case 3: image.load("images/P-4.png"); break;
     default: image.load("images/C.png");
     }
 }

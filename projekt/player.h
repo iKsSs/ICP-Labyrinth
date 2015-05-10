@@ -36,7 +36,7 @@ public:
     QPoint getPosition();
 
     void setName(QString);
-    void setImage();
+    void setImage(unsigned int);
 
     void setCard(Treasure*);
     Treasure* getCard();
