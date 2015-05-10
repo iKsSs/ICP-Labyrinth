@@ -894,8 +894,8 @@ void Board::makeBckp()
 
 void Board::undo()
 {
-    qDebug(QString::number(this->state).toStdString().c_str());
+    if (this->bckpList.isEmpty()) return;
+
     this->load("", this->bckpList.last());
     this->bckpList.pop_back();
-    qDebug(QString::number(this->state).toStdString().c_str());
 }
