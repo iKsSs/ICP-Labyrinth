@@ -35,7 +35,7 @@ class Board
     TreasurePack* cards;
 
     //...
-    QVector<Board> board;
+    QVector<QString> bckpList;
 public:
     Board();
     void setBoard(unsigned int);
@@ -67,9 +67,10 @@ public:
     void actPlus();         //!< change active player
 
     void insertNewTile(QPoint);
-    void undo();                    //!< step backward
     QString data();
-    void load(QString filename);        //!< load game from file
+    void load(QString filename, QString);        //!< load game from file
+    void makeBckp();
+    void undo();
 
     void updatePlayersV(bool, bool, bool, bool, int);   //!< method to move player with tile vertically
     void updatePlayersH(bool, bool, bool, bool, int);   //!< method to move player with tile horizontally
