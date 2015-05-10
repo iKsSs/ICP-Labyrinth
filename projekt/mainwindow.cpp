@@ -32,6 +32,9 @@ MainWindow::MainWindow(QWidget *parent) :
     this->numPlayers = 0;
     this->quantity = 12;
 
+    this->b_row = 100;
+    this->b_col = 100;
+
     //GUI objekty
     scene = new QGraphicsScene(this);
     newTile = new QGraphicsScene(this);
@@ -156,11 +159,12 @@ void MainWindow::game(){
     this->board->setOutterFields(this->size);   //vygenerování policek pro vsunuti kamene
     this->board->setTreasures(this->quantity);   //vygenerovat poklady
     this->board->setCards(this->quantity);   //vygenerovat karty
-    this->board->setTreasureToTile(this->size, this->quantity);   //prirazeni kamenum poklad
-    this->board->setCardToPlayers();         //prirazeni karty hraci
 
     this->board->getCards()->shuffle();     //zamicha karty
     this->board->getTreasures()->shuffle(); //zamicha poklady
+
+    this->board->setTreasureToTile(this->size, this->quantity);   //prirazeni kamenum poklad
+    this->board->setCardToPlayers();         //prirazeni karty hraci
 
     gw_board->setInteractive(true);
 
@@ -190,7 +194,7 @@ void MainWindow::game(){
 
     gw_board->setScene(scene);  //zobrazi board
 
-    this->board->state = board->State::SHIFT;
+    this->board->state = Board::SHIFT;
 
     //connections
     connect(btn_rotate, SIGNAL (released()), this, SLOT (handle_btn_rotate()));
@@ -282,6 +286,9 @@ MainWindow::~MainWindow()
  */
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
+    if(this->board->state == Board::STAY){
+        event->ignore();
+    }
     event->accept();
 
     if (event->button() == Qt::LeftButton){
@@ -297,8 +304,8 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
             if ((posX > width - 50 || posX < 50) || (posY > height - 50 || posY < 50))
             {
                 //mimo hraci plochu
-              if (this->board->state == board->State::SHIFT){
-                this->board->state = board->State::MOVE;
+              if (this->board->state == Board::SHIFT){
+                this->board->state = Board::MOVE;
                 if ((posX > width - IMG_SIZE || posX < IMG_SIZE) || (posY > height - IMG_SIZE || posY < IMG_SIZE))
                 {
 
@@ -318,32 +325,53 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                     unsigned int row = (posY) / IMG_SIZE;
                     unsigned int col = (posX) / IMG_SIZE;
 
-                    if (row % 2 == 0 && col % 2 == 0)
-                    {
-                        board->insertNewTile(QPoint(row, col));
-                        this->genBoard();
-                        this->drawNewTile();
-                    }
+              //      if (!(row == 0 && col == b_col && b_row == this->size+1)){   //nevraceni zpet v nasledujich tahu
+                        if (row % 2 == 0 && col % 2 == 0)
+                        {
+                            board->insertNewTile(QPoint(row, col));
+                            this->genBoard();
+                            this->drawNewTile();
+                        }
+              //      }
+                    this->b_row = row;
+                    this->b_col = col;
                 }
               }
             }
             else
             {
-                if (this->board->state == board->State::MOVE){
-                    this->board->state = board->State::SHIFT;
+                if (this->board->state == Board::MOVE){
 
                     unsigned int row = (posY - 50) / IMG_SIZE;
                     unsigned int col = (posX - 50) / IMG_SIZE;
-
-
 
                     Player* p = this->board->getActPlayer();
 
                     if (this->canMove(p->getPosition().x() * this->size + p->getPosition().y(), row * this->size + col)){
                         p->setPosition(QPoint(row,col));
+
+                        this->board->state = Board::SHIFT;
+
+                        Tile *t = this->board->getTile(row * this->size + col);
+                        if(t->getTreasure() != NULL && p->getCard()->getCode() == t->getTreasure()->getCode()){
+                            qDebug("HURA");
+                            p->addPoints(1);
+
+                            if(p->getPoints() >= this->quantity / this->board->getNumPlayers()){
+                                qDebug("KONEC");
+                                this->board->state = Board::STAY;
+                            }
+
+                            p->setCard(this->board->getCards()->getTreasure());
+                            p->getCard()->setImage();
+                            this->board->getCards()->removeTreasure();
+
+                            t->setTreasure(NULL);
+                        }
+
                         this->board->actPlus();
                         l_player_res->setText(this->board->getActPlayer()->getName());
-                        this->drawCard(p);
+                        this->drawCard(this->board->getActPlayer());
                     }
 
                     this->genBoard();

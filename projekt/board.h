@@ -29,8 +29,8 @@ class Board
     unsigned int size;
     unsigned int act;
 
-    TreasurePack *treasures;
-    TreasurePack *cards;
+    TreasurePack* treasures;
+    TreasurePack* cards;
 
     //...
     QVector<Board> board;
@@ -71,8 +71,11 @@ public:
 
     QString toCSV();
 
-    enum class State { SHIFT, MOVE, STAY };
-    State state;
+    unsigned int state;
+
+    static const unsigned int SHIFT = 1;
+    static const unsigned int MOVE = 2;
+    static const unsigned int STAY = 3;
 protected:
     //Tile generateTile();
 };

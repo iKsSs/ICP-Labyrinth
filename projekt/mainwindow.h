@@ -82,6 +82,7 @@ private:
     unsigned int numPlayers;
 
     unsigned int width, height;
+    unsigned int b_row, b_col;
 
     Board *board;
 

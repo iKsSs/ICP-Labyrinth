@@ -15,7 +15,7 @@
  *
  * Implicit contructor
  */
-Board::Board(): newTile{NULL}, treasures{NULL}, cards{NULL}, size{0}, act{0}, state{State::STAY}
+Board::Board(): newTile{NULL}, treasures{NULL}, cards{NULL}, size{0}, act{0}, state{3}
 {}
 
 /**

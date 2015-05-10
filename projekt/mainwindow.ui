@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>587</width>
-    <height>415</height>
+    <width>604</width>
+    <height>460</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -37,7 +37,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>587</width>
+     <width>604</width>
      <height>20</height>
     </rect>
    </property>

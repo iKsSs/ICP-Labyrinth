@@ -30,7 +30,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(587, 415);
+        MainWindow->resize(604, 460);
         MainWindow->setMaximumSize(QSize(1920, 1920));
         MainWindow->setContextMenuPolicy(Qt::DefaultContextMenu);
         MainWindow->setAnimated(true);
@@ -41,7 +41,7 @@ public:
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setEnabled(false);
-        menuBar->setGeometry(QRect(0, 0, 587, 20));
+        menuBar->setGeometry(QRect(0, 0, 604, 20));
         MainWindow->setMenuBar(menuBar);
 
         retranslateUi(MainWindow);
