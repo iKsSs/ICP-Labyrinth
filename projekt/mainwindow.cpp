@@ -26,8 +26,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    qsrand(qrand()); //pro testovani
-    //qsrand(QTime::currentTime().msec());    //random
+    //qsrand(qrand()); //pro testovani
+    qsrand(QTime::currentTime().msec());    //random
 
     ui->setupUi(this);
 
@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->b_row = 100;
     this->b_col = 100;
+    this->b_type = 0;
 
     //GUI objekty
     scene = new QGraphicsScene(this);
@@ -93,15 +94,15 @@ void MainWindow::menu(){
     this->hideGame();
 
     //nastavit pozice
-    l_addPlayers->setGeometry(QRect(250, 25, 40, 80));
-    l_sizeView->setGeometry(QRect(20, 100, 90, 20));
-    l_quantityView->setGeometry(QRect(350, 100, 120, 20));
+    l_addPlayers->setGeometry(QRect(250, 25, 60, 80));
+    l_sizeView->setGeometry(QRect(20, 100, 110, 20));
+    l_quantityView->setGeometry(QRect(350, 100, 140, 20));
     le_player->setGeometry(QRect(150, 20, 80, 20));
 
-    l_size->setGeometry(QRect(20, 20, 60, 20));
-    l_quantity->setGeometry(QRect(350, 20, 90, 20));
+    l_size->setGeometry(QRect(20, 20, 80, 20));
+    l_quantity->setGeometry(QRect(350, 20, 110, 20));
     l_player_res->setGeometry(QRect(20, 160, 250, 20));
-    l_players->setGeometry(QRect(250, 20, 60, 20));
+    l_players->setGeometry(QRect(250, 20, 80, 20));
 
     btn_quantity_12->setGeometry(QRect(350, 40, 20, 20));
     btn_quantity_24->setGeometry(QRect(370, 40, 20, 20));
@@ -208,10 +209,10 @@ void MainWindow::load(){
     btn_rotate->setGeometry(QRect(60, height+20, 50, 23));      //tlacitko rotace
     btn_save->setGeometry(QRect(width+20, 10, 50, 23));      //tlacitko save
     btn_load->setGeometry(QRect(width+20, 40, 50, 23));      //tlacitko load
-    btn_undo->setGeometry(QRect(width+20, 240, 50, 23));      //tlacitko load
-    l_players->setGeometry(QRect(240, height+15, 80, 60));      //stitek hraci
-    l_addPlayers->setGeometry(QRect(290, height+15, 80, 60));   //stitek seznam hracu
-    l_size->setGeometry(QRect(340, height+15, 80, 60));   //stitek barev hracu
+    btn_undo->setGeometry(QRect(width+20, 200, 50, 23));      //tlacitko undo
+    l_players->setGeometry(QRect(200, height+15, 80, 60));      //stitek hraci
+    l_addPlayers->setGeometry(QRect(250, height+15, 90, 60));   //stitek seznam hracu
+    l_size->setGeometry(QRect(360, height+15, 80, 60));   //stitek barev hracu
     l_quantity->setGeometry(QRect(width+20, height-100, 80, 60));   //stitek vitezneho hrace
     l_player_res->setGeometry(QRect(width+20, 80, 90, 20));          //aktualni hrac
     gw_newTile->setGeometry(QRect(10, height+20, 44, 44));      //novy kamen mimo hraci desku
@@ -332,8 +333,6 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 
         if((posX > 0 && posX < width) && (posY > 0 && posY < height)){
 
-            this->board->makeBckp();
-
             if ((posX > width - 50 || posX < 50) || (posY > height - 50 || posY < 50))
             {
                 //mimo hraci plochu
@@ -358,13 +357,12 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                     unsigned int row = (posY) / IMG_SIZE;
                     unsigned int col = (posX) / IMG_SIZE;
 
-//                    if ((row == b_row && (col == this->size - b_col +1 || col == this->size + b_col +1)) ||
-//                            (col == b_col && (row == this->size - b_row +1 || row == this->size + b_row +1))
-//                            ){   //nevraceni zpet v nasledujich tahu
-//                        return;
-//                    }
+                    if ( (this->b_type == 1 && b_col == col && b_row != row) || (this->b_type == 2 && b_col != col && b_row == row) ){   //nevraceni zpet v nasledujich tahu
+                        return;
+                    }
                         if (row % 2 == 0 && col % 2 == 0)
                         {
+                            this->board->makeBckp();
                             board->insertNewTile(QPoint(row, col));
                             this->genBoard();
                             this->drawNewTile();
@@ -373,12 +371,15 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 
                     this->b_row = row;
                     this->b_col = col;
+                    this->b_type = (row == 0 || row == 6) ? 1 : 2;
                   }
                 }
             }
             else
             {
                 if (this->board->state == Board::MOVE){
+
+                    this->board->makeBckp();
 
                     unsigned int row = (posY - 50) / IMG_SIZE;
                     unsigned int col = (posX - 50) / IMG_SIZE;
@@ -388,15 +389,14 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                     if (this->canMove(p->getPosition().x() * this->size + p->getPosition().y(), row * this->size + col)){
                         p->setPosition(QPoint(row,col));
 
+
                         this->board->state = Board::SHIFT;
 
                         Tile *t = this->board->getTile(row * this->size + col);
                         if(t->getTreasure() != NULL && p->getCard()->getCode() == t->getTreasure()->getCode()){
-                            qDebug("HURA");
                             p->addPoints(1);
 
                             if(p->getPoints() >= this->quantity / this->board->getNumPlayers()){//quantity / pocet hracu
-                                qDebug("KONEC");
                                 this->board->state = Board::STAY;
                                 QString str = p->getName() + "\nwon!";
                                 l_quantity->setText(str);
@@ -633,7 +633,7 @@ void MainWindow::handle_btn_save()
 
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save as"),
     "",
-    tr("Files (*.csv)"));
+    tr("Files (*.*)"));
 
     if(fileName.isEmpty()){return;}
 
@@ -656,7 +656,7 @@ void MainWindow::handle_btn_load()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
     "",
-    tr("Files (*.csv)"));
+    tr("Files (*.*)"));
 
     if(fileName.isEmpty()){return;}
 
