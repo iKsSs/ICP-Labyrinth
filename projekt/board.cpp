@@ -739,10 +739,10 @@ void Board::load(QString filename, QString cfgString = "")
 
     if (cfgString.isEmpty())
     {
-        QFile file(filename);
-        file.open(QFile::ReadOnly | QFile::Text);
-        in = new QTextStream(&file);
-        file.close();
+        QFile *file = new QFile(filename);
+        file->open(QFile::ReadOnly | QFile::Text);
+        in = new QTextStream(file);
+        //file->close();
     }
     else
     {
