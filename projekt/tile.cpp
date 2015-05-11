@@ -295,9 +295,9 @@ void TileCross::rotate(){
 void TileStraight::genImage()
 {
     switch(this->rotation){
-        case 1: this->image.load("images/S-1.png");break;
-        case 2: this->image.load("images/S-2.png");break;
-        default: this->image.load("images/C.png");
+        case 1: this->image.load("./images/S-1.png");break;
+        case 2: this->image.load("./images/S-2.png");break;
+        default: this->image.load("./images/C.png");
     }
 }
 
