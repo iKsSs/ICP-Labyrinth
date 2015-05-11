@@ -18,8 +18,14 @@
  *
  * Implicit contructor
  */
-Board::Board(): newTile{NULL}, treasures{NULL}, cards{NULL}, size{0}, act{0}, state{3}
-{}
+Board::Board(){
+    newTile = NULL;
+    treasures = NULL;
+    cards = NULL;
+    size = 0;
+    act = 0;
+    state = 3;
+}
 
 /**
  * @brief Board::setBoard
@@ -154,6 +160,7 @@ void Board::setOutterFields(unsigned int n){
 /**
  * @brief Board::setTreasureToTile
  * @param n
+ * @param q
  *
  * Set treasure to tile
  */
@@ -419,16 +426,17 @@ int Board::genRand(unsigned int Low, unsigned int High){
  * Insert new tile into board and shift row or col
  */
 void Board::insertNewTile(QPoint point){
-    unsigned int i, j, k;
-    unsigned int n = this->players.size();
+    int i, j, k;
+    int n = this->players.size();
     bool p_0, p_1, p_2, p_3;
     p_0 = p_1 = p_2 = p_3 = false;
+    int size = static_cast<signed int>(this->size);
 
     Tile* x;
     //shift up
-    if(point.x() == this->size+1){
-        j = this->size*this->size - (this->size+1-point.y());
-        for(i=0; i < this->size; ++i){
+    if(point.x() == size+1){
+        j = size*size - (size+1-point.y());
+        for(i=0; i < size; ++i){
             //kontrola zda na aktualne se posouvajicim policku neni hrac
             for(k=0; k < n; ++k){
                 if(this->getPlayer(k)->getPosition() == QPoint(i,point.y()-1)){
@@ -443,7 +451,7 @@ void Board::insertNewTile(QPoint point){
             x = tiles[j];
             tiles[j] = newTile;
             newTile = x;
-            j -= this->size;
+            j -= size;
         }
 
         this->updatePlayersV(p_0, p_1, p_2, p_3, -1);
@@ -452,7 +460,7 @@ void Board::insertNewTile(QPoint point){
     //shift down
     else if(point.x() == 0){
         j = point.y() - 1;
-        for(i=0; i < this->size; ++i){
+        for(i=0; i < size; ++i){
             //kontrola zda na aktualne se posouvajicim policku neni hrac
             for(k=0; k < n; ++k){
                 if(this->getPlayer(k)->getPosition() == QPoint(i,point.y()-1)){
@@ -467,15 +475,15 @@ void Board::insertNewTile(QPoint point){
             x = tiles[j];
             tiles[j] = newTile;
             newTile = x;
-            j += this->size;
+            j += size;
         }
 
         this->updatePlayersV(p_0, p_1, p_2, p_3, 1);
     }
     //shift left
-    else if(point.y() == this->size+1){
-        j = point.x()*this->size - 1;
-        for(i=0; i < this->size; ++i){
+    else if(point.y() == size+1){
+        j = point.x()*size - 1;
+        for(i=0; i < size; ++i){
             //kontrola zda na aktualne se posouvajicim policku neni hrac
             for(k=0; k < n; ++k){
                 if(this->getPlayer(k)->getPosition() == QPoint(point.x()-1,i)){
@@ -497,8 +505,8 @@ void Board::insertNewTile(QPoint point){
     }
     //shift right
     else if(point.y() == 0){
-        j = (point.x()-1)*this->size;
-        for(i=0; i < this->size; ++i){
+        j = (point.x()-1)*size;
+        for(i=0; i < size; ++i){
             //kontrola zda na aktualne se posouvajicim policku neni hrac
             for(k=0; k < n; ++k){
                 if(this->getPlayer(k)->getPosition() == QPoint(point.x()-1,i)){
@@ -531,13 +539,14 @@ void Board::insertNewTile(QPoint point){
  * Update player position during shifting - vertical shift
  */
 void Board::updatePlayersV(bool p_0, bool p_1, bool p_2, bool p_3, int add){
+    int size = static_cast<signed int>(this->size);
     Player* pl;
         if(p_0){    //player 1
             pl = this->getPlayer(0);
             if (pl->getPosition().x() == 0 && add == -1){
-                pl->setPositionX(this->size-1);
+                pl->setPositionX(size-1);
             }
-            else if (pl->getPosition().x() == this->size-1 && add == 1){
+            else if (pl->getPosition().x() == size-1 && add == 1){
                 pl->setPositionX(0);
             }
             else{
@@ -547,9 +556,9 @@ void Board::updatePlayersV(bool p_0, bool p_1, bool p_2, bool p_3, int add){
         if(p_1){    //player 2
             pl = this->getPlayer(1);
             if (pl->getPosition().x() == 0 && add == -1){
-                pl->setPositionX(this->size-1);
+                pl->setPositionX(size-1);
             }
-            else if (pl->getPosition().x() == this->size-1 && add == 1){
+            else if (pl->getPosition().x() == size-1 && add == 1){
                 pl->setPositionX(0);
             }
             else{
@@ -559,9 +568,9 @@ void Board::updatePlayersV(bool p_0, bool p_1, bool p_2, bool p_3, int add){
         if(p_2){    //player 3
             pl = this->getPlayer(2);
             if (pl->getPosition().x() == 0 && add == -1){
-                pl->setPositionX(this->size-1);
+                pl->setPositionX(size-1);
             }
-            else if (pl->getPosition().x() == this->size-1 && add == 1){
+            else if (pl->getPosition().x() == size-1 && add == 1){
                 pl->setPositionX(0);
             }
             else{
@@ -571,9 +580,9 @@ void Board::updatePlayersV(bool p_0, bool p_1, bool p_2, bool p_3, int add){
         if(p_3){    //player 4
             pl = this->getPlayer(3);
             if (pl->getPosition().x() == 0 && add == -1){
-                pl->setPositionX(this->size-1);
+                pl->setPositionX(size-1);
             }
-            else if (pl->getPosition().x() == this->size-1 && add == 1){
+            else if (pl->getPosition().x() == size-1 && add == 1){
                 pl->setPositionX(0);
             }
             else{
@@ -593,13 +602,14 @@ void Board::updatePlayersV(bool p_0, bool p_1, bool p_2, bool p_3, int add){
  * Update player position during shifting - horizontal shift
  */
 void Board::updatePlayersH(bool p_0, bool p_1, bool p_2, bool p_3, int add){
+    int size = static_cast<signed int>(this->size);
     Player* pl;
         if(p_0){    //player 1
             pl = this->getPlayer(0);
             if (pl->getPosition().y() == 0 && add == -1){
-                pl->setPositionY(this->size-1);
+                pl->setPositionY(size-1);
             }
-            else if (pl->getPosition().y() == this->size-1 && add == 1){
+            else if (pl->getPosition().y() == size-1 && add == 1){
                 pl->setPositionY(0);
             }
             else{
@@ -609,9 +619,9 @@ void Board::updatePlayersH(bool p_0, bool p_1, bool p_2, bool p_3, int add){
         if(p_1){    //player 2
             pl = this->getPlayer(1);
             if (pl->getPosition().y() == 0 && add == -1){
-                pl->setPositionY(this->size-1);
+                pl->setPositionY(size-1);
             }
-            else if (pl->getPosition().y() == this->size-1 && add == 1){
+            else if (pl->getPosition().y() == size-1 && add == 1){
                 pl->setPositionY(0);
             }
             else{
@@ -621,9 +631,9 @@ void Board::updatePlayersH(bool p_0, bool p_1, bool p_2, bool p_3, int add){
         if(p_2){    //player 3
             pl = this->getPlayer(2);
             if (pl->getPosition().y() == 0 && add == -1){
-                pl->setPositionY(this->size-1);
+                pl->setPositionY(size-1);
             }
-            else if (pl->getPosition().y() == this->size-1 && add == 1){
+            else if (pl->getPosition().y() == size-1 && add == 1){
                 pl->setPositionY(0);
             }
             else{
@@ -633,9 +643,9 @@ void Board::updatePlayersH(bool p_0, bool p_1, bool p_2, bool p_3, int add){
         if(p_3){    //player 4
             pl = this->getPlayer(3);
             if (pl->getPosition().y() == 0 && add == -1){
-                pl->setPositionY(this->size-1);
+                pl->setPositionY(size-1);
             }
-            else if (pl->getPosition().y() == this->size-1 && add == 1){
+            else if (pl->getPosition().y() == size-1 && add == 1){
                 pl->setPositionY(0);
             }
             else{

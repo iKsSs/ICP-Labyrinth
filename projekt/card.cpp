@@ -136,7 +136,7 @@ Treasure* TreasurePack::getTreasure(unsigned int i){
  * Remove item on first index of treasure
  */
 void TreasurePack::removeTreasure(){
-    this->treasures.removeFirst();
+    this->treasures.remove(0);
 }
 
 /**

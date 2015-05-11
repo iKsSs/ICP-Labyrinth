@@ -29,7 +29,7 @@ class Board
     QVector<Player*> players;
     Tile* newTile;      //!< tile to insert */
     unsigned int size;  //!< game board size */
-    unsigned int act;   //!< num of active player */
+    int act;   //!< num of active player */
 
     TreasurePack* treasures;
     TreasurePack* cards;
