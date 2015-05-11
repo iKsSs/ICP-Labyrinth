@@ -295,9 +295,9 @@ void TileCross::rotate(){
 void TileStraight::genImage()
 {
     switch(this->rotation){
-        case 1: this->image.load("./images/S-1.png");break;
-        case 2: this->image.load("./images/S-2.png");break;
-        default: this->image.load("./images/C.png");
+        case 1: this->image.load(":/images/S-1.png");break;
+        case 2: this->image.load(":/images/S-2.png");break;
+        default: this->image.load(":/images/C.png");
     }
 }
 
@@ -309,11 +309,11 @@ void TileStraight::genImage()
 void TileCorner::genImage()
 {
     switch(this->rotation){
-        case 1: this->image.load("images/L-1.png");break;
-        case 2: this->image.load("images/L-2.png");break;
-        case 3: this->image.load("images/L-3.png");break;
-        case 4: this->image.load("images/L-4.png");break;
-        default: this->image.load("images/C.png");
+        case 1: this->image.load(":/images/L-1.png");break;
+        case 2: this->image.load(":/images/L-2.png");break;
+        case 3: this->image.load(":/images/L-3.png");break;
+        case 4: this->image.load(":/images/L-4.png");break;
+        default: this->image.load(":/images/C.png");
     }
 }
 
@@ -325,11 +325,11 @@ void TileCorner::genImage()
 void TileCross::genImage()
 {
     switch(this->rotation){
-        case 1: this->image.load("images/T-1.png");break;
-        case 2: this->image.load("images/T-2.png");break;
-        case 3: this->image.load("images/T-3.png");break;
-        case 4: this->image.load("images/T-4.png");break;
-        default: this->image.load("images/C.png");
+        case 1: this->image.load(":/images/T-1.png");break;
+        case 2: this->image.load(":/images/T-2.png");break;
+        case 3: this->image.load(":/images/T-3.png");break;
+        case 4: this->image.load(":/images/T-4.png");break;
+        default: this->image.load(":/images/C.png");
     }
 }
 
@@ -394,7 +394,7 @@ TileOutter::TileOutter(unsigned int r){
  */
 void TileOutter::genImage()
 {
-   this->image.load("images/E.png");
+   this->image.load(":/images/E.png");
 }
 
 /**

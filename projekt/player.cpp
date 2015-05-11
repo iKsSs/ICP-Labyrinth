@@ -111,11 +111,11 @@ void Player::setName(QString name)
  */
 void Player::setImage(unsigned int i){
     switch(i){
-        case 0: image.load("images/P-1.png"); break;
-        case 1: image.load("images/P-2.png"); break;
-        case 2: image.load("images/P-3.png"); break;
-        case 3: image.load("images/P-4.png"); break;
-    default: image.load("images/C.png");
+        case 0: image.load(":/images/P-1.png"); break;
+        case 1: image.load(":/images/P-2.png"); break;
+        case 2: image.load(":/images/P-3.png"); break;
+        case 3: image.load(":/images/P-4.png"); break;
+    default: image.load(":/images/C.png");
     }
 }
 
