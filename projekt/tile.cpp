@@ -14,8 +14,12 @@
  *
  * Constructor with directions up, right, down and left
  */
-Move::Move(): up{false}, right{false}, down{false}, left{false}
-{}
+Move::Move(){
+    up = false;
+    right = false;
+    down = false;
+    left = false;
+}
 
 /**
  * @brief Move::setMove

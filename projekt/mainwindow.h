@@ -61,7 +61,7 @@ public:
 
     void genBoard();    //!< generate game board
 
-    bool canMove(unsigned int, unsigned int);   //!< look for path from start_index to end_index
+    bool canMove(int, int);   //!< look for path from start_index to end_index
 
 private slots:
     void handle_btn_rotate();

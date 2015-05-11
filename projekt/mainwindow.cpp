@@ -323,9 +323,9 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
     event->accept();
 
     if (event->button() == Qt::LeftButton){
-        if(event->localPos().x() < 10 || event->localPos().y() < 10){return;}
-        unsigned int posX = event->localPos().x()-10;
-        unsigned int posY = event->localPos().y()-10;
+        if(event->x() < 10 || event->y() < 10){return;}
+        unsigned int posX = event->x()-10;
+        unsigned int posY = event->y()-10;
 
         unsigned int width = this->gw_board->width();
         unsigned int height = this->gw_board->height();
@@ -635,6 +635,8 @@ void MainWindow::handle_btn_save()
     "",
     tr("Files (*.csv)"));
 
+    if(fileName.isEmpty()){return;}
+
     QFile file(fileName);
     file.open(QFile::WriteOnly | QFile::Text);
 
@@ -655,6 +657,8 @@ void MainWindow::handle_btn_load()
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
     "",
     tr("Files (*.csv)"));
+
+    if(fileName.isEmpty()){return;}
 
     board->load(fileName, "");
 
@@ -736,7 +740,7 @@ void MainWindow::genBoard(){
             for (l=0; l < board->getNumPlayers(); ++l){
                 Player* p;
                 p = board->getPlayer(l);
-                if (i == p->getPosition().x() && j == p->getPosition().y()){
+                if (i == static_cast<unsigned int>(p->getPosition().x()) && j == static_cast<unsigned int>(p->getPosition().y())){
                     obr = p->getImage();
                     pixmapItem = scene->addPixmap(obr); //prida obrazek do sceny a vrati odkaz na nej
 
@@ -762,7 +766,7 @@ void MainWindow::genBoard(){
  *
  * Return if move from start to end is possible
  */
-bool MainWindow::canMove(unsigned int index_start, unsigned int index_goal)
+bool MainWindow::canMove(int index_start, int index_goal)
 {
     QVector<unsigned int> indexs;
     unsigned int ptr_indexs = 0;
@@ -795,7 +799,7 @@ bool MainWindow::canMove(unsigned int index_start, unsigned int index_goal)
 
         if (move.moveRight())
         {
-            if (index_start + 1 % (this->size) != 0 && index_start + 1 < this->size * this->size)
+            if (index_start + 1 % static_cast<signed int>(this->size) != 0 && index_start + 1 < static_cast<signed int>(this->size * this->size))
             {
                 Move move = board->getTile(index_start + 1)->getMove();
                 if (move.moveLeft())
