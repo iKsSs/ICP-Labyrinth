@@ -778,8 +778,6 @@ void Board::load(QString filename, QString cfgString = "")
         else if (l.size() == 2 && l[0] == "ST")
         {
             this->state = l[1].toInt();
-
-            qDebug("obnova stavu");
         }
         else if (l.size() == 7 && l[0] == "P")
         {
