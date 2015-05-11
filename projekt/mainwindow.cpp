@@ -490,7 +490,7 @@ void MainWindow::drawNewTile()
  */
 void MainWindow::drawCard(Player* p)
 {
-    QPixmap pix("images/E.png");
+    QPixmap pix(":/images/E.png");
     this->card->addPixmap(pix);
     this->card->addPixmap(p->getCard()->getImage());
 

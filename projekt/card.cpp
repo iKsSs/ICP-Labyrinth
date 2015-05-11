@@ -35,7 +35,7 @@ unsigned int Treasure::getCode(){
  * Set image
  */
 void Treasure::setImage(){
-    QString str = "images/treasure/T-" + QString::number(this->code) + ".png";
+    QString str = ":/images/treasure/T-" + QString::number(this->code) + ".png";
     image.load(str);
 }
 
