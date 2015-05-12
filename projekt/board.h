@@ -10,11 +10,8 @@
 #ifndef BOARD
 #define BOARD
 
-#include <QPoint>
 #include <QVector>
-#include <QSet>
 #include <QTime>
-#include <qglobal.h>
 
 #include "player.h"
 #include "tile.h"

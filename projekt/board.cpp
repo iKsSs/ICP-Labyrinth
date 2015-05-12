@@ -857,7 +857,7 @@ void Board::load(QString filename, QString cfgString = "")
         else if (l.size() == 3 && l[0] == "OT")
         {
             int move = l[1].toInt();
-            if (move == 1010 || move == 0101)
+            if (move == 1010 || move == 101)
             {
                 Tile *tile = new TileOutter(l[2].toInt());
                 this->outter.push_back(tile);
@@ -876,7 +876,7 @@ void Board::load(QString filename, QString cfgString = "")
         else if (l.size() == 5 && l[0] == "OT")
         {
             int move = l[1].toInt();
-            if (move == 1010 || move == 0101)
+            if (move == 1010 || move == 101)
             {
                 Tile *tile = new TileOutter(l[2].toInt());
                 this->outter.push_back(tile);
@@ -897,7 +897,7 @@ void Board::load(QString filename, QString cfgString = "")
         else if (l.size() == 3 && l[0] == "T")
         {
             int move = l[1].toInt();
-            if (move == 1010 || move == 0101)
+            if (move == 1010 || move == 101)
             {
                 Tile *tile = new TileStraight(l[2].toInt());
                 this->tiles.push_back(tile);
@@ -917,7 +917,7 @@ void Board::load(QString filename, QString cfgString = "")
         {
             int move = l[1].toInt();
             Tile *tile;
-            if (move == 1010 || move == 0101)
+            if (move == 1010 || move == 101)
             {
                 tile = new TileStraight(l[2].toInt());
             }
@@ -940,7 +940,7 @@ void Board::load(QString filename, QString cfgString = "")
         else if (l.size() == 3 && l[0] == "IT")
         {
             int move = l[1].toInt();
-            if (move == 1010 || move == 0101)
+            if (move == 1010 || move == 101)
             {
                 Tile *tile = new TileStraight(l[2].toInt());
                 this->newTile = tile;
@@ -960,7 +960,7 @@ void Board::load(QString filename, QString cfgString = "")
         {
             int move = l[1].toInt();
             Tile *tile;
-            if (move == 1010 || move == 0101)
+            if (move == 1010 || move == 101)
             {
                 tile = new TileStraight(l[2].toInt());
             }

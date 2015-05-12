@@ -12,7 +12,6 @@
 #ifndef TILE
 #define TILE
 
-#include <QPoint>
 #include <QPixmap>
 #include <QVector>
 #include <QString>
