@@ -86,8 +86,6 @@ private:
     unsigned int size;
 
     unsigned int width, height;
-    unsigned int b_row, b_col;
-    int b_type;
 
     Board *board;
 

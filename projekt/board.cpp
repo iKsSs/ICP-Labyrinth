@@ -25,6 +25,9 @@ Board::Board(){
     size = 0;
     act = 0;
     state = 3;
+    b_row = 100;
+    b_col = 100;
+    b_type = 0;
 }
 
 /**
@@ -362,6 +365,66 @@ Player *Board::getPlayer(unsigned int i){
  */
 Player *Board::getActPlayer(){
     return this->players[act];
+}
+
+/**
+ * @brief Board::getB_col
+ * @return b_col
+ *
+ * Get b_col
+ */
+unsigned int Board::getB_col(){
+    return this->b_col;
+}
+
+/**
+ * @brief Board::setB_col
+ * @param col
+ *
+ * Set b_col
+ */
+void Board::setB_col(unsigned int col){
+    this->b_col = col;
+}
+
+/**
+ * @brief Board::getB_row
+ * @return b_row
+ *
+ * Get b_row
+ */
+unsigned int Board::getB_row(){
+    return this->b_row;
+}
+
+/**
+ * @brief Board::setB_row
+ * @param row
+ *
+ * Set b_row
+ */
+void Board::setB_row(unsigned int row){
+    this->b_row = row;
+}
+
+/**
+ * @brief Board::getB_type
+ * @return b_type
+ *
+ * Get b_type
+ */
+int Board::getB_type(){
+    return this->b_type;
+}
+
+/**
+ * @brief Board::getB_type
+ * @param type
+ *
+ * Set b_type
+ */
+void Board::setB_type(int type){
+    this->b_type = type;
 }
 
 /**

@@ -34,10 +34,6 @@ MainWindow::MainWindow(QWidget *parent) :
     this->size = 7;
     this->quantity = 12;
 
-    this->b_row = 100;
-    this->b_col = 100;
-    this->b_type = 0;
-
     //GUI objekty
     scene = new QGraphicsScene(this);
     newTile = new QGraphicsScene(this);
@@ -51,8 +47,8 @@ MainWindow::MainWindow(QWidget *parent) :
     l_sizeView = new QLabel("Choosen size: " + QString::number(this->size), this);
     l_quantityView = new QLabel("Choosen quantity: " + QString::number(this->quantity), this);
 
-    l_size = new QLabel("Choose size:", this);
-    l_quantity = new QLabel("Choose quantity:", this);
+    l_size = new QLabel("Size:", this);
+    l_quantity = new QLabel("Quantity:", this);
     l_player_res  = new QLabel(this);
 
     gw_board = new QGraphicsView(this);
@@ -98,22 +94,23 @@ void MainWindow::menu(){
     l_sizeView->setGeometry(QRect(20, 100, 110, 20));
     l_quantityView->setGeometry(QRect(350, 100, 140, 20));
     le_player->setGeometry(QRect(150, 20, 80, 20));
+    le_player->setMaxLength(12);
 
     l_size->setGeometry(QRect(20, 20, 80, 20));
     l_quantity->setGeometry(QRect(350, 20, 110, 20));
     l_player_res->setGeometry(QRect(20, 160, 250, 20));
     l_players->setGeometry(QRect(250, 20, 80, 20));
 
-    btn_quantity_12->setGeometry(QRect(350, 40, 20, 20));
-    btn_quantity_24->setGeometry(QRect(370, 40, 20, 20));
-    btn_size_5->setGeometry(QRect(40, 40, 20, 20));
-    btn_size_7->setGeometry(QRect(60, 40, 20, 20));
-    btn_size_9->setGeometry(QRect(80, 40, 20, 20));
-    btn_size_11->setGeometry(QRect(100, 40, 20, 20));
+    btn_quantity_12->setGeometry(QRect(350, 40, 25, 25));
+    btn_quantity_24->setGeometry(QRect(375, 40, 25, 25));
+    btn_size_5->setGeometry(QRect(20, 40, 25, 25));
+    btn_size_7->setGeometry(QRect(45, 40, 25, 25));
+    btn_size_9->setGeometry(QRect(70, 40, 25, 25));
+    btn_size_11->setGeometry(QRect(95, 40, 25, 25));
 
-    btn_play->setGeometry(QRect(280, 140, 75, 40));
+    btn_play->setGeometry(QRect(300, 140, 75, 40));
 
-    btn_addPlayer->setGeometry(QRect(150, 50, 75, 23));      //tlacitko pridat hrace
+    btn_addPlayer->setGeometry(QRect(150, 50, 85, 23));      //tlacitko pridat hrace
     setFixedSize(500, 200);                       //cele okno
 
     //connections
@@ -202,22 +199,25 @@ void MainWindow::load(){
     this->height = this->size*IMG_SIZE+100;   //vyska sceny
 
     this->drawCard(this->board->getActPlayer());
+
+    l_quantity->setAlignment(Qt::AlignCenter);
+    l_player_res->setAlignment(Qt::AlignCenter);
     l_player_res->setText(this->board->getActPlayer()->getName());
 
     //nastaveni zobrazovani objektu
     gw_board->setGeometry(QRect(10, 10, width+2, height+2));    //prizpusobeni okna hraci desky
     btn_rotate->setGeometry(QRect(60, height+20, 50, 23));      //tlacitko rotace
-    btn_save->setGeometry(QRect(width+20, 10, 50, 23));      //tlacitko save
-    btn_load->setGeometry(QRect(width+20, 40, 50, 23));      //tlacitko load
-    btn_undo->setGeometry(QRect(width+20, 200, 50, 23));      //tlacitko undo
+    btn_save->setGeometry(QRect(width+30, 10, 60, 23));      //tlacitko save
+    btn_load->setGeometry(QRect(width+30, 40, 60, 23));      //tlacitko load
+    btn_undo->setGeometry(QRect(width+30, 200, 60, 35));      //tlacitko undo
     l_players->setGeometry(QRect(200, height+15, 80, 60));      //stitek hraci
     l_addPlayers->setGeometry(QRect(250, height+15, 90, 60));   //stitek seznam hracu
     l_size->setGeometry(QRect(360, height+15, 80, 60));   //stitek barev hracu
-    l_quantity->setGeometry(QRect(width+20, height-100, 80, 60));   //stitek vitezneho hrace
-    l_player_res->setGeometry(QRect(width+20, 80, 90, 20));          //aktualni hrac
+    l_quantity->setGeometry(QRect(width+20, height-100, 70, 60));   //stitek vitezneho hrace
+    l_player_res->setGeometry(QRect(width+20, 80, 70, 20));          //aktualni hrac
     gw_newTile->setGeometry(QRect(10, height+20, 44, 44));      //novy kamen mimo hraci desku
-    gw_card->setGeometry(QRect(width+20, 120, 44, 44));      //karta
-    setFixedSize(10+width+20+50, 10+height+25+40);                       //cele okno
+    gw_card->setGeometry(QRect(width+35, 120, 44, 44));      //karta
+    setFixedSize(10+width+20+70, 10+height+25+40);                       //cele okno
 
     switch(this->board->getNumPlayers()){
         case 1: l_size->setText("red"); break;
@@ -357,7 +357,8 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                     unsigned int row = (posY) / IMG_SIZE;
                     unsigned int col = (posX) / IMG_SIZE;
 
-                    if ( (this->b_type == 1 && b_col == col && b_row != row) || (this->b_type == 2 && b_col != col && b_row == row) ){   //nevraceni zpet v nasledujich tahu
+                    if ( (this->board->getB_type() == 1 && this->board->getB_col() == col && this->board->getB_row() != row) ||
+                         (this->board->getB_type() == 2 && this->board->getB_col() != col && this->board->getB_row() == row) ){   //nevraceni zpet v nasledujich tahu
                         return;
                     }
                         if (row % 2 == 0 && col % 2 == 0)
@@ -367,13 +368,13 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                             this->genBoard();
                             this->drawNewTile();
                             this->board->state = Board::MOVE;
-                        }
 
-                    this->b_row = row;
-                    this->b_col = col;
-                    this->b_type = (row == 0 || row == 6) ? 1 : 2;
-                  }
-                }
+                            this->board->setB_row(row);
+                            this->board->setB_col(col);
+                            this->board->setB_type((row == 0 || row == (this->size+1)) ? 1 : 2);
+                        }                    
+                 }
+              }
             }
             else
             {
@@ -665,6 +666,8 @@ void MainWindow::handle_btn_load()
     this->size = this->board->getSize();
 
     this->board->recoverPlayerImage();
+
+    this->drawPlayers();
 
     this->load();
 }
