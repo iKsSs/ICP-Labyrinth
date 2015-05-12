@@ -34,6 +34,9 @@ class Board
     TreasurePack* treasures;
     TreasurePack* cards;
 
+    unsigned int b_row, b_col;
+    int b_type;
+
     //...
     QVector<QString> bckpList;  //!< backup state for undo */
 public:
@@ -65,6 +68,13 @@ public:
     Player* getPlayer(unsigned int);
     Player* getActPlayer();
     void actPlus();         //!< change active player
+
+    unsigned int getB_col();
+    void setB_col(unsigned int);
+    unsigned int getB_row();
+    void setB_row(unsigned int);
+    int getB_type();
+    void setB_type(int);
 
     void insertNewTile(QPoint);
     QString data();
