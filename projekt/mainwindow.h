@@ -12,21 +12,18 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsView>
-#include <QApplication>
+
 #include <QLabel>
-#include <QPoint>
 #include <QVector>
 #include <QPixmap>
 #include <QGraphicsPixmapItem>
 #include <QFileDialog>
 
-#include <QMessageBox>
 #include <QMouseEvent>
 
 #include <QMainWindow>
 #include <QPushButton>
 #include <QLineEdit>
-#include <QCoreApplication>
 
 #include "board.h"
 
