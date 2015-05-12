@@ -134,7 +134,7 @@ void MainWindow::hideMenu(){
     l_sizeView->hide();
     l_quantityView->hide();
     //l_size->hide();
-    l_quantity->hide();
+    //l_quantity->hide();
     le_player->hide();
     btn_quantity_12->hide();
     btn_quantity_24->hide();
@@ -201,6 +201,7 @@ void MainWindow::load(){
     this->drawCard(this->board->getActPlayer());
 
     l_quantity->setAlignment(Qt::AlignCenter);
+    l_quantity->setText("SHIFT");
     l_player_res->setAlignment(Qt::AlignCenter);
     l_player_res->setText(this->board->getActPlayer()->getName());
 
@@ -213,8 +214,8 @@ void MainWindow::load(){
     l_players->setGeometry(QRect(200, height+15, 80, 60));      //stitek hraci
     l_addPlayers->setGeometry(QRect(250, height+15, 90, 60));   //stitek seznam hracu
     l_size->setGeometry(QRect(360, height+15, 80, 60));   //stitek barev hracu
-    l_quantity->setGeometry(QRect(width+20, height-100, 70, 60));   //stitek vitezneho hrace
-    l_player_res->setGeometry(QRect(width+20, 80, 70, 20));          //aktualni hrac
+    l_quantity->setGeometry(QRect(width+20, 100, 80, 20));   //stitek vitezneho hrace
+    l_player_res->setGeometry(QRect(width+20, 80, 80, 20));          //aktualni hrac
     gw_newTile->setGeometry(QRect(10, height+20, 44, 44));      //novy kamen mimo hraci desku
     gw_card->setGeometry(QRect(width+35, 120, 44, 44));      //karta
     setFixedSize(10+width+20+70, 10+height+25+40);                       //cele okno
@@ -368,6 +369,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                             this->genBoard();
                             this->drawNewTile();
                             this->board->state = Board::MOVE;
+                            l_quantity->setText("MOVE");
 
                             this->board->setB_row(row);
                             this->board->setB_col(col);
@@ -392,6 +394,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 
 
                         this->board->state = Board::SHIFT;
+                        l_quantity->setText("SHIFT");
 
                         Tile *t = this->board->getTile(row * this->size + col);
                         if(t->getTreasure() != NULL && p->getCard()->getCode() == t->getTreasure()->getCode()){
@@ -400,8 +403,8 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                             if(p->getPoints() >= this->quantity / this->board->getNumPlayers()){//quantity / pocet hracu
                                 this->board->state = Board::STAY;
                                 QString str = p->getName() + "\nwon!";
+                                l_quantity->setGeometry(QRect(width+20, height-100, 70, 60));
                                 l_quantity->setText(str);
-                                l_quantity->show();
                             }
 
                             p->setCard(this->board->getCards()->getTreasure());
