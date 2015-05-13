@@ -90,15 +90,15 @@ void MainWindow::menu(){
     this->hideGame();
 
     //nastavit pozice
-    l_addPlayers->setGeometry(QRect(250, 25, 60, 80));
+    l_addPlayers->setGeometry(QRect(250, 30, 60, 80));
     l_sizeView->setGeometry(QRect(20, 100, 110, 20));
     l_quantityView->setGeometry(QRect(350, 100, 140, 20));
     le_player->setGeometry(QRect(150, 20, 80, 20));
-    le_player->setMaxLength(12);
+    le_player->setMaxLength(10);
 
     l_size->setGeometry(QRect(20, 20, 80, 20));
-    l_quantity->setGeometry(QRect(350, 20, 110, 20));
-    l_player_res->setGeometry(QRect(20, 160, 250, 20));
+    l_quantity->setGeometry(QRect(350, 20, 115, 20));
+    l_player_res->setGeometry(QRect(20, 160, 270, 20));
     l_players->setGeometry(QRect(250, 20, 80, 20));
 
     btn_quantity_12->setGeometry(QRect(350, 40, 25, 25));
@@ -108,10 +108,10 @@ void MainWindow::menu(){
     btn_size_9->setGeometry(QRect(70, 40, 25, 25));
     btn_size_11->setGeometry(QRect(95, 40, 25, 25));
 
-    btn_play->setGeometry(QRect(300, 140, 75, 40));
+    btn_play->setGeometry(QRect(300, 160, 75, 40));
 
     btn_addPlayer->setGeometry(QRect(150, 50, 85, 23));      //tlacitko pridat hrace
-    setFixedSize(500, 200);                       //cele okno
+    setFixedSize(500, 210);                       //cele okno
 
     //connections
     connect(btn_quantity_12, SIGNAL (released()), this, SLOT (handle_btn_quantity_12()));
@@ -207,11 +207,11 @@ void MainWindow::load(){
 
     //nastaveni zobrazovani objektu
     gw_board->setGeometry(QRect(10, 10, width+2, height+2));    //prizpusobeni okna hraci desky
-    btn_rotate->setGeometry(QRect(60, height+20, 50, 23));      //tlacitko rotace
+    btn_rotate->setGeometry(QRect(60, height+30, 70, 23));      //tlacitko rotace
     btn_save->setGeometry(QRect(width+30, 10, 60, 23));      //tlacitko save
     btn_load->setGeometry(QRect(width+30, 40, 60, 23));      //tlacitko load
     btn_undo->setGeometry(QRect(width+30, 200, 60, 35));      //tlacitko undo
-    l_players->setGeometry(QRect(200, height+15, 80, 60));      //stitek hraci
+    l_players->setGeometry(QRect(185, height+15, 80, 60));      //stitek hraci
     l_addPlayers->setGeometry(QRect(250, height+15, 90, 60));   //stitek seznam hracu
     l_size->setGeometry(QRect(360, height+15, 80, 60));   //stitek barev hracu
     l_quantity->setGeometry(QRect(width+20, 100, 80, 20));   //stitek vitezneho hrace
