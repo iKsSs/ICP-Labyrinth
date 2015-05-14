@@ -58,8 +58,6 @@ public:
 
     void genBoard();    //!< generate game board
 
-    bool canMove(int, int);   //!< look for path from start_index to end_index
-
     QString getTileImage(Tile*);
     QString getTreasureImage(Tile*);
     QString getPlayerImage(int);

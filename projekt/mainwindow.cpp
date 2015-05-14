@@ -90,7 +90,7 @@ void MainWindow::menu(){
     this->hideGame();
 
     //nastavit pozice
-    l_addPlayers->setGeometry(QRect(250, 30, 60, 80));
+    l_addPlayers->setGeometry(QRect(250, 40, 90, 80));
     l_sizeView->setGeometry(QRect(20, 100, 110, 20));
     l_quantityView->setGeometry(QRect(380, 100, 150, 20));
     le_player->setGeometry(QRect(150, 20, 80, 20));
@@ -98,7 +98,7 @@ void MainWindow::menu(){
 
     l_size->setGeometry(QRect(20, 20, 80, 20));
     l_quantity->setGeometry(QRect(380, 20, 115, 20));
-    l_player_res->setGeometry(QRect(20, 160, 270, 20));
+    l_player_res->setGeometry(QRect(20, 160, 280, 20));
     l_players->setGeometry(QRect(250, 20, 80, 20));
 
     btn_quantity_12->setGeometry(QRect(380, 40, 25, 25));
@@ -111,7 +111,7 @@ void MainWindow::menu(){
     btn_play->setGeometry(QRect(340, 140, 75, 40));
 
     btn_addPlayer->setGeometry(QRect(150, 50, 85, 23));      //tlacitko pridat hrace
-    setFixedSize(530, 200);                       //cele okno
+    setFixedSize(540, 200);                       //cele okno
 
     //connections
     connect(btn_quantity_12, SIGNAL (released()), this, SLOT (handle_btn_quantity_12()));
@@ -212,13 +212,13 @@ void MainWindow::load(){
     btn_load->setGeometry(QRect(width+30, 40, 60, 23));      //tlacitko load
     btn_undo->setGeometry(QRect(width+30, 200, 60, 35));      //tlacitko undo
     l_players->setGeometry(QRect(185, height+15, 80, 60));      //stitek hraci
-    l_addPlayers->setGeometry(QRect(250, height+15, 90, 60));   //stitek seznam hracu
-    l_size->setGeometry(QRect(360, height+15, 80, 60));   //stitek barev hracu
+    l_addPlayers->setGeometry(QRect(250, height+15, 90, 70));   //stitek seznam hracu
+    l_size->setGeometry(QRect(360, height+15, 80, 70));   //stitek barev hracu
     l_quantity->setGeometry(QRect(width+20, 100, 80, 20));   //stitek vitezneho hrace
     l_player_res->setGeometry(QRect(width+20, 80, 80, 20));          //aktualni hrac
     gw_newTile->setGeometry(QRect(10, height+20, 44, 44));      //novy kamen mimo hraci desku
     gw_card->setGeometry(QRect(width+35, 120, 44, 44));      //karta
-    setFixedSize(10+width+20+70, 10+height+25+40);                       //cele okno
+    setFixedSize(10+width+20+70, 10+height+25+50);                       //cele okno
 
     switch(this->board->getNumPlayers()){
         case 1: l_size->setText("red"); break;
@@ -389,7 +389,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 
                     Player* p = this->board->getActPlayer();
 
-                    if (this->canMove(p->getPosition().x() * this->size + p->getPosition().y(), row * this->size + col)){
+                    if (this->board->canMove(p->getPosition().x() * this->size + p->getPosition().y(), row * this->size + col)){
                         p->setPosition(QPoint(row,col));
 
 
@@ -408,7 +408,6 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                             }
 
                             p->setCard(this->board->getCards()->getTreasure());
-                            //p->getCard()->setImage();
                             this->board->getCards()->removeTreasure();
 
                             t->setTreasure(NULL);
@@ -737,7 +736,6 @@ void MainWindow::genBoard(){
 
             //vykresleni pokladu
             if(tile->getTreasure() != NULL){
-            //    obr = tile->getTreasure()->getImage();     //ziska obrazek
                 obr.load(this->getTreasureImage(tile));     //ziska obrazek
 
                 pixmapItem = scene->addPixmap(obr); //prida obrazek do sceny a vrati odkaz na nej
@@ -764,127 +762,6 @@ void MainWindow::genBoard(){
         /* Odradkovani */
         x = 0;
         y += IMG_SIZE;  //posunuti v ose Y
-    }
-}
-
-/**
- * @brief MainWindow::canMove
- * @param index_start
- * @param index_goal
- * @return TRUE     move from start to end is possible
- * @return FALSE    move from start to end is not possible
- *
- * Return if move from start to end is possible
- */
-bool MainWindow::canMove(int index_start, int index_goal)
-{
-    QVector<unsigned int> indexs;
-    unsigned int ptr_indexs = 0;
-
-    indexs.push_back(index_start);  //startovaci index do vektoru
-    bool inc_ptr_indexs = false;
-
-    while (true)
-    {
-        index_start = indexs[ptr_indexs];
-
-        Move move = board->getTile(index_start)->getMove();
-
-        if (move.moveUp())
-        {
-            if (index_start - this->size < this->size * this->size)
-            {
-                Move move = board->getTile(index_start - this->size)->getMove();
-                if (move.moveDown())
-                {
-                    if (indexs.indexOf(index_start - this->size) == -1)
-                    {
-                        indexs.push_back(index_start - this->size);
-
-                        inc_ptr_indexs = true;
-                    }
-                }
-            }
-        }
-
-        if (move.moveRight())
-        {
-            if (index_start + 1 % static_cast<signed int>(this->size) != 0 && index_start + 1 < static_cast<signed int>(this->size * this->size))
-            {
-                Move move = board->getTile(index_start + 1)->getMove();
-                if (move.moveLeft())
-                {
-                    if (indexs.indexOf(index_start + 1) == -1)
-                    {
-                        indexs.push_back(index_start + 1);
-
-                        inc_ptr_indexs = true;
-                    }
-                }
-            }
-        }
-
-        if (move.moveDown())
-        {
-            if (index_start + this->size < this->size * this->size)
-            {
-                Move move = board->getTile(index_start + this->size)->getMove();
-                if (move.moveUp())
-                {
-                    if (indexs.indexOf(index_start + this->size) == -1)
-                    {
-                        indexs.push_back(index_start + this->size);
-
-                        inc_ptr_indexs = true;
-                    }
-                }
-            }
-        }
-
-        if (move.moveLeft())
-        {
-            if (index_start % this->size != 0 && index_start - 1 >= 0)
-            {
-                Move move = board->getTile(index_start - 1)->getMove();
-                if (move.moveRight())
-                {
-                    if (indexs.indexOf(index_start - 1) == -1)
-                    {
-                        indexs.push_back(index_start - 1);
-
-                        inc_ptr_indexs = true;
-                    }
-                }
-            }
-        }
-
-        if (index_start == index_goal) //cesta existuje
-        {
-           // qDebug("Cesta existuje\n");
-
-            return true;
-        }
-
-        if (inc_ptr_indexs)
-        {
-            if (ptr_indexs + 1 < static_cast<unsigned int>(indexs.count()))
-            {
-                ptr_indexs++;
-                inc_ptr_indexs = false;
-                continue;
-            }
-        }
-        else
-        {
-            if (ptr_indexs + 1 < static_cast<unsigned int>(indexs.count()))
-            {
-                ptr_indexs++;
-                continue;
-            }
-
-           // qDebug("Cesta neexistuje\n");
-            return false;
-        }
     }
 }
 

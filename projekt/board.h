@@ -78,6 +78,8 @@ public:
     void makeBckp();
     void undo();
 
+    bool canMove(int, int);   //!< look for path from start_index to end_index
+
     void updatePlayersV(bool, bool, bool, bool, int);   //!< method to move player with tile vertically
     void updatePlayersH(bool, bool, bool, bool, int);   //!< method to move player with tile horizontally
 
