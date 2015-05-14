@@ -92,26 +92,26 @@ void MainWindow::menu(){
     //nastavit pozice
     l_addPlayers->setGeometry(QRect(250, 30, 60, 80));
     l_sizeView->setGeometry(QRect(20, 100, 110, 20));
-    l_quantityView->setGeometry(QRect(350, 100, 140, 20));
+    l_quantityView->setGeometry(QRect(380, 100, 150, 20));
     le_player->setGeometry(QRect(150, 20, 80, 20));
     le_player->setMaxLength(10);
 
     l_size->setGeometry(QRect(20, 20, 80, 20));
-    l_quantity->setGeometry(QRect(350, 20, 115, 20));
+    l_quantity->setGeometry(QRect(380, 20, 115, 20));
     l_player_res->setGeometry(QRect(20, 160, 270, 20));
     l_players->setGeometry(QRect(250, 20, 80, 20));
 
-    btn_quantity_12->setGeometry(QRect(350, 40, 25, 25));
-    btn_quantity_24->setGeometry(QRect(375, 40, 25, 25));
+    btn_quantity_12->setGeometry(QRect(380, 40, 25, 25));
+    btn_quantity_24->setGeometry(QRect(405, 40, 25, 25));
     btn_size_5->setGeometry(QRect(20, 40, 25, 25));
     btn_size_7->setGeometry(QRect(45, 40, 25, 25));
     btn_size_9->setGeometry(QRect(70, 40, 25, 25));
     btn_size_11->setGeometry(QRect(95, 40, 25, 25));
 
-    btn_play->setGeometry(QRect(300, 160, 75, 40));
+    btn_play->setGeometry(QRect(340, 140, 75, 40));
 
     btn_addPlayer->setGeometry(QRect(150, 50, 85, 23));      //tlacitko pridat hrace
-    setFixedSize(500, 210);                       //cele okno
+    setFixedSize(530, 200);                       //cele okno
 
     //connections
     connect(btn_quantity_12, SIGNAL (released()), this, SLOT (handle_btn_quantity_12()));
