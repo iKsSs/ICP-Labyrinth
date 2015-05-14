@@ -12,8 +12,6 @@
 
 #include <QPoint>
 #include <QString>
-#include <QImage>
-#include <QPixmap>
 
 #include "card.h"
 
@@ -23,9 +21,9 @@ class Player
 {
     QPoint position;
     QString name;
-    QPixmap image;
     unsigned int points;
     Treasure* card;         //!< searched card(treasure) */
+
 public:
     Player();
     Player(QString);      //!< constructor with name
@@ -38,13 +36,11 @@ public:
     QPoint getPosition();
 
     void setName(QString);
-    void setImage(unsigned int);
+    QString getName();
 
     void setCard(Treasure*);
     Treasure* getCard();
 
-    QPixmap getImage();
-    QString getName();
     unsigned int getPoints();
 
     void addPoints(unsigned int);
@@ -52,8 +48,6 @@ public:
     bool operator == (const Player&) const;   //!< operator to compare players name
 
     static unsigned int countNoName;    //!< auxiliary var for generating "noname palyer" */
-
-    //~Player();
 
     QString toCSV();        //!< method to save data in file
 };

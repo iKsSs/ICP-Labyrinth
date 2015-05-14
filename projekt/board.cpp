@@ -196,7 +196,7 @@ void Board::setCardToPlayers(){
     unsigned int i, n = this->players.size();
     for (i=0; i < n; ++i){
         this->players[i]->setCard(this->cards->getTreasure());
-        this->players[i]->getCard()->setImage();
+        //this->players[i]->getCard()->setImage();
         this->cards->removeTreasure();
     }
 }
@@ -453,20 +453,6 @@ void Board::setPlayerPos(){
             case 2: this->players[i]->setPosition(QPoint(0,0)); break;
             case 3: this->players[i]->setPosition(QPoint(this->size-1,this->size-1)); break;
         }
-        this->players[i]->setImage(i);    //podle pozice se nastavi obrazek
-    }
-}
-
-/**
- * @brief Board::recoverPlayerImage
- *
- * Set image to player after load/undo
- */
-void Board::recoverPlayerImage(){
-    unsigned int i, n = this->players.size();
-    for (i=0; i < n; ++i){  //pro kazdeho hrace se nastavi pozice
-
-        this->players[i]->setImage(i);    //podle pozice se nastavi obrazek
     }
 }
 
@@ -727,7 +713,7 @@ QString Board::data()
 {
     QString data = "";
 
-    //ulozi sutry
+    //ulozi kameny
     for (int i  = 0; i < this->tiles.count(); i++)
     {
         Tile *t = this->tiles[i];
@@ -754,16 +740,20 @@ QString Board::data()
     //ulozi karty
     data.append(this->cards->toCSV(true));
 
+    data.append("B;");
+    data.append(QString::number(this->b_type) + ";");
+    data.append(QString::number(this->b_row) + ";");
+    data.append(QString::number(this->b_col) + "\n");
 
     data.append("S;");
     data.append(QString::number(this->size) + "\n");
+
     data.append("A;");
     data.append(QString::number(this->act) + "\n");
 
     data.append("I" + this->newTile->toCSV());
 
     data.append("ST;");
-
     data.append(QString::number(this->state) + "\n");
 
     return data;
@@ -791,7 +781,6 @@ void Board::load(QString filename, QString cfgString = "")
     this->tiles.clear();
     this->outter.clear();
     this->players.clear();
-    //this->bckpList.clear();
 
     //treasures vectory nemuzu mazat, metoda jen pro nastaveni
     //vytvarim pomocne vektory
@@ -799,13 +788,13 @@ void Board::load(QString filename, QString cfgString = "")
     QVector<Treasure *> cs;
 
     QTextStream *in;
+    QFile *file;
 
     if (cfgString.isEmpty())
     {
-        QFile *file = new QFile(filename);
+        file = new QFile(filename);
         file->open(QFile::ReadOnly | QFile::Text);
         in = new QTextStream(file);
-        //file->close();
     }
     else
     {
@@ -828,12 +817,18 @@ void Board::load(QString filename, QString cfgString = "")
         {
             this->size = l[1].toInt();
         }
-        else if (l.size() == 2 && l[0] == "CB")
+        else if (l.size() == 4 && l[0] == "B")
+        {
+            this->b_type = l[1].toInt();
+            this->b_row = l[2].toInt();
+            this->b_col = l[3].toInt();
+        }
+        else if (l.size() == 2 && l[0] == "CP")
         {
             Treasure *t = new Treasure(l[1].toInt());
             cs.push_back(t);
         }
-        else if (l.size() == 2 && l[0] == "B")
+        else if (l.size() == 2 && l[0] == "P")
         {
             Treasure *t = new Treasure(l[1].toInt());
             ts.push_back(t);
@@ -980,6 +975,11 @@ void Board::load(QString filename, QString cfgString = "")
             tile->setTreasure(t);
             this->newTile = tile;
         }
+    }
+
+    if (cfgString.isEmpty())    //uzavreni souboru
+    {
+        file->close();
     }
 }
 

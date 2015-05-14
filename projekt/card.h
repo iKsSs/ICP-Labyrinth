@@ -11,19 +11,17 @@
 #define CARD
 
 #include <QVector>
-#include <QPixmap>
+#include <QString>
 
 /*! Class representing treasure */
 
 class Treasure{
     unsigned int code;
-    QPixmap image;
+
   public:
     Treasure();
     Treasure(unsigned int);     //!< constructor with code
     unsigned int getCode();
-    void setImage();
-    QPixmap getImage();
 
     QString toCSV();        //!< method to save data in file
 };
@@ -33,15 +31,20 @@ class Treasure{
 class TreasurePack{
     unsigned int quantity;
     QVector<Treasure*> treasures;
+
   public:
     TreasurePack(){this->quantity=0;}
     TreasurePack(unsigned int);     //!< constructor with quantity
+
+    void setVector(QVector<Treasure*>);
     void setTreasurePack();
+
     Treasure* getTreasure();        //!< get first treasure
     Treasure* getTreasure(unsigned int);    //!< get i-th treasure
+
     void removeTreasure();          //!< remove first treasure
+
     void shuffle();
-    void setVector(QVector<Treasure*>);
 
     QString toCSV(bool);    //!< method to save game in file
 
