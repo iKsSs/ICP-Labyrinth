@@ -51,7 +51,7 @@ public:
     void showGame();    //!< show game objects
 
     void drawNewTile();
-    void drawCard(Player *);
+    void drawCard(Player*);
     void drawPlayers();
     void drawSize();
     void drawQuantity();
@@ -60,6 +60,10 @@ public:
 
     bool canMove(int, int);   //!< look for path from start_index to end_index
 
+    QString getTileImage(Tile*);
+    QString getTreasureImage(Tile*);
+    QString getPlayerImage(int);
+
 private slots:
     void handle_btn_rotate();
 
@@ -67,6 +71,7 @@ private slots:
     void handle_btn_size_7();
     void handle_btn_size_9();
     void handle_btn_size_11();
+
     void handle_btn_addPlayer();
     void handle_btn_save();
     void handle_btn_load();
@@ -90,33 +95,33 @@ private:
     QGraphicsScene *newTile;
     QGraphicsScene *card;
 
+    QLabel *l_addPlayers;
+    QLabel *l_players;
+    QLabel *l_sizeView;
+    QLabel *l_quantityView;
+
+    QGraphicsView *gw_board;
+    QGraphicsView *gw_newTile;
+    QGraphicsView *gw_card;
+
+    QLabel *l_size;
+    QLabel *l_quantity;
+    QLabel *l_player_res;
+
+    QLineEdit *le_player;
+
     QPushButton *btn_rotate;
     QPushButton *btn_addPlayer;
-
-    QLabel* l_addPlayers;
-    QLabel* l_players;
-    QLabel* l_sizeView;
-    QLabel* l_quantityView;
-
-    QGraphicsView* gw_board;
-    QGraphicsView* gw_newTile;
-    QGraphicsView* gw_card;
-
-    QLabel* l_size;
-    QLabel* l_quantity;
-    QLabel* l_player_res;
-    QLineEdit* le_player;
-
-    QPushButton* btn_quantity_12;
-    QPushButton* btn_quantity_24;
-    QPushButton* btn_size_5;
-    QPushButton* btn_size_7;
-    QPushButton* btn_size_9;
-    QPushButton* btn_size_11;
-    QPushButton* btn_save;
-    QPushButton* btn_load;
-    QPushButton* btn_undo;
-    QPushButton* btn_play;
+    QPushButton *btn_quantity_12;
+    QPushButton *btn_quantity_24;
+    QPushButton *btn_size_5;
+    QPushButton *btn_size_7;
+    QPushButton *btn_size_9;
+    QPushButton *btn_size_11;
+    QPushButton *btn_save;
+    QPushButton *btn_load;
+    QPushButton *btn_undo;
+    QPushButton *btn_play;
 
 protected:
     void mousePressEvent(QMouseEvent *event);   //!< handle mouse click event

@@ -105,21 +105,6 @@ void Player::setName(QString name)
 }
 
 /**
- * @brief Player::setImage
- *
- * Set image to player according to position
- */
-void Player::setImage(unsigned int i){
-    switch(i){
-        case 0: image.load(":/images/P-1.png"); break;
-        case 1: image.load(":/images/P-2.png"); break;
-        case 2: image.load(":/images/P-3.png"); break;
-        case 3: image.load(":/images/P-4.png"); break;
-    default: image.load(":/images/C.png");
-    }
-}
-
-/**
  * @brief Player::setCard
  * @param t
  *
@@ -127,7 +112,6 @@ void Player::setImage(unsigned int i){
  */
 void Player::setCard(Treasure* t){
     this->card = t;
-    this->card->setImage();
 }
 
 /**
@@ -138,16 +122,6 @@ void Player::setCard(Treasure* t){
  */
 Treasure* Player::getCard(){
     return this->card;
-}
-
-/**
- * @brief Player::getImage
- * @return image
- *
- * Return image of player.
- */
-QPixmap Player::getImage(){
-    return this->image;
 }
 
 /**

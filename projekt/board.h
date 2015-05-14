@@ -50,7 +50,6 @@ public:
     unsigned int getSize();
 
     void setPlayerPos();
-    void recoverPlayerImage();      //!< set player image after load
 
     //Tile* getTile(QPoint);   //vraci kamen pro danou souradnici
     Tile* getTile(int);     //vraci kamen pro dany index

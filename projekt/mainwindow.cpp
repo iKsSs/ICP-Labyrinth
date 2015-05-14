@@ -408,7 +408,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                             }
 
                             p->setCard(this->board->getCards()->getTreasure());
-                            p->getCard()->setImage();
+                            //p->getCard()->setImage();
                             this->board->getCards()->removeTreasure();
 
                             t->setTreasure(NULL);
@@ -480,9 +480,12 @@ void MainWindow::handle_btn_addPlayer()
  */
 void MainWindow::drawNewTile()
 {
-    this->newTile->addPixmap(board->getNewTile()->getImage());        //prida obrazek do okenka
+    QPixmap obr;
+    obr.load(this->getTileImage(this->board->getNewTile()));
+    this->newTile->addPixmap(obr);        //prida obrazek do okenka
     if(board->getNewTile()->getTreasure() != NULL){
-        this->newTile->addPixmap(board->getNewTile()->getTreasure()->getImage());     //ziska obrazek
+        obr.load(this->getTreasureImage(this->board->getNewTile()));
+        this->newTile->addPixmap(obr);     //ziska obrazek
     }
     gw_newTile->setScene(newTile);  //zobrazi novy kamen
 }
@@ -496,7 +499,11 @@ void MainWindow::drawCard(Player* p)
 {
     QPixmap pix(":/images/E.png");
     this->card->addPixmap(pix);
-    this->card->addPixmap(p->getCard()->getImage());
+
+    QPixmap obr;
+    obr.load(":/images/treasure/T-" + QString::number(p->getCard()->getCode()) + ".png");
+
+    this->card->addPixmap(obr);
 
     gw_card->setScene(card);
 }
@@ -668,8 +675,6 @@ void MainWindow::handle_btn_load()
 
     this->size = this->board->getSize();
 
-    this->board->recoverPlayerImage();
-
     this->drawPlayers();
 
     this->load();
@@ -683,8 +688,6 @@ void MainWindow::handle_btn_load()
 void MainWindow::handle_btn_undo()
 {
     this->board->undo();
-
-    this->board->recoverPlayerImage();
 
     this->load();
 }
@@ -709,7 +712,7 @@ void MainWindow::genBoard(){
             if(((i==0 || i==(this->size-1)) && j%2==1) || ((j==0 || j==(this->size-1)) && i%2==1)){
                 tile = board->getOutterField(k);
                 k++;
-                obr = tile->getImage();
+                obr.load(this->getTileImage(tile));
                 pixmapItem = scene->addPixmap(obr);
                 a=x;
                 b=y;
@@ -724,7 +727,8 @@ void MainWindow::genBoard(){
             tile = board->getTile(souradnice);    //odkaz na kamen
 
             //vykresleni kamenu
-            obr = tile->getImage();     //ziska obrazek
+
+            obr.load(this->getTileImage(tile));     //ziska obrazek
 
             pixmapItem = scene->addPixmap(obr); //prida obrazek do sceny a vrati odkaz na nej
 
@@ -733,8 +737,8 @@ void MainWindow::genBoard(){
 
             //vykresleni pokladu
             if(tile->getTreasure() != NULL){
-                obr = tile->getTreasure()->getImage();     //ziska obrazek
-
+            //    obr = tile->getTreasure()->getImage();     //ziska obrazek
+                obr.load(this->getTreasureImage(tile));     //ziska obrazek
 
                 pixmapItem = scene->addPixmap(obr); //prida obrazek do sceny a vrati odkaz na nej
 
@@ -747,7 +751,7 @@ void MainWindow::genBoard(){
                 Player* p;
                 p = board->getPlayer(l);
                 if (i == static_cast<unsigned int>(p->getPosition().x()) && j == static_cast<unsigned int>(p->getPosition().y())){
-                    obr = p->getImage();
+                    obr.load(this->getPlayerImage(l));     //ziska obrazek
                     pixmapItem = scene->addPixmap(obr); //prida obrazek do sceny a vrati odkaz na nej
 
                     pixmapItem->setX(x+50);
@@ -882,4 +886,80 @@ bool MainWindow::canMove(int index_start, int index_goal)
             return false;
         }
     }
+}
+
+/**
+ * @brief MainWindow::getTileImage
+ * @param tile
+ * @return str
+ *
+ * Get tile image path
+ */
+QString MainWindow::getTileImage(Tile* tile)
+{
+    unsigned int move = tile->getMove().getMove();
+    unsigned int rot = tile->getRotation();
+    QString str = ":/images/C.png";
+
+    if (move == 1010 || move == 101){
+        switch(rot){
+            case 1: str = ":/images/S-1.png"; break;
+            case 2: str = ":/images/S-2.png"; break;
+        }
+    }
+    else if (move == 1100 || move == 110 || move == 11 || move == 1001){
+        switch(rot){
+            case 1: str = ":/images/L-1.png"; break;
+            case 2: str = ":/images/L-2.png"; break;
+            case 3: str = ":/images/L-3.png"; break;
+            case 4: str = ":/images/L-4.png"; break;
+        }
+    }
+    else if(move == 1110 || move == 111 || move == 1011 || move == 1101){
+        switch(rot){
+            case 1: str = ":/images/T-1.png"; break;
+            case 2: str = ":/images/T-2.png"; break;
+            case 3: str = ":/images/T-3.png"; break;
+            case 4: str = ":/images/T-4.png"; break;
+        }
+    }
+    else{
+       str = ":/images/E.png";
+    }
+
+    return str;
+}
+
+/**
+ * @brief MainWindow::getTreasureImage
+ * @param tile
+ * @return str
+ *
+ * Get treasure image path
+ */
+QString MainWindow::getTreasureImage(Tile* tile)
+{
+    QString str = ":/images/treasure/T-" + QString::number(tile->getTreasure()->getCode()) + ".png";
+    return str;
+}
+
+/**
+ * @brief MainWindow::getPlayerImage
+ * @param i
+ * @return str
+ *
+ * Get player image path
+ */
+QString MainWindow::getPlayerImage(int i)
+{
+    QString str = ":/images/C.png";
+
+    switch(i){
+        case 0: str = ":/images/P-1.png"; break;
+        case 1: str = ":/images/P-2.png"; break;
+        case 2: str = ":/images/P-3.png"; break;
+        case 3: str = ":/images/P-4.png"; break;
+    }
+
+    return str;
 }

@@ -148,9 +148,6 @@ void Tile::setRotation(unsigned int r){
  */
 void Tile::setTreasure(Treasure *t){
     this->treasure = t;
-    if (this->treasure != NULL){
-        this->treasure->setImage();
-    }
 }
 
 /**
@@ -170,16 +167,6 @@ void Tile::removeTreasure(){
  */
 QPoint Tile::getPosition(){
     return this->position;
-}
-
-/**
- * @brief Tile::getImage
- * @return image
- *
- * Get image
- */
-QPixmap Tile::getImage(){
-    return this->image;
 }
 
 /**
@@ -222,7 +209,6 @@ TileStraight::TileStraight(unsigned int r){
     TileStraight::count++;
     this->rotation = r;
     this->setMove();
-    this->genImage();
 }
 
 /**
@@ -235,7 +221,6 @@ TileCorner::TileCorner(unsigned int r){
     TileCorner::count++;
     this->rotation = r;
     this->setMove();
-    this->genImage();
 }
 
 /**
@@ -248,7 +233,6 @@ TileCross::TileCross(unsigned int r){
     TileCross::count++;
     this->rotation = r;
     this->setMove();
-    this->genImage();
 }
 
 /**
@@ -260,7 +244,6 @@ void TileStraight::rotate(){
     this->rotation++;
     if(this->rotation%3 == 0){this->rotation = 1;}
     this->setMove();
-    this->genImage();
 }
 
 /**
@@ -272,7 +255,6 @@ void TileCorner::rotate(){
     this->rotation++;
     if(this->rotation%5 == 0){this->rotation = 1;}
     this->setMove();
-    this->genImage();
 }
 
 /**
@@ -284,53 +266,6 @@ void TileCross::rotate(){
     this->rotation++;
     if(this->rotation%5 == 0){this->rotation = 1;}
     this->setMove();
-    this->genImage();
-}
-
-/**
- * @brief TileStraight::genImage
- *
- * Generate image
- */
-void TileStraight::genImage()
-{
-    switch(this->rotation){
-        case 1: this->image.load(":/images/S-1.png");break;
-        case 2: this->image.load(":/images/S-2.png");break;
-        default: this->image.load(":/images/C.png");
-    }
-}
-
-/**
- * @brief TileCorner::genImage
- *
- * Generate image
- */
-void TileCorner::genImage()
-{
-    switch(this->rotation){
-        case 1: this->image.load(":/images/L-1.png");break;
-        case 2: this->image.load(":/images/L-2.png");break;
-        case 3: this->image.load(":/images/L-3.png");break;
-        case 4: this->image.load(":/images/L-4.png");break;
-        default: this->image.load(":/images/C.png");
-    }
-}
-
-/**
- * @brief TileCross::genImage
- *
- * Generate image
- */
-void TileCross::genImage()
-{
-    switch(this->rotation){
-        case 1: this->image.load(":/images/T-1.png");break;
-        case 2: this->image.load(":/images/T-2.png");break;
-        case 3: this->image.load(":/images/T-3.png");break;
-        case 4: this->image.load(":/images/T-4.png");break;
-        default: this->image.load(":/images/C.png");
-    }
 }
 
 /**
@@ -384,18 +319,18 @@ void TileCross::setMove()
  */
 TileOutter::TileOutter(unsigned int r){
     this->rotation = r;
-    this->genImage();
 }
 
 /**
- * @brief TileOutter::genImage
+ * @brief TileOutter::setMove
  *
- * Generate image
+ * Set move
  */
-void TileOutter::genImage()
+void TileOutter::setMove()
 {
-   this->image.load(":/images/E.png");
+    move.setMove(F,F,F,F);
 }
+
 
 /**
  * @brief Tile::toCSV

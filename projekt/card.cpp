@@ -30,16 +30,6 @@ unsigned int Treasure::getCode(){
 }
 
 /**
- * @brief Treasure::setImage
- *
- * Set image
- */
-void Treasure::setImage(){
-    QString str = ":/images/treasure/T-" + QString::number(this->code) + ".png";
-    image.load(str);
-}
-
-/**
  * @brief TreasurePack::toCSV
  * @return csv
  */
@@ -67,20 +57,10 @@ QString Treasure::toCSV()
 {
     QString csv = "";
 
-    csv.append("B;");
+    csv.append("P;");
     csv.append(QString::number(this->code) + "\n");
 
     return csv;
-}
-
-/**
- * @brief Treasure::getImage
- * @return image
- *
- * Return image
- */
-QPixmap Treasure::getImage(){
-    return this->image;
 }
 
 /**

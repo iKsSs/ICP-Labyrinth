@@ -12,9 +12,9 @@
 #ifndef TILE
 #define TILE
 
-#include <QPixmap>
 #include <QVector>
 #include <QString>
+#include <QPoint>
 
 #include "player.h"
 #include "card.h"
@@ -44,7 +44,6 @@ public:
 class Tile{
 protected:
   QPoint position;
-  QPixmap image;
   Move move;
   Treasure *treasure;
   unsigned int rotation;
@@ -53,24 +52,18 @@ public:
   Tile();
   Tile(unsigned int);       //!< constructor with rotation
   virtual void rotate()=0;
-  virtual void genImage()=0;
+  virtual void setMove()=0;
 
   void setPosition(QPoint);
   void setRotation(unsigned int);
-  void setMove();
   void setTreasure(Treasure*);
 
   void removeTreasure();
 
   QPoint getPosition();
-  QPixmap getImage();
+  unsigned int getRotation();
   Move getMove();
   Treasure* getTreasure();
-  unsigned int getRotation();
-
-  void addPlayer(Player);
-  void removePlayer(Player);
-  QVector<Player> getPlayers();
 
   QString toCSV();          //!< method to data game in file
 };
@@ -84,7 +77,6 @@ public:
   TileStraight(unsigned int);    //!< constructor with rotation
   TileStraight(){TileStraight::count++;}
   virtual void rotate();
-  virtual void genImage();
   void setMove();
 };
 
@@ -97,7 +89,6 @@ public:
   TileCorner(unsigned int);    //!< constructor with rotation
   TileCorner(){TileCorner::count++;}
   virtual void rotate();
-  virtual void genImage();
   void setMove();
 };
 
@@ -110,7 +101,6 @@ public:
   TileCross(unsigned int);    //!< constructor with rotation
   TileCross(){TileCross::count++;}
   virtual void rotate();
-  virtual void genImage();
   void setMove();
 };
 
@@ -122,7 +112,7 @@ public:
   TileOutter(unsigned int);    //!< constructor with rotation
   TileOutter(){}
   virtual void rotate(){}
-  virtual void genImage();
+  void setMove();
 };
 
 #endif // TILE
