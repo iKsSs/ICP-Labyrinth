@@ -788,7 +788,7 @@ void Board::load(QString filename, QString cfgString = "")
     QVector<Treasure *> cs;
 
     QTextStream *in;
-    QFile *file;
+    QFile *file = NULL;
 
     if (cfgString.isEmpty())
     {
@@ -977,7 +977,7 @@ void Board::load(QString filename, QString cfgString = "")
         }
     }
 
-    if (cfgString.isEmpty())    //uzavreni souboru
+    if (cfgString.isEmpty() && file != NULL)    //uzavreni souboru
     {
         file->close();
     }
@@ -1004,4 +1004,126 @@ void Board::undo()
 
     this->load("", this->bckpList.last());
     this->bckpList.pop_back();
+}
+
+
+/**
+ * @brief Board::canMove
+ * @param index_start
+ * @param index_goal
+ * @return TRUE     move from start to end is possible
+ * @return FALSE    move from start to end is not possible
+ *
+ * Return if move from start to end is possible
+ */
+bool Board::canMove(int index_start, int index_goal)
+{
+    QVector<unsigned int> indexs;
+    unsigned int ptr_indexs = 0;
+
+    indexs.push_back(index_start);  //startovaci index do vektoru
+    bool inc_ptr_indexs = false;
+
+    while (true)
+    {
+        index_start = indexs[ptr_indexs];
+
+        Move move = this->getTile(index_start)->getMove();
+
+        if (move.moveUp())
+        {
+            if (index_start - this->size < this->size * this->size)
+            {
+                Move move = this->getTile(index_start - this->size)->getMove();
+                if (move.moveDown())
+                {
+                    if (indexs.indexOf(index_start - this->size) == -1)
+                    {
+                        indexs.push_back(index_start - this->size);
+
+                        inc_ptr_indexs = true;
+                    }
+                }
+            }
+        }
+
+        if (move.moveRight())
+        {
+            if (index_start + 1 % static_cast<signed int>(this->size) != 0 && index_start + 1 < static_cast<signed int>(this->size * this->size))
+            {
+                Move move = this->getTile(index_start + 1)->getMove();
+                if (move.moveLeft())
+                {
+                    if (indexs.indexOf(index_start + 1) == -1)
+                    {
+                        indexs.push_back(index_start + 1);
+
+                        inc_ptr_indexs = true;
+                    }
+                }
+            }
+        }
+
+        if (move.moveDown())
+        {
+            if (index_start + this->size < this->size * this->size)
+            {
+                Move move = this->getTile(index_start + this->size)->getMove();
+                if (move.moveUp())
+                {
+                    if (indexs.indexOf(index_start + this->size) == -1)
+                    {
+                        indexs.push_back(index_start + this->size);
+
+                        inc_ptr_indexs = true;
+                    }
+                }
+            }
+        }
+
+        if (move.moveLeft())
+        {
+            if (index_start % this->size != 0 && index_start - 1 >= 0)
+            {
+                Move move = this->getTile(index_start - 1)->getMove();
+                if (move.moveRight())
+                {
+                    if (indexs.indexOf(index_start - 1) == -1)
+                    {
+                        indexs.push_back(index_start - 1);
+
+                        inc_ptr_indexs = true;
+                    }
+                }
+            }
+        }
+
+        if (index_start == index_goal) //cesta existuje
+        {
+           // qDebug("Cesta existuje\n");
+
+            return true;
+        }
+
+        if (inc_ptr_indexs)
+        {
+            if (ptr_indexs + 1 < static_cast<unsigned int>(indexs.count()))
+            {
+                ptr_indexs++;
+                inc_ptr_indexs = false;
+                continue;
+            }
+        }
+        else
+        {
+            if (ptr_indexs + 1 < static_cast<unsigned int>(indexs.count()))
+            {
+                ptr_indexs++;
+                continue;
+            }
+
+           // qDebug("Cesta neexistuje\n");
+            return false;
+        }
+    }
 }
