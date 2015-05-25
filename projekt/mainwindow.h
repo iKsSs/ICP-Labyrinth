@@ -54,6 +54,7 @@ public:
     void drawCard(Player*);
     void drawPlayers();
     void drawSize();
+    void drawState();
     void drawQuantity();
 
     void genBoard();    //!< generate game board
@@ -104,6 +105,7 @@ private:
 
     QLabel *l_size;
     QLabel *l_quantity;
+    QLabel *l_state;
     QLabel *l_player_res;
 
     QLineEdit *le_player;

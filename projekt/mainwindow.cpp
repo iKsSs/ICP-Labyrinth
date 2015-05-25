@@ -49,6 +49,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     l_size = new QLabel("Size:", this);
     l_quantity = new QLabel("Quantity:", this);
+    l_state = new QLabel(this);
     l_player_res  = new QLabel(this);
 
     gw_board = new QGraphicsView(this);
@@ -200,8 +201,10 @@ void MainWindow::load(){
 
     this->drawCard(this->board->getActPlayer());
 
+    l_quantity->clear();
+
     l_quantity->setAlignment(Qt::AlignCenter);
-    l_quantity->setText("SHIFT");
+    l_state->setAlignment(Qt::AlignCenter);
     l_player_res->setAlignment(Qt::AlignCenter);
     l_player_res->setText(this->board->getActPlayer()->getName());
 
@@ -213,8 +216,9 @@ void MainWindow::load(){
     btn_undo->setGeometry(QRect(width+30, 200, 60, 35));      //tlacitko undo
     l_players->setGeometry(QRect(185, height+15, 80, 60));      //stitek hraci
     l_addPlayers->setGeometry(QRect(250, height+15, 90, 70));   //stitek seznam hracu
-    l_size->setGeometry(QRect(360, height+15, 80, 70));   //stitek barev hracu
-    l_quantity->setGeometry(QRect(width+20, 100, 80, 20));   //stitek vitezneho hrace
+    l_size->setGeometry(QRect(360, height+15, 80, 70));         //stitek barev hracu
+    l_state->setGeometry(QRect(width+20, 100, 80, 20));         //stitek akce
+    l_quantity->setGeometry(QRect(width+20, height-100, 70, 60));  //stitek vitezneho hrace
     l_player_res->setGeometry(QRect(width+20, 80, 80, 20));          //aktualni hrac
     gw_newTile->setGeometry(QRect(10, height+20, 44, 44));      //novy kamen mimo hraci desku
     gw_card->setGeometry(QRect(width+35, 120, 44, 44));      //karta
@@ -226,6 +230,8 @@ void MainWindow::load(){
         case 3: l_size->setText("red\nblue\ngreen"); break;
         case 4: l_size->setText("red\nblue\ngreen\ngrey"); break;
     }
+
+    this->drawState();      //zobrazi stav
 
     this->drawNewTile();        //zobrazi novy kamen
 
@@ -246,6 +252,7 @@ void MainWindow::hideGame(){
     btn_save->hide();
     btn_load->hide();
     btn_undo->hide();
+    l_state->hide();
 }
 
 /**
@@ -262,6 +269,7 @@ void MainWindow::showGame(){
     btn_save->show();
     btn_load->show();
     btn_undo->show();
+    l_state->show();
 }
 
 /**
@@ -288,6 +296,7 @@ MainWindow::~MainWindow()
 
     delete l_size;
     delete l_quantity;
+    delete l_state;
     delete l_player_res;
     delete le_player;
 
@@ -369,7 +378,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                             this->genBoard();
                             this->drawNewTile();
                             this->board->state = Board::MOVE;
-                            l_quantity->setText("MOVE");
+                            this->drawState();
 
                             this->board->setB_row(row);
                             this->board->setB_col(col);
@@ -394,7 +403,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 
 
                         this->board->state = Board::SHIFT;
-                        l_quantity->setText("SHIFT");
+                        this->drawState();
 
                         Tile *t = this->board->getTile(row * this->size + col);
                         if(t->getTreasure() != NULL && p->getCard()->getCode() == t->getTreasure()->getCode()){
@@ -403,7 +412,6 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                             if(p->getPoints() >= this->quantity / this->board->getNumPlayers()){//quantity / pocet hracu
                                 this->board->state = Board::STAY;
                                 QString str = p->getName() + "\nwon!";
-                                l_quantity->setGeometry(QRect(width+20, height-100, 70, 60));
                                 l_quantity->setText(str);
                             }
 
@@ -578,6 +586,19 @@ void MainWindow::drawSize(){
     str = "Choosen size: " + QString::number(this->size);
     l_sizeView->setText(str);
     l_sizeView->repaint();
+}
+
+/**
+ * @brief MainWindow::drawState
+ *
+ * Set state
+ */
+void MainWindow::drawState(){
+    switch(this->board->state){
+        case Board::MOVE: l_state->setText("MOVE"); break;
+        case Board::SHIFT: l_state->setText("SHIFT"); break;
+    default: l_state->clear();
+    }
 }
 
 /**
